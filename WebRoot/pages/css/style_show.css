@@ -864,7 +864,7 @@
         width: 10%;
         display: block;
         position: absolute;
-        top: 10.1rem;
+        top: 9.5rem;
         left: 3.5%;
         float: left;
         text-align: center;
@@ -1045,8 +1045,9 @@
 /*show-fifth1*/
 
 .box-body-fifth {
-    height: 18.6rem;
+    height: 16.6rem;
     overflow: hidden;
+    margin-top: 2rem;
 }
 
 .block-one-fifth {
@@ -1089,6 +1090,10 @@
     margin: 0 auto;
     top: -5px;
     z-index: 5;
+}
+
+.tuli-fifth-pz {
+    top: 10rem!important;
 }
 
 /*third-left*/
