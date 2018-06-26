@@ -335,6 +335,17 @@ function initwebsocket(type){
                 audio.src = "audio/"+msg['PRO']+"/3/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
             }
+            else if(msg['STATE']=='05'){//关闭声音
+
+                var audioSrc = audio.src;
+                var tempSrc="/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
+                if(audioSrc.indexOf(tempSrc) != -1){
+
+                    audio.pause();
+                }
+
+
+            }
             else{
                 $('#'+msg['NUM']+'_'+msg['STATE']+'[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
             }

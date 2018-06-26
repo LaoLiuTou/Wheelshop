@@ -67,9 +67,8 @@
     background-color: #fe0000;
 }
 .font12 {
-    font-size: 1.2rem;
-    margin: 0!important;
-    padding: 0!important;
+    font-size: 1.4rem;
+    position: relative;
 }
 
 .box-body {
@@ -589,7 +588,23 @@
     width: 85%;
     float: left;
     margin-left: 15%;
+
 }
+
+.mtrem1 { margin-top: .8rem;}
+.mbrem1 { margin-bottom: .8rem;}
+
+.block-one-third i:first-child {
+    display: block;
+    margin: .2rem 0;
+}
+
+.block-one-third i:last-child {
+    display: block;
+    margin: .2rem 0;
+}
+
+
 /*左右开头部分-third*/
 .block-right-third {
     width: 10%;
@@ -750,7 +765,7 @@
 
 
 
-/*指示线yhird*/
+/*指示线third*/
 .line-box-third {
     width: 30%;
     height: 7.5rem;
@@ -780,6 +795,12 @@
     position: absolute;
     top: -15px;
     left: -2px;
+}
+/*图例-third*/
+
+.tuli-box-third-pz {
+    top: 10.8rem!important;
+    width: 5.4%;
 }
 
 .tuli-box-2-third {

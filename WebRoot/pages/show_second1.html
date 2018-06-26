@@ -380,12 +380,12 @@
         //时间
         updateTime();
 
-        setInterval(updateTime,60000);
+        setInterval(updateTime,1000);
 
     });
 
     function updateTime(){
-        var currentTime = new Date().format("yyyy年MM月dd日 hh:mm");
+        var currentTime = new Date().format("yyyy年MM月dd日 hh:mm:ss");
         $('#currentTime').text(currentTime);
     }
 
