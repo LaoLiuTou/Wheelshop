@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wheelshop.dao.device.IDeviceMapper"> 
+	<select id="selectdeviceById" parameterType="String" resultType="Device">
+		SELECT * FROM device WHERE ID=#{id}
+	</select>
+
+	<delete id="deletedevice" parameterType="String"> 
+		DELETE FROM device WHERE ID=#{id}
+	</delete>
+
+	<select id="selectdeviceByParam" parameterType="java.util.Map" resultType="Device">
+		SELECT *
+		FROM device
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
+			<if test="nodeno != null"> AND NODENO =#{nodeno} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+		ORDER BY ID DESC 
+		LIMIT #{fromPage},#{toPage} 
+	</select>
+
+	<select id="selectCountdeviceByParam" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(id) 
+		FROM device 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
+			<if test="nodeno != null"> AND NODENO =#{nodeno} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+	</select>
+
+	<update id="updatedevice" parameterType="Device">
+		UPDATE device 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="id != null">ID=#{id}, </if>
+			<if test="production != null">PRODUCTION=#{production}, </if>
+			<if test="deviceno != null">DEVICENO=#{deviceno}, </if>
+			<if test="nodeno != null">NODENO=#{nodeno}, </if>
+			<if test="flag != null">FLAG=#{flag}, </if>
+		</trim>
+		WHERE ID=#{id}
+	</update>
+
+	<insert id="adddevice" parameterType="Device" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO device 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="production != null">PRODUCTION, </if>
+			<if test="deviceno != null">DEVICENO, </if>
+			<if test="nodeno != null">NODENO, </if>
+			<if test="flag != null">FLAG, </if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="production != null">#{production}, </if>
+			<if test="deviceno != null">#{deviceno}, </if>
+			<if test="nodeno != null">#{nodeno}, </if>
+			<if test="flag != null">#{flag}, </if>
+		</trim>
+	</insert>
+
+	<insert id="muladddevice" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			INSERT INTO device 
+			<trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">ID, </if>
+				<if test="item.production != null">PRODUCTION, </if>
+				<if test="item.deviceno != null">DEVICENO, </if>
+				<if test="item.nodeno != null">NODENO, </if>
+				<if test="item.flag != null">FLAG, </if>
+			</trim>
+			<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">#{item.id}, </if>
+				<if test="item.production != null">#{item.production}, </if>
+				<if test="item.deviceno != null">#{item.deviceno}, </if>
+				<if test="item.nodeno != null">#{item.nodeno}, </if>
+				<if test="item.flag != null">#{item.flag}, </if>
+			</trim>
+		</foreach>
+	</insert>
+</mapper>

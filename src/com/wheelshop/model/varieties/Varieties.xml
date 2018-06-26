@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wheelshop.dao.varieties.IVarietiesMapper"> 
+	<select id="selectvarietiesById" parameterType="String" resultType="Varieties">
+		SELECT * FROM varieties WHERE ID=#{id}
+	</select>
+
+	<delete id="deletevarieties" parameterType="String"> 
+		DELETE FROM varieties WHERE ID IN ${_parameter}
+	</delete>
+
+	<select id="selectvarietiesByParam" parameterType="java.util.Map" resultType="Varieties">
+		SELECT *
+		FROM varieties
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="variety != null"> AND VARIETY LIKE #{variety} </if>
+			<if test="yield != null"> AND YIELD =#{yield} </if>
+			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="capacity != null"> AND CAPACITY =#{capacity} </if>
+			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>
+			<if test="required != null"> AND REQUIRED =#{required} </if>
+			<if test="creater != null"> AND CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="type != null"> AND TYPE =#{type} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+		ORDER BY ID DESC 
+		LIMIT #{fromPage},#{toPage} 
+	</select>
+
+	<select id="selectCountvarietiesByParam" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(id) 
+		FROM varieties 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="variety != null"> AND VARIETY =#{variety} </if>
+			<if test="yield != null"> AND YIELD =#{yield} </if>
+			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="capacity != null"> AND CAPACITY =#{capacity} </if>
+			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>
+			<if test="required != null"> AND REQUIRED =#{required} </if>
+			<if test="creater != null"> AND CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="type != null"> AND TYPE =#{type} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+	</select>
+
+	<update id="updatevarieties" parameterType="Varieties">
+		UPDATE varieties 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="id != null">ID=#{id}, </if>
+			<if test="variety != null">VARIETY=#{variety}, </if>
+			<if test="yield != null">YIELD=#{yield}, </if>
+			<if test="rhythm != null">RHYTHM=#{rhythm}, </if>
+			<if test="production != null">PRODUCTION=#{production}, </if>
+			<if test="capacity != null">CAPACITY=#{capacity}, </if>
+			<if test="changtime != null">CHANGTIME=#{changtime}, </if>
+			<if test="required != null">REQUIRED=#{required}, </if>
+			<if test="creater != null">CREATER=#{creater}, </if>
+			<if test="adddate != null">ADDDATE=#{adddate}, </if>
+			<if test="type != null">TYPE=#{type}, </if>
+			<if test="flag != null">FLAG=#{flag}, </if>
+		</trim>
+		WHERE ID=#{id}
+	</update>
+
+	<insert id="addvarieties" parameterType="Varieties" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO varieties 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="variety != null">VARIETY, </if>
+			<if test="yield != null">YIELD, </if>
+			<if test="rhythm != null">RHYTHM, </if>
+			<if test="production != null">PRODUCTION, </if>
+			<if test="capacity != null">CAPACITY, </if>
+			<if test="changtime != null">CHANGTIME, </if>
+			<if test="required != null">REQUIRED, </if>
+			<if test="creater != null">CREATER, </if>
+			<if test="adddate != null">ADDDATE, </if>
+			<if test="type != null">TYPE, </if>
+			<if test="flag != null">FLAG, </if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="variety != null">#{variety}, </if>
+			<if test="yield != null">#{yield}, </if>
+			<if test="rhythm != null">#{rhythm}, </if>
+			<if test="production != null">#{production}, </if>
+			<if test="capacity != null">#{capacity}, </if>
+			<if test="changtime != null">#{changtime}, </if>
+			<if test="required != null">#{required}, </if>
+			<if test="creater != null">#{creater}, </if>
+			<if test="adddate != null">#{adddate}, </if>
+			<if test="type != null">#{type}, </if>
+			<if test="flag != null">#{flag}, </if>
+		</trim>
+	</insert>
+
+	<insert id="muladdvarieties" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			INSERT INTO varieties 
+			<trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">ID, </if>
+				<if test="item.variety != null">VARIETY, </if>
+				<if test="item.yield != null">YIELD, </if>
+				<if test="item.rhythm != null">RHYTHM, </if>
+				<if test="item.production != null">PRODUCTION, </if>
+				<if test="item.capacity != null">CAPACITY, </if>
+				<if test="item.changtime != null">CHANGTIME, </if>
+				<if test="item.required != null">REQUIRED, </if>
+				<if test="item.creater != null">CREATER, </if>
+				<if test="item.adddate != null">ADDDATE, </if>
+				<if test="item.type != null">TYPE, </if>
+				<if test="item.flag != null">FLAG, </if>
+			</trim>
+			<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">#{item.id}, </if>
+				<if test="item.variety != null">#{item.variety}, </if>
+				<if test="item.yield != null">#{item.yield}, </if>
+				<if test="item.rhythm != null">#{item.rhythm}, </if>
+				<if test="item.production != null">#{item.production}, </if>
+				<if test="item.capacity != null">#{item.capacity}, </if>
+				<if test="item.changtime != null">#{item.changtime}, </if>
+				<if test="item.required != null">#{item.required}, </if>
+				<if test="item.creater != null">#{item.creater}, </if>
+				<if test="item.adddate != null">#{item.adddate}, </if>
+				<if test="item.type != null">#{item.type}, </if>
+				<if test="item.flag != null">#{item.flag}, </if>
+			</trim>
+		</foreach>
+	</insert>
+</mapper>

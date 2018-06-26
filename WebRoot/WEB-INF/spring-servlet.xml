@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<!-- 自动扫描controller包下的所有类，使其认为是spring mvc的控制器 路径即为类路径 -->
+	<context:component-scan base-package="com.wheelshop"></context:component-scan>
+	<mvc:default-servlet-handler/>  
+	<mvc:annotation-driven>  
+	<!-- 处理responseBody 里面日期类型 -->
+		<mvc:message-converters>  
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+				<property name="objectMapper"> 
+					<bean class="com.wheelshop.utils.JsonObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 多部分文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="10485760000"></property>
+		<property name="maxInMemorySize" value="40960"></property> 
+	</bean>
+	<!-- 配置视图解析器 如何把handler 方法返回值解析为实际的物理视图  根据控制器返回的字符串拼接成jsp路径：/WEB-INF/jsp/xx.jsp -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name = "prefix" value="/WEB-INF/jsp/"></property>
+		<property name = "suffix" value = ".jsp"></property>
+	</bean>
+</beans>

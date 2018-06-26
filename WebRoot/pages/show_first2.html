@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="keywords" content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>旋压A线</title>
+
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+  <link href="js/iCheck/skins/minimal/green.css" rel="stylesheet">
+
+
+  <!--common-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style_show.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="sticky-header">
+
+
+
+    <!--表格开始-->
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <div class="panel-body">
+
+                        <table  class="display table table-bordered table-striped" id="dynamic-table">
+
+                            <tbody id="secondTbody">
+                            <tr >
+                                <td colspan="4" class="jianxiu-time">检修时间：<span id="timeSpan"  ></span></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+
+
+                                    <section class="box-body">
+
+                                        <div class="block-left">
+                                            <ul class="six-box">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                            <ul class="two-box">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                            <div class="three-box">
+                                                <!--<div class="div-one bg-green"></div>-->
+                                                <div class="div-two bg-green white">条料</div>
+                                                <!-- <div class="div-three bg-green"></div>-->
+                                            </div>
+                                        </div>
+
+                                        <div class="block-right-box">
+                                            <div class="block-one">
+                                                <i prod="1" id="radio11" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device1_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device1_02" class="box-center bg-green black">1</div>
+                                                <div prod="1" id="device1_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio12" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio21" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device2_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device2_02" class="box-center bg-green black">2</div>
+                                                <div prod="1" id="device2_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio22" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio31" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device3_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device3_02" class="box-center bg-green black">3-1</div>
+                                                <div prod="1" id="device3_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio32" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                            <div class="block-one">
+                                                <i prod="1" id="radio41" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device4_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device4_02" class="box-center bg-green black">3-2</div>
+                                                <div prod="1" id="device4_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio42" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio51" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device5_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device5_02" class="box-center bg-green black">4</div>
+                                                <div prod="1" id="device5_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio52" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio61" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device6_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device6_02" class="box-center bg-green black">5</div>
+                                                <div prod="1" id="device6_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio62" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                            <div class="block-one">
+                                                <i prod="1" id="radio71" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device7_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device7_02" class="box-center bg-green  black">6</div>
+                                                <div prod="1" id="device7_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio72" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio81" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device8_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device8_02" class="box-center bg-green black">7</div>
+                                                <div prod="1" id="device8_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio82" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio91" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device9_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device9_02" class="box-center bg-green black">8</div>
+                                                <div prod="1" id="device9_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio92" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                            <div class="block-one">
+                                                <i prod="1" id="radio101" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device10_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device10_02" class="box-center bg-green black">9</div>
+                                                <div prod="1" id="device10_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio102" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio111" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device11_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device11_02" class="box-center bg-green black">10</div>
+                                                <div prod="1" id="device11_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio112" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio121" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device12_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device12_02" class="box-center bg-green black">11</div>
+                                                <div prod="1" id="device12_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio122" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                            <div class="block-one">
+                                                <i prod="1" id="radio131" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device13_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device13_02" class="box-center bg-green black">12</div>
+                                                <div prod="1" id="device13_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio132" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio141" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device14_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device14_02" class="box-center bg-green black">13</div>
+                                                <div prod="1" id="device14_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio142" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio151" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device15_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device15_02" class="box-center bg-green black">14</div>
+                                                <div prod="1" id="device15_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio152" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                        </div>
+
+                                    </section>
+
+
+                                    <div class="line-box-one">
+                                        <div class="line-box-top"></div>
+                                        <div class="line-box-two">
+                                            <div class="line-box-three"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <section class="box-body">
+
+                                        <div class="block-left">
+                                            <ul class="six-box">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                            <ul class="two-box">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                            <div class="three-box">
+                                                <!--<div class="div-one bg-green"></div>-->
+                                                <div class="div-two bg-green white">轮辐</div>
+                                                <!--<div class="div-three bg-green"></div>-->
+                                            </div>
+                                        </div>
+
+                                        <div class="block-right-box">
+                                            <div class="block-one">
+                                                <i prod="1" id="radio161" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device16_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device16_02" class="box-center bg-green black">15</div>
+                                                <div prod="1" id="device16_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio162" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio171" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device17_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device17_02" class="box-center bg-green black">16</div>
+                                                <div prod="1" id="device17_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio172" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio181" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device18_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device18_02" class="box-center bg-green black">17-1</div>
+                                                <div prod="1" id="device18_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio182" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                            <div class="block-one">
+                                                <i prod="1" id="radio191" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device19_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device19_02" class="box-center bg-green black">17-2</div>
+                                                <div prod="1" id="device19_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio192" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio201" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device20_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device20_02" class="box-center bg-green black">17-3</div>
+                                                <div prod="1" id="device20_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio202" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio211" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device21_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device21_02" class="box-center bg-green black">17-4</div>
+                                                <div prod="1" id="device21_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio212" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                            <div class="block-one">
+                                                <i prod="1" id="radio221" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device22_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device22_02" class="box-center bg-green  black">17-5</div>
+                                                <div prod="1" id="device22_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio222" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio231" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device23_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device23_02" class="box-center bg-green black">18</div>
+                                                <div prod="1" id="device23_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio232" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio241" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device24_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device24_02" class="box-center bg-green black">19</div>
+                                                <div prod="1" id="device24_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio242" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+                                            <div class="block-one">
+                                                <i prod="1" id="radio251" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device25_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device25_02" class="box-center bg-green black">20</div>
+                                                <div prod="1" id="device25_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio252" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+                                            <div class="block-one">
+                                                <i prod="1" id="radio261" class="glyphicon glyphicon-user  font12"></i>
+                                                <div prod="1" id="device26_01" class="box-top bg-green"></div>
+                                                <div prod="1" id="device26_02" class="box-center bg-green black">21</div>
+                                                <div prod="1" id="device26_03" class="box-bottom bg-green"></div>
+                                                <i prod="1" id="radio262" class="glyphicon glyphicon-user  font12"></i>
+                                            </div>
+
+
+                                        </div>
+                                        <!--图例-->
+                                        <div class="tuli-box">
+                                            <div  prod="1" id="shebei" class="box-top bg-green"></div>
+                                            <div  prod="1" id="gongzhuang" class="box-center bg-green"></div>
+                                            <div  prod="1" id="shengchan" class="box-bottom bg-green"></div>
+                                            <span  class="shebei">设备</span>
+                                            <span class="gongzhuang">工装</span>
+                                            <span  class="shengchan">生产</span>
+                                        </div>
+
+                                        <ul class="tuli-box-2">
+                                            <li><span prod="1" id="wendu"></span>循环水</li>
+                                        </ul>
+
+                                    </section>
+
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="font24">生产状态：<span prod="1"  id="prodstate"></span></td>
+                                <td id="currentTime" colspan="2" class="currenttime-font font24"></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <!--表格结束-->
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+
+<script src="js/main/config.js"></script>
+<script src="js/main/md5.js"></script>
+<script src="js/main/ws_production.js"></script>
+<script src="js/main/ws_timer.js"></script>
+<script>
+
+    $(document).ready(function(){
+
+
+        guestLogin(1);
+        //时间
+        updateTime();
+
+        setInterval(updateTime,1000);
+
+        setInterval(timer,1000);
+    });
+
+    function updateTime(){
+        var currentTime = new Date().format("yyyy年MM月dd日 hh:mm:ss");
+        $('#currentTime').text(currentTime);
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wheelshop.dao.user.IUserMapper"> 
+	<select id="selectuserById" parameterType="String" resultType="User">
+		SELECT * FROM user WHERE ID=#{id}
+	</select>
+
+	<delete id="deleteuser" parameterType="String"> 
+		DELETE FROM user WHERE ID=#{id}
+	</delete>
+
+	<select id="selectuserByParam" parameterType="java.util.Map" resultType="User">
+		SELECT *
+		FROM user
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="username != null"> AND USERNAME =#{username} </if>
+			<if test="password != null"> AND PASSWORD =#{password} </if>
+			<if test="nickname != null"> AND NICKNAME =#{nickname} </if>
+			<if test="comment != null"> AND COMMENT =#{comment} </if>
+			<if test="c_id != null"> AND C_ID =#{c_id} </if>
+			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="c_dtFrom != null"> AND unix_timestamp(C_DT) &gt;=unix_timestamp(#{c_dtFrom}) </if>
+			<if test="c_dtTo != null"> AND unix_timestamp(C_DT) &lt;=unix_timestamp(#{c_dtTo}) </if>
+			<if test="c_dt != null"> AND C_DT =#{c_dt} </if>
+			<if test="u_dtFrom != null"> AND unix_timestamp(U_DT) &gt;=unix_timestamp(#{u_dtFrom}) </if>
+			<if test="u_dtTo != null"> AND unix_timestamp(U_DT) &lt;=unix_timestamp(#{u_dtTo}) </if>
+			<if test="u_dt != null"> AND U_DT =#{u_dt} </if>
+		</trim>  
+		ORDER BY ID DESC 
+		LIMIT #{fromPage},#{toPage} 
+	</select>
+
+	<select id="selectCountuserByParam" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(id) 
+		FROM user 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="username != null"> AND USERNAME =#{username} </if>
+			<if test="password != null"> AND PASSWORD =#{password} </if>
+			<if test="nickname != null"> AND NICKNAME =#{nickname} </if>
+			<if test="comment != null"> AND COMMENT =#{comment} </if>
+			<if test="c_id != null"> AND C_ID =#{c_id} </if>
+			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="c_dtFrom != null"> AND unix_timestamp(C_DT) &gt;=unix_timestamp(#{c_dtFrom}) </if>
+			<if test="c_dtTo != null"> AND unix_timestamp(C_DT) &lt;=unix_timestamp(#{c_dtTo}) </if>
+			<if test="c_dt != null"> AND C_DT =#{c_dt} </if>
+			<if test="u_dtFrom != null"> AND unix_timestamp(U_DT) &gt;=unix_timestamp(#{u_dtFrom}) </if>
+			<if test="u_dtTo != null"> AND unix_timestamp(U_DT) &lt;=unix_timestamp(#{u_dtTo}) </if>
+			<if test="u_dt != null"> AND U_DT =#{u_dt} </if>
+		</trim>  
+	</select>
+
+	<update id="updateuser" parameterType="User">
+		UPDATE user 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="id != null">ID=#{id}, </if>
+			<if test="username != null">USERNAME=#{username}, </if>
+			<if test="password != null">PASSWORD=#{password}, </if>
+			<if test="nickname != null">NICKNAME=#{nickname}, </if>
+			<if test="comment != null">COMMENT=#{comment}, </if>
+			<if test="c_id != null">C_ID=#{c_id}, </if>
+			<if test="state != null">STATE=#{state}, </if>
+			<if test="c_dt != null">C_DT=#{c_dt}, </if>
+			<if test="u_dt != null">U_DT=#{u_dt}, </if>
+		</trim>
+		WHERE ID=#{id}
+	</update>
+
+	<insert id="adduser" parameterType="User" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO user 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="username != null">USERNAME, </if>
+			<if test="password != null">PASSWORD, </if>
+			<if test="nickname != null">NICKNAME, </if>
+			<if test="comment != null">COMMENT, </if>
+			<if test="c_id != null">C_ID, </if>
+			<if test="state != null">STATE, </if>
+			<if test="c_dt != null">C_DT, </if>
+			<if test="u_dt != null">U_DT, </if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="username != null">#{username}, </if>
+			<if test="password != null">#{password}, </if>
+			<if test="nickname != null">#{nickname}, </if>
+			<if test="comment != null">#{comment}, </if>
+			<if test="c_id != null">#{c_id}, </if>
+			<if test="state != null">#{state}, </if>
+			<if test="c_dt != null">#{c_dt}, </if>
+			<if test="u_dt != null">#{u_dt}, </if>
+		</trim>
+	</insert>
+
+	<insert id="muladduser" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			INSERT INTO user 
+			<trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">ID, </if>
+				<if test="item.username != null">USERNAME, </if>
+				<if test="item.password != null">PASSWORD, </if>
+				<if test="item.nickname != null">NICKNAME, </if>
+				<if test="item.comment != null">COMMENT, </if>
+				<if test="item.c_id != null">C_ID, </if>
+				<if test="item.state != null">STATE, </if>
+				<if test="item.c_dt != null">C_DT, </if>
+				<if test="item.u_dt != null">U_DT, </if>
+			</trim>
+			<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">#{item.id}, </if>
+				<if test="item.username != null">#{item.username}, </if>
+				<if test="item.password != null">#{item.password}, </if>
+				<if test="item.nickname != null">#{item.nickname}, </if>
+				<if test="item.comment != null">#{item.comment}, </if>
+				<if test="item.c_id != null">#{item.c_id}, </if>
+				<if test="item.state != null">#{item.state}, </if>
+				<if test="item.c_dt != null">#{item.c_dt}, </if>
+				<if test="item.u_dt != null">#{item.u_dt}, </if>
+			</trim>
+		</foreach>
+	</insert>
+</mapper>

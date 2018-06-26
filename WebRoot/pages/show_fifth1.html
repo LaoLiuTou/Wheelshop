@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="keywords" content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>旋压轮辐</title>
+
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+  <link href="js/iCheck/skins/minimal/green.css" rel="stylesheet">
+
+
+  <!--common-->
+    <link href="css/style_show.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="sticky-header">
+
+    <!--表格开始-->
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <!--<header class="panel-heading">
+                </header>-->
+                <div class="panel-body">
+
+                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                        <thead>
+                       <!-- <tr style="border: 0px;">
+                            <th colspan="8" style="text-align: center;color: red;"><h1><span id="production"></span></h1></th>
+
+                        </tr>-->
+
+                        </thead>
+                        <tbody id="firstTbody">
+                        <tr>
+                            <td><span class="width-50-td">变化点:</span><span prod="5" id="changed" class="ml10 mr10"></span><i id="changedI" class="glyphicon glyphicon-user red font12"></i></td>
+                            <td><span class="width-50-td">计划产量:</span><span prod="5" id="yield" class="ml10"></span></td>
+                            <td><span class="width-50-td">生产停台:</span><span prod="5" id="prodstop" class="ml10"></span></td>
+                            <td><span class="width-50-td">生产效率:</span><span prod="5" id="rate" class="ml10"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="width-50-td">品种:</span><span prod="5" id="variety" class="ml10"></span></td>
+                            <td><span class="width-50-td">计划完成:</span><span prod="5" id="plancomp" class="ml10"></span></td>
+                            <td><span class="width-50-td">设备停台:</span><span prod="5" id="equipstop" class="ml10"></span></td>
+                            <td><span class="width-50-td">开机时间:</span><span prod="5" id="starttime" class="ml10"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="width-50-td">节拍:</span><span prod="5" id="rhythm" class="ml10"></span></td>
+                            <td><span class="width-50-td">实际完成:</span><span prod="5" id="actualcomp" class="ml10"></span></td>
+                            <td><span class="width-50-td">工装停台:</span><span prod="5" id="toolstop" class="ml10"></span></td>
+                            <td><span class="width-50-td">加班时长:</span><span prod="5" id="overtime" class="ml10"></span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+
+                                <section class="box-body box-body-fifth">
+
+                                    <div class="block-left">
+                                        <ul class="six-box">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                        <ul class="two-box">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                        <div class="three-box">
+                                            <div class="div-two bg-green white">饼料</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="block-right-box">
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio11" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device1_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device1_02" class="box-center bg-green black">1-1</div>
+                                            <div prod="5" id="device1_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio12" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio21" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device2_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device2_02" class="box-center bg-green black">1-2</div>
+                                            <div prod="5" id="device2_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio22" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio31" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device3_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device3_02" class="box-center bg-green black">1-3</div>
+                                            <div prod="5" id="device3_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio32" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio41" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device4_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device4_02" class="box-center bg-green black">1-4</div>
+                                            <div prod="5" id="device4_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio42" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio51" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device5_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device5_02" class="box-center bg-green black">2-1</div>
+                                            <div prod="5" id="device5_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio52" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio61" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device6_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device6_02" class="box-center bg-green black">2-2</div>
+                                            <div prod="5" id="device6_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio62" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio71" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device7_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device7_02" class="box-center bg-green  black">3-1</div>
+                                            <div prod="5" id="device7_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio72" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio81" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device8_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device8_02" class="box-center bg-green black">3-2</div>
+                                            <div prod="5" id="device8_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio82" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio91" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device9_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device9_02" class="box-center bg-green black">4-1</div>
+                                            <div prod="5" id="device9_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio92" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio101" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device10_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device10_02" class="box-center bg-green black">4-2</div>
+                                            <div prod="5" id="device10_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio102" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio111" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device11_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device11_02" class="box-center bg-green black">5</div>
+                                            <div prod="5" id="device11_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio112" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio121" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device12_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device12_02" class="box-center bg-green black">6-1</div>
+                                            <div prod="5" id="device12_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio122" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio131" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device13_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device13_02" class="box-center bg-green black">6-2</div>
+                                            <div prod="5" id="device13_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio132" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio141" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device14_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device14_02" class="box-center bg-green black">6-3</div>
+                                            <div prod="5" id="device14_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio142" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio151" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device15_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device15_02" class="box-center bg-green black">6-4</div>
+                                            <div prod="5" id="device15_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio152" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio161" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device16_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device16_02" class="box-center bg-green black">6-5</div>
+                                            <div prod="5" id="device16_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio162" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+
+                                        <div class="block-one-fifth">
+                                            <i prod="5" id="radio171" class="glyphicon glyphicon-user  font12"></i>
+                                            <div prod="5" id="device17_01" class="box-top bg-green"></div>
+                                            <div prod="5" id="device17_02" class="box-center bg-green black">6-6</div>
+                                            <div prod="5" id="device17_03" class="box-bottom bg-green"></div>
+                                            <i prod="5" id="radio172" class="glyphicon glyphicon-user  font12"></i>
+                                        </div>
+                                    </div>
+
+                                    <!--图例-->
+                                    <div class="tuli-box">
+                                        <div  prod="5" id="shebei" class="box-top bg-green"></div>
+                                        <div  prod="5" id="gongzhuang" class="box-center bg-green"></div>
+                                        <div  prod="5" id="shengchan" class="box-bottom bg-green"></div>
+                                        <span  class="shebei">设备</span>
+                                        <span class="gongzhuang">工装</span>
+                                        <span  class="shengchan">生产</span>
+                                    </div>
+
+                                    <ul class="tuli-box-2">
+                                        <li><span prod="5" id="wendu"></span>循环水</li>
+                                    </ul>
+
+                                </section>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="font24">生产状态：<span prod="5"  id="prodstate"></span></td>
+                            <td id="currentTime" colspan="2" class="currenttime-font font24"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <!--表格结束-->
+
+
+<!-- modal -->
+
+
+<!-- modal -->
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+
+<script src="js/main/config.js"></script>
+<script src="js/main/md5.js"></script>
+<script src="js/main/ws_production.js"></script>
+<script src="js/main/ws_timer.js"></script>
+<script>
+
+    $(document).ready(function(){
+
+        guestLogin(5);
+        //时间
+        updateTime();
+
+        setInterval(updateTime,1000);
+
+    });
+
+    function updateTime(){
+        var currentTime = new Date().format("yyyy年MM月dd日 hh:mm:ss");
+        $('#currentTime').text(currentTime);
+    }
+
+
+
+</script>
+</body>
+</html>

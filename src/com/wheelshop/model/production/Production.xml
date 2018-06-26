@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wheelshop.dao.production.IProductionMapper"> 
+	<select id="selectproductionById" parameterType="String" resultType="Production">
+		SELECT * FROM production WHERE ID=#{id}
+	</select>
+
+	<delete id="deleteproduction" parameterType="String"> 
+		DELETE FROM production WHERE ID=#{id}
+	</delete>
+
+	<select id="selectproductionByParam" parameterType="java.util.Map" resultType="Production">
+		SELECT *
+		FROM production
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="changed != null"> AND CHANGED =#{changed} </if>
+			<if test="yield != null"> AND YIELD =#{yield} </if>
+			<if test="prodstop != null"> AND PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND POWER =#{power} </if>
+			<if test="rate != null"> AND RATE =#{rate} </if>
+			<if test="variety != null"> AND VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="plancomp != null"> AND PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
+			<if test="actualcomp != null"> AND ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+		ORDER BY ID DESC 
+		LIMIT #{fromPage},#{toPage} 
+	</select>
+
+	<select id="selectCountproductionByParam" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(id) 
+		FROM production 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="changed != null"> AND CHANGED =#{changed} </if>
+			<if test="yield != null"> AND YIELD =#{yield} </if>
+			<if test="prodstop != null"> AND PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND POWER =#{power} </if>
+			<if test="rate != null"> AND RATE =#{rate} </if>
+			<if test="variety != null"> AND VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="plancomp != null"> AND PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
+			<if test="actualcomp != null"> AND ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+	</select>
+
+	<update id="updateproduction" parameterType="Production">
+		UPDATE production 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="id != null">ID=#{id}, </if>
+			<if test="production != null">PRODUCTION=#{production}, </if>
+			<if test="changed != null">CHANGED=#{changed}, </if>
+			<if test="yield != null">YIELD=#{yield}, </if>
+			<if test="prodstop != null">PRODSTOP=#{prodstop}, </if>
+			<if test="power != null">POWER=#{power}, </if>
+			<if test="rate != null">RATE=#{rate}, </if>
+			<if test="variety != null">VARIETY=#{variety}, </if>
+			<if test="rhythm != null">RHYTHM=#{rhythm}, </if>
+			<if test="plancomp != null">PLANCOMP=#{plancomp}, </if>
+			<if test="equipstop != null">EQUIPSTOP=#{equipstop}, </if>
+			<if test="starttime != null">STARTTIME=#{starttime}, </if>
+			<if test="actualcomp != null">ACTUALCOMP=#{actualcomp}, </if>
+			<if test="toolstop != null">TOOLSTOP=#{toolstop}, </if>
+			<if test="overtime != null">OVERTIME=#{overtime}, </if>
+			<if test="prodstate != null">PRODSTATE=#{prodstate}, </if>
+			<if test="creater != null">CREATER=#{creater}, </if>
+			<if test="adddate != null">ADDDATE=#{adddate}, </if>
+			<if test="flag != null">FLAG=#{flag}, </if>
+		</trim>
+		WHERE ID=#{id}
+	</update>
+
+	<insert id="addproduction" parameterType="Production" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO production 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="production != null">PRODUCTION, </if>
+			<if test="changed != null">CHANGED, </if>
+			<if test="yield != null">YIELD, </if>
+			<if test="prodstop != null">PRODSTOP, </if>
+			<if test="power != null">POWER, </if>
+			<if test="rate != null">RATE, </if>
+			<if test="variety != null">VARIETY, </if>
+			<if test="rhythm != null">RHYTHM, </if>
+			<if test="plancomp != null">PLANCOMP, </if>
+			<if test="equipstop != null">EQUIPSTOP, </if>
+			<if test="starttime != null">STARTTIME, </if>
+			<if test="actualcomp != null">ACTUALCOMP, </if>
+			<if test="toolstop != null">TOOLSTOP, </if>
+			<if test="overtime != null">OVERTIME, </if>
+			<if test="prodstate != null">PRODSTATE, </if>
+			<if test="creater != null">CREATER, </if>
+			<if test="adddate != null">ADDDATE, </if>
+			<if test="flag != null">FLAG, </if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="production != null">#{production}, </if>
+			<if test="changed != null">#{changed}, </if>
+			<if test="yield != null">#{yield}, </if>
+			<if test="prodstop != null">#{prodstop}, </if>
+			<if test="power != null">#{power}, </if>
+			<if test="rate != null">#{rate}, </if>
+			<if test="variety != null">#{variety}, </if>
+			<if test="rhythm != null">#{rhythm}, </if>
+			<if test="plancomp != null">#{plancomp}, </if>
+			<if test="equipstop != null">#{equipstop}, </if>
+			<if test="starttime != null">#{starttime}, </if>
+			<if test="actualcomp != null">#{actualcomp}, </if>
+			<if test="toolstop != null">#{toolstop}, </if>
+			<if test="overtime != null">#{overtime}, </if>
+			<if test="prodstate != null">#{prodstate}, </if>
+			<if test="creater != null">#{creater}, </if>
+			<if test="adddate != null">#{adddate}, </if>
+			<if test="flag != null">#{flag}, </if>
+		</trim>
+	</insert>
+
+	<insert id="muladdproduction" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			INSERT INTO production 
+			<trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">ID, </if>
+				<if test="item.production != null">PRODUCTION, </if>
+				<if test="item.changed != null">CHANGED, </if>
+				<if test="item.yield != null">YIELD, </if>
+				<if test="item.prodstop != null">PRODSTOP, </if>
+				<if test="item.power != null">POWER, </if>
+				<if test="item.rate != null">RATE, </if>
+				<if test="item.variety != null">VARIETY, </if>
+				<if test="item.rhythm != null">RHYTHM, </if>
+				<if test="item.plancomp != null">PLANCOMP, </if>
+				<if test="item.equipstop != null">EQUIPSTOP, </if>
+				<if test="item.starttime != null">STARTTIME, </if>
+				<if test="item.actualcomp != null">ACTUALCOMP, </if>
+				<if test="item.toolstop != null">TOOLSTOP, </if>
+				<if test="item.overtime != null">OVERTIME, </if>
+				<if test="item.prodstate != null">PRODSTATE, </if>
+				<if test="item.creater != null">CREATER, </if>
+				<if test="item.adddate != null">ADDDATE, </if>
+				<if test="item.flag != null">FLAG, </if>
+			</trim>
+			<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">#{item.id}, </if>
+				<if test="item.production != null">#{item.production}, </if>
+				<if test="item.changed != null">#{item.changed}, </if>
+				<if test="item.yield != null">#{item.yield}, </if>
+				<if test="item.prodstop != null">#{item.prodstop}, </if>
+				<if test="item.power != null">#{item.power}, </if>
+				<if test="item.rate != null">#{item.rate}, </if>
+				<if test="item.variety != null">#{item.variety}, </if>
+				<if test="item.rhythm != null">#{item.rhythm}, </if>
+				<if test="item.plancomp != null">#{item.plancomp}, </if>
+				<if test="item.equipstop != null">#{item.equipstop}, </if>
+				<if test="item.starttime != null">#{item.starttime}, </if>
+				<if test="item.actualcomp != null">#{item.actualcomp}, </if>
+				<if test="item.toolstop != null">#{item.toolstop}, </if>
+				<if test="item.overtime != null">#{item.overtime}, </if>
+				<if test="item.prodstate != null">#{item.prodstate}, </if>
+				<if test="item.creater != null">#{item.creater}, </if>
+				<if test="item.adddate != null">#{item.adddate}, </if>
+				<if test="item.flag != null">#{item.flag}, </if>
+			</trim>
+		</foreach>
+	</insert>
+</mapper>

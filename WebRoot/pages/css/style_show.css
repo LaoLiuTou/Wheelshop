@@ -1,0 +1,1114 @@
+
+/* flows */
+
+/*html { font-size:83.333333%;}*/
+/*body {font-size:12px; font-size:1.2rem;}*/
+
+@media only screen and (min-width: 320px){
+    html {
+        font-size: 62.5% !important;
+    }
+}
+@media only screen and (min-width: 640px){
+    html {
+        font-size: 100% !important;
+    }
+}
+@media only screen and (min-width: 750px){
+    html {
+        font-size: 100% !important;
+    }
+}
+@media only screen and (min-width: 1242px){
+    html {
+        font-size: 100% !important;
+    }
+}
+
+@media only screen and (min-width: 1900px){
+    html {
+        font-size: 225% !important;
+    }
+}
+
+
+
+.mt5 {margin-top: 5px!important;}
+.mt15 { margin-top: 15px!important;}
+.mr10 { margin-right: 10px!important;}
+.mr20 { margin-right: 20px!important; }
+.mt20 { margin-top: 20px;}
+.mt30 { margin-top: 30px;}
+.mt80 { margin-top: 80px;}
+.mb20 { margin-bottom: 20px!important;}
+.mb5 { margin-bottom: 5px!important;}
+.ml20 { margin-left: 20px;}
+.pad0 { padding: 0!important;}
+.bdnone { border: none!important;}
+.textarea-line {resize: vertical;}
+
+.red {
+    color: #fe0000;
+}
+.green {
+    color: #00b050;
+}
+.black {
+    color: #000;
+}
+.white {
+    color: #fff;
+}
+
+.bg-green {
+    background-color: #00b050;
+}
+.bg-red {
+    background-color: #fe0000;
+}
+.font12 {
+    font-size: 1.2rem;
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.box-body {
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    position:relative;
+}
+
+.block-right-box {
+    width: 90%;
+    float: left;
+}
+
+.block-one {
+    width: 6.5%;
+    display: block;
+    position: relative;
+    float: left;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.block-one .box-top {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto!important;
+    padding: 0;
+    bottom: -5px;
+    z-index: 5;
+    box-sizing: border-box;
+}
+.block-one .box-center {
+    width: 100%;
+    height: 2.6rem;
+    border: 1px solid #535353;
+    position: relative;
+    text-align: center;
+    line-height: 2.6rem;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    z-index: 1;
+}
+.block-one .box-bottom {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto;
+    top: -5px;
+    z-index: 5;
+}
+
+
+/*左侧开头部分*/
+.block-left {
+    width: 10%;
+    display: block;
+    position: relative;
+    float: left;
+    text-align: center;
+    margin-top: 3.8rem;
+    z-index: 5;
+}
+.block-left .six-box {
+    width: 30%;
+    border: 1px solid #535353;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 20%;
+    list-style-type:none;
+}
+.block-left .six-box li {
+    width: 100%;
+    height: .6rem;
+    background-color: #00b050;
+    border-bottom: 1px solid #535353;
+}
+.block-left .two-box {
+    width: 50%;
+    border: 1px solid #535353;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    left: 50%;
+    top: 0;
+    overflow: hidden;
+    background-color: #00b050;
+    list-style-type:none;
+}
+.block-left .two-box li {
+    width: 20%;
+    height: 1.4rem;
+    border-right: 1px solid #535353;
+    float: left;
+}
+.block-left .two-box li:last-child {
+    border-right: none;
+}
+.block-left .three-box {
+    width: 100%;
+    height: 2rem;
+    display: block;
+    position: relative;
+    text-align: center;
+    left: 0;
+    top: .9rem;
+}
+
+.block-left .three-box .div-two {
+    width: 75%;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.3rem;
+    font-weight: bolder;
+    border: 1px solid #535353;
+    position: absolute;
+    margin: 0 auto;
+    z-index: 5;
+    left: 5%;
+}
+
+
+.hidden{
+    visibility: hidden;
+}
+.visible{
+    visibility:visible;
+}
+
+/*设备异常*/
+.bg-green-red{
+    /*transition: all 0.2s linear;*/
+    animation:greenred 1.5s infinite; /*animation 时间 播放次数*/
+    animation-direction:alternate; /*是否循环交替反向播放动画*/
+}
+@keyframes greenred
+{
+    0% {background:#fe0000;}
+    50% {background:#00b050;}
+    75% {background:#fe0000;}
+    100% {background:#00b050;}
+}
+/*品质异常*/
+.bg-green-orange{
+    /*transition: all 0.2s linear;*/
+    animation:greenorange 1.5s infinite; /*animation 时间 播放次数*/
+    animation-direction:alternate; /*是否循环交替反向播放动画*/
+}
+@keyframes greenorange
+{
+    0% {background: #fed201;}
+    50% {background:#00b050;}
+    75% {background:#fed201;}
+    100% {background:#00b050;}
+}
+/*取消*/
+.bg-grey{
+    background: #666666;
+}
+
+
+/*缺料*/
+.bg-green-blue{
+    /*transition: all 0.2s linear;*/
+    animation:greenblue 1.5s infinite; /*animation 时间 播放次数*/
+    animation-direction:alternate; /*是否循环交替反向播放动画*/
+}
+@keyframes greenblue
+{
+    0% {background: #0006c1;}
+    50% {background:#00b050;}
+    75% {background:#0006c1;}
+    100% {background:#00b050;}
+}
+/*图例*/
+
+.tuli-box {
+    position: absolute;
+    z-index: 999;
+    right: 6.5%;
+    top: 10.6rem;
+    width: 5.4%;
+}
+
+.tuli-box .box-top {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto;
+    bottom: -5px;
+    z-index: 5;
+}
+.tuli-box .box-center {
+    width: 100%;
+    height: 2.6rem;
+    border: 1px solid #535353;
+    position: relative;
+    text-align: center;
+    font-weight: bolder;
+    z-index: 1;
+}
+.tuli-box .box-bottom {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto;
+    top: -5px;
+    z-index: 5;
+}
+
+.tuli-box .shebei {
+    position: absolute;
+    left: 110%;
+    top: -0.6rem;
+    font-size: 1.2rem;
+}
+.tuli-box .gongzhuang {
+    position: absolute;
+    left: 110%;
+    top: 1.4rem;
+    font-size: 1.2rem;
+}
+.tuli-box .shengchan {
+    position: absolute;
+    left: 110%;
+    top: 3.4rem;
+    font-size: 1.2rem;
+}
+
+.tuli-box-2 {
+    width: 10%;
+    height: calc( 4.6rem - 10px );
+    padding: 0;
+    position: absolute;
+    z-index: 999;
+    top: 10.6rem;
+    right: 13%;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-top: 5px;
+}
+
+.tuli-box-2 li {
+    width: 100%;
+    line-height: calc( 4.6rem - 10px );
+    font-size: 1.4rem;
+    font-weight: bolder;
+    border-bottom: 1px solid #ccc;
+    transition: all 0.2s linear 0s;
+    background-color: #00b050;
+    text-align: center;
+    color: #000;
+}
+
+.table-bordered {
+    border: 2px solid #aaa;
+    font-size: 1.4rem;
+    font-weight: bolder;
+    color: #222!important;
+}
+.table-bordered td {
+    border: 1px solid #aaa!important;
+    white-space: nowrap;
+    padding: 0 5px!important;
+}
+.table-bordered th {
+    border-bottom: 1px solid #aaa!important;
+    white-space: nowrap;
+    padding: 0 5px!important;
+}
+/*.width-50-td {
+    width: 50%!important;
+    display: block;
+    float: left;
+}*/
+/*指示线1*/
+.line-box-one {
+    width: calc( 95% - 75px );
+    height: 5rem;
+    margin: 0 0.5% 0 4.5%;
+    display: block;
+    position: absolute;
+    top: 11rem;
+    /*background-color: rgba(0,0,0,.4);*/
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    z-index: 0;
+}
+.line-box-one .line-box-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 2px;
+    background-color: #000;
+}
+.line-box-one .line-box-two {
+    position: absolute;
+    top: 5rem;
+    left: 0;
+    width: 5%;
+    height: 3.1rem;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+}
+.line-box-one .line-box-two .line-box-three {
+    width: 0;
+    height: 0;
+    border-left: 20px solid #000;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    top: 2rem;
+    right: -6px;
+}
+
+/*指示线2*/
+.line-box-one-2 {
+    width: calc( 83% - 75px );
+    height: 5rem;
+    margin: 0 0.5% 0 4.5%;
+    display: block;
+    position: absolute;
+    top: 11rem;
+    /*background-color: rgba(0,0,0,.4);*/
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    z-index: 0;
+}
+.line-box-one-2 .line-box-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 2px;
+    background-color: #000;
+}
+.line-box-one-2 .line-box-two {
+    position: absolute;
+    top: 5rem;
+    left: 0;
+    width: 5%;
+    height: 3.1rem;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+}
+.line-box-one-2 .line-box-two .line-box-three {
+    width: 0;
+    height: 0;
+    border-left: 20px solid #000;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    top: 2rem;
+    right: -6px;
+}
+
+.jianxiu-time {
+    text-align: center;
+    color: #ff0000;
+    font-size: 3rem;
+    line-height: 6.1rem!important;
+
+}
+.currenttime-font {
+    color: #ff0000;
+    text-align: center;
+}
+.font24 {
+    font-size: 2.4rem;
+}
+
+@media only screen and (min-width: 1900px){
+    .tuli-box {
+        position: absolute;
+        z-index: 999;
+        right: 6.5%;
+        top: 11.5rem;
+        width: 5.4%;
+    }
+    .tuli-box-2 {
+        width: 10%;
+        height: calc( 4.6rem - 10px );
+        padding: 0;
+        position: absolute;
+        z-index: 999;
+        top: 11.5rem;
+        right: 13%;
+        list-style: none;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        margin-top: 5px;
+    }
+    /*指示线1*/
+    .line-box-one {
+        width: calc( 95% - 75px );
+        height: 4.5rem;
+        margin: 0 0.5% 0 4.5%;
+        display: block;
+        position: absolute;
+        top: 12rem;
+        /*background-color: rgba(0,0,0,.4);*/
+        border-right: 4px solid #000;
+        border-bottom: 4px solid #000;
+        z-index: 0;
+    }
+    .line-box-one .line-box-top {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10%;
+        height: 4px;
+        background-color: #000;
+    }
+    .line-box-one .line-box-two {
+        position: absolute;
+        top: 4.5rem;
+        left: 0;
+        width: 5%;
+        height: 3.1rem;
+        border-bottom: 4px solid #000;
+        border-left: 4px solid #000;
+    }
+    .line-box-one .line-box-two .line-box-three {
+        width: 0;
+        height: 0;
+        border-left: 40px solid #000;
+        border-top: 30px solid transparent;
+        border-bottom: 30px solid transparent;
+        position: absolute;
+        top: 2.2rem;
+        right: -10px;
+    }
+
+    /*指示线2*/
+    .line-box-one-2 {
+        width: calc( 83% - 75px );
+        height: 4.5rem;
+        margin: 0 0.5% 0 4.5%;
+        display: block;
+        position: absolute;
+        top: 12rem;
+        /*background-color: rgba(0,0,0,.4);*/
+        border-right: 4px solid #000;
+        border-bottom: 4px solid #000;
+        z-index: 0;
+    }
+    .line-box-one-2 .line-box-top {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10%;
+        height: 4px;
+        background-color: #000;
+    }
+    .line-box-one-2 .line-box-two {
+        position: absolute;
+        top: 4.5rem;
+        left: 0;
+        width: 5%;
+        height: 3.1rem;
+        border-bottom: 4px solid #000;
+        border-left: 4px solid #000;
+    }
+    .line-box-one-2 .line-box-two .line-box-three {
+        width: 0;
+        height: 0;
+        border-left: 40px solid #000;
+        border-top: 30px solid transparent;
+        border-bottom: 30px solid transparent;
+        position: absolute;
+        top: 2.2rem;
+        right: -10px;
+    }
+
+    .table-bordered {
+        border: 2px solid #aaa;
+        font-size: 1.6rem;
+        font-weight: bolder;
+        color: #222!important;
+    }
+    .table-bordered td {
+        border: 1px solid #aaa!important;
+        white-space: nowrap;
+        padding: 0 5px!important;
+    }
+    .table-bordered th {
+        border-bottom: 1px solid #aaa!important;
+        white-space: nowrap;
+        padding: 0 5px!important;
+    }
+    /*show_first2*/
+    .jianxiu-time {
+        text-align: center;
+        color: #ff0000;
+        font-size: 4.2rem;
+        line-height: 6.1rem!important;
+        height: 253px;
+    }
+}
+
+/*show-third*/
+.box-body-third {
+    height: 9.3rem;
+    overflow: hidden;
+}
+.block-right-box-third {
+    width: 85%;
+    float: left;
+    margin-left: 15%;
+}
+/*左右开头部分-third*/
+.block-right-third {
+    width: 10%;
+    display: block;
+    position: relative;
+    float: left;
+    text-align: center;
+    margin-left: -28.3%;
+    top: .8rem;
+    z-index: 5;
+}
+.block-right-third .four-box {
+    width: 30%;
+    border: 1px solid #535353;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 35%;
+    top: 2rem;
+    list-style-type:none;
+}
+.block-right-third .four-box li {
+    width: 100%;
+    height: .6rem;
+    background-color: #00b050;
+    border-bottom: 1px solid #535353;
+}
+.block-right-third .five-box {
+    width: 50%;
+    border: 1px solid #535353;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 3rem;
+    right: 65%;
+    overflow: hidden;
+    background-color: #00b050;
+    list-style-type:none;
+}
+.block-right-third .five-box li {
+    width: 20%;
+    height: 1.4rem;
+    border-right: 1px solid #535353;
+    float: left;
+}
+.block-right-third .two-box li:last-child {
+    border-right: none;
+}
+.block-right-third .three-box {
+    width: 100%;
+    height: 2rem;
+    display: block;
+    text-align: center;
+    position: absolute;
+    top: 0;
+
+}
+
+.block-right-third .three-box .div-two {
+    width: 75%;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.3rem;
+    font-weight: bolder;
+    border: 1px solid #535353;
+    margin: 0 auto;
+    z-index: 5;
+}
+/*third-left*/
+.block-left-third {
+    width: 10%;
+    display: block;
+    position: absolute;
+    top: 9.1rem;
+    left: 3.5%;
+    float: left;
+    text-align: center;
+    z-index: 5;
+}
+.block-left-third .four-box {
+    width: 30%;
+    border: 1px solid #535353;
+    padding: 0;
+    margin: 0;
+    list-style-type:none;
+    position: absolute;
+    top: 2rem;
+    left: 35%;
+}
+.block-left-third .four-box li {
+    width: 100%;
+    height: .6rem;
+    background-color: #00b050;
+    border-bottom: 1px solid #535353;
+}
+.block-left-third .five-box {
+    width: 50%;
+    border: 1px solid #535353;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #00b050;
+    list-style-type:none;
+    position: absolute;
+    top: 3rem;
+    left: 65%;
+}
+.block-left-third .five-box li {
+    width: 20%;
+    height: 1.4rem;
+    border-right: 1px solid #535353;
+    float: left;
+}
+.block-left-third .five-box li:last-child {
+    border-right: none;
+}
+.block-left-third .three-box {
+    width: 100%;
+    height: 2rem;
+    display: block;
+    text-align: center;
+
+}
+
+.block-left-third .three-box .div-two {
+    width: 75%;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.3rem;
+    font-weight: bolder;
+    border: 1px solid #535353;
+    margin: 0 auto;
+    z-index: 5;
+}
+
+/*show-third1-center-line*/
+.center-block-third {
+    width: 100%;
+    border: 1px solid #535353;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #00b050;
+    list-style-type:none;
+    float: left;
+    position: relative;
+    top: 3.6rem;
+}
+.center-block-third li {
+    width: 20%;
+    height: 1.4rem;
+    border-right: 1px solid #535353;
+    float: left;
+}
+.center-block-third li:last-child {
+    border-right: none;
+}
+
+
+
+/*指示线yhird*/
+.line-box-third {
+    width: 30%;
+    height: 7.5rem;
+    margin: 0 0.5% 0 49%;
+    display: block;
+    position: absolute;
+    top: 13rem;
+    /*background-color: rgba(0,0,0,.4);*/
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    z-index: 0;
+}
+.line-box-third .line-2-third {
+    width: 13%;
+    height: 5%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top: 2px solid #000000;
+}
+.line-box-third .line-2-third .line-3-third {
+    width: 0;
+    height: 0;
+    border-right: 20px solid #000;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    position: absolute;
+    top: -15px;
+    left: -2px;
+}
+
+.tuli-box-2-third {
+    width: 10%;
+    height: calc(4.6rem - 10px);
+    padding: 0;
+    position: absolute;
+    z-index: 999;
+    top: 4.5rem;
+    right: 1.5%;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-top: 5px;
+}
+
+.tuli-box-2-third li {
+    width: 100%;
+    line-height: calc( 4.6rem - 10px );
+    font-size: 1.2rem;
+    font-weight: bolder;
+    border-bottom: 1px solid #ccc;
+    transition: all 0.2s linear 0s;
+    background-color: #00b050;
+    text-align: center;
+    color: #000;
+}
+
+@media only screen and (min-width: 1900px){
+    .line-box-third {
+        width: 30%;
+        height: 8rem;
+        display: block;
+        position: absolute;
+        top: 13.2rem;
+        /*background-color: rgba(0,0,0,.4);*/
+        border-right: 4px solid #000;
+        border-bottom: 4px solid #000;
+        z-index: 0;
+    }
+    .line-box-third .line-2-third {
+        width: 10%;
+        height: 5%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-top: 4px solid #000000;
+    }
+    .line-box-third .line-2-third .line-3-third {
+        width: 0;
+        height: 0;
+        border-right: 40px solid #000;
+        border-top: 30px solid transparent;
+        border-bottom: 30px solid transparent;
+        position: absolute;
+        top: -30px;
+        left: -4px;
+    }
+
+    .block-left-third {
+        width: 10%;
+        display: block;
+        position: absolute;
+        top: 10.1rem;
+        left: 3.5%;
+        float: left;
+        text-align: center;
+        z-index: 5;
+    }
+
+    .center-block-third {
+        width: 100%;
+        border: 1px solid #535353;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        background-color: #00b050;
+        list-style-type:none;
+        float: left;
+        position: relative;
+        top: 3.9rem;
+    }
+}
+
+/*show-fourth1*/
+.block-one-fourth {
+    width: 5.4%;
+    display: block;
+    position: relative;
+    float: left;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.block-one-fourth .box-top {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto!important;
+    padding: 0;
+    bottom: -5px;
+    z-index: 5;
+    box-sizing: border-box;
+}
+.block-one-fourth .box-center {
+    width: 100%;
+    height: 2.6rem;
+    border: 1px solid #535353;
+    position: relative;
+    text-align: center;
+    line-height: 2.6rem;
+    font-size: 1.1rem;
+    font-weight: bolder;
+    z-index: 1;
+}
+.block-one-fourth .box-bottom {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto;
+    top: -5px;
+    z-index: 5;
+}
+
+/*图例-show-fourth1*/
+
+.tuli-box-fourth {
+    position: absolute;
+    z-index: 999;
+    right: 4%;
+    top: 10.6rem;
+    width: 5.4%;
+}
+
+.tuli-box-fourth .box-top {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto;
+    bottom: -5px;
+    z-index: 5;
+}
+.tuli-box-fourth .box-center {
+    width: 100%;
+    height: 2.6rem;
+    border: 1px solid #535353;
+    position: relative;
+    text-align: center;
+    font-weight: bolder;
+    z-index: 1;
+}
+.tuli-box-fourth .box-bottom {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto;
+    top: -5px;
+    z-index: 5;
+}
+
+.tuli-box-fourth .shebei {
+    position: absolute;
+    left: 110%;
+    top: -0.6rem;
+    font-size: 1rem;
+}
+.tuli-box-fourth .gongzhuang {
+    position: absolute;
+    left: 110%;
+    top: 1.4rem;
+    font-size: 1rem;
+}
+.tuli-box-fourth .shengchan {
+    position: absolute;
+    left: 110%;
+    top: 3.4rem;
+    font-size: 1rem;
+}
+
+.tuli-box-2-fourth {
+    width: 6%;
+    height: calc( 4.6rem - 10px );
+    padding: 0;
+    position: absolute;
+    z-index: 999;
+    top: 10.6rem;
+    right: 10%;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-top: 5px;
+}
+
+.tuli-box-2-fourth li {
+    width: 100%;
+    line-height: calc( 4.6rem - 10px );
+    font-size: 1.2rem;
+    font-weight: bolder;
+    border-bottom: 1px solid #ccc;
+    transition: all 0.2s linear 0s;
+    background-color: #00b050;
+    text-align: center;
+    color: #000;
+}
+
+@media only screen and (min-width: 1900px) {
+    .tuli-box-fourth {
+        position: absolute;
+        z-index: 999;
+        right: 4.5%;
+        top: 11.5rem;
+        width: 5.4%;
+    }
+
+    .tuli-box-2-fourth {
+        width: 10%;
+        height: calc(4.6rem - 10px);
+        padding: 0;
+        position: absolute;
+        z-index: 999;
+        top: 4.5rem;
+        right: 1.5%;
+        list-style: none;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        margin-top: 5px;
+    }
+}
+
+/*指示线show-fourth1*/
+
+/*指示线1*/
+.line-box-one-fourth {
+    width: calc( 83% - 75px )!important;
+}
+
+/*show-fifth1*/
+
+.box-body-fifth {
+    height: 18.6rem;
+    overflow: hidden;
+}
+
+.block-one-fifth {
+    width: 5.8%;
+    display: block;
+    position: relative;
+    float: left;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.block-one-fifth .box-top {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto!important;
+    padding: 0;
+    bottom: -5px;
+    z-index: 5;
+    box-sizing: border-box;
+}
+.block-one-fifth .box-center {
+    width: 100%;
+    height: 2.6rem;
+    border: 1px solid #535353;
+    position: relative;
+    text-align: center;
+    line-height: 2.6rem;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    z-index: 1;
+}
+.block-one-fifth .box-bottom {
+    width: 80%;
+    height: 1rem;
+    border: 1px solid #535353;
+    position: relative;
+    margin: 0 auto;
+    top: -5px;
+    z-index: 5;
+}
+
+/*third-left*/
+.block-left-sixth {
+    width: 10%;
+    display: block;
+    position: absolute;
+    top: 8rem;
+    left: 3.5%;
+    float: left;
+    text-align: center;
+    z-index: 5;
+}
+
+.block-left-sixth .three-box {
+    width: 100%;
+    height: 2rem;
+    display: block;
+    text-align: center;
+
+}
+.block-left-sixth .three-box .div-two {
+    width: 75%;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.3rem;
+    font-weight: bolder;
+    border: 1px solid #535353;
+    margin: 0 auto;
+    z-index: 5;
+}
+/*show-sisth1*/
+.east-line {
+    position: absolute;
+    top: 2.5rem;
+    left: .5rem;
+    font-size: 1.4rem;
+}
+.west-line {
+    position: absolute;
+    top: 11.5rem;
+    left: .5rem;
+    font-size: 1.4rem;
+}
