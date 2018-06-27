@@ -35,7 +35,7 @@
 			<if test="creater != null"> AND CREATER =#{creater} </if>
 			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
 			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
 			<if test="flag != null"> AND FLAG =#{flag} </if>
 		</trim>  
 		ORDER BY ID DESC 

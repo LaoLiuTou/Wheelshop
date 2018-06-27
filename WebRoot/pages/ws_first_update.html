@@ -497,13 +497,14 @@
 <script src="js/main/ws_production.js"></script>
 <script>
     var production=1;
+    //变化点
+    var changed = {};
     $(document).ready(function(){
 
 
         selectVarieties(production);
 
-        //变化点
-        var changed = {};
+
         $('#saveBtn').click(function(){
             $('#changedSpan').text($('#changedShow').text());
         });

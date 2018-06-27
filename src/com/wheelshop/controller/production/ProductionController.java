@@ -35,7 +35,23 @@ public class ProductionController {
 	public Map add(Production production){
 		Map resultMap=new HashMap();
 		try {
-			iProductionService.addProduction(production);
+			
+			//更新 或者 新建
+			Map paramMap=new HashMap();
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",1); 
+			paramMap.put("flag",production.getFlag());
+			paramMap.put("adddate","1");
+			List<Production> plist=iProductionService.selectProductionByParam(paramMap);
+			if(plist.size()>0){
+				production.setId(plist.get(0).getId());
+				iProductionService.updateProduction(production);
+			}
+			else{
+				iProductionService.addProduction(production);
+			}
+			
+			
 			
 			//推送
 			for (Map.Entry entry:NettyChannelMap.map.entrySet()){
@@ -218,6 +234,88 @@ public class ProductionController {
 		return resultMap;
 	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/lastProduction")
+	@ResponseBody
+	public Map last(HttpServletRequest request, HttpServletResponse response,Production production)
+		throws ServletException, IOException {
+		Map resultMap=new HashMap();
+		try {
+			String page=request.getParameter("page");
+			String size=request.getParameter("size");
+			if(page!=null&&size!=null){
+				Map paramMap=new HashMap();
+				paramMap.put("fromPage",(Integer.parseInt(page)-1)*Integer.parseInt(size));
+				paramMap.put("toPage",Integer.parseInt(size)); 
+				paramMap.put("id",production.getId());
+				paramMap.put("production",production.getProduction());
+				paramMap.put("changed",production.getChanged());
+				paramMap.put("yield",production.getYield());
+				paramMap.put("prodstop",production.getProdstop());
+				paramMap.put("power",production.getPower());
+				paramMap.put("rate",production.getRate());
+				paramMap.put("variety",production.getVariety());
+				paramMap.put("rhythm",production.getRhythm());
+				paramMap.put("plancomp",production.getPlancomp());
+				paramMap.put("equipstop",production.getEquipstop());
+				String starttimeFrom=request.getParameter("starttimeFrom");
+				String starttimeTo=request.getParameter("starttimeTo");
+				if(starttimeFrom!=null&&!starttimeFrom.equals(""))
+				paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
+				if(starttimeTo!=null&&!starttimeTo.equals(""))
+				paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+				paramMap.put("actualcomp",production.getActualcomp());
+				paramMap.put("toolstop",production.getToolstop());
+				paramMap.put("overtime",production.getOvertime());
+				paramMap.put("prodstate",production.getProdstate());
+				paramMap.put("creater",production.getCreater());
+				String adddateFrom=request.getParameter("adddateFrom");
+				String adddateTo=request.getParameter("adddateTo");
+				if(adddateFrom!=null&&!adddateFrom.equals(""))
+				paramMap.put("adddateFrom", sdf.parse(adddateFrom));
+				if(adddateTo!=null&&!adddateTo.equals(""))
+				paramMap.put("adddateTo", sdf.parse(adddateTo));
+				paramMap.put("flag",production.getFlag());
+				
+				//当天数据
+				paramMap.put("adddate","1");
+				
+				
+				//int totalnumber=iProductionService.selectCountProductionByParam(paramMap);
+				List<Production> list=iProductionService.selectProductionByParam(paramMap);
+				if(list.size()==0){
+					paramMap.remove("adddate");
+					list=iProductionService.selectProductionByParam(paramMap);
+					if(list.size()>0){
+						Production p=list.get(0);
+						p.setAdddate(new Date());
+						p.setId(null);
+						iProductionService.addProduction(p);
+						list=iProductionService.selectProductionByParam(paramMap);
+					}
+				}
+				 
+				
+				Map tempMap=new HashMap();
+				resultMap.put("status", "0");
+				//tempMap.put("num", totalnumber);
+				tempMap.put("data", list);
+				resultMap.put("msg", tempMap);
+			}
+			else{
+				resultMap.put("status", "-1");
+				resultMap.put("msg", "分页参数不能为空！");
+			}
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "查询失败！");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/listProduction")
 	@ResponseBody
 	public Map list(HttpServletRequest request, HttpServletResponse response,Production production)
@@ -279,4 +377,7 @@ public class ProductionController {
 		}
 		return resultMap;
 	}
+	
+	
+	
 }

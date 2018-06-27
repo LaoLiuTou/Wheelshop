@@ -435,13 +435,13 @@
 
 
     var production=5;
+    //变化点
+    var changed = {};
     $(document).ready(function(){
 
 
         selectVarieties(production);
 
-        //变化点
-        var changed = {};
         $('#saveBtn').click(function(){
             $('#changedSpan').text($('#changedShow').text());
         });

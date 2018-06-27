@@ -16,7 +16,7 @@ $(document).ready(function(){
  */
 function lastProduction(type,production){
     var bodyParam={'page':1,'size':1,'flag':production};
-    var httpR = new createHttpR(url+'listProduction','post','text',bodyParam,'callBack');
+    var httpR = new createHttpR(url+'lastProduction','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
         var status = obj['status'];
@@ -99,6 +99,7 @@ function lastProduction(type,production){
                                 greenNum++;
                             }
                         }
+                        changed=jQuery.parseJSON(data[o]['changed']);
                         $('#redNum').text(redNum);
                         $('#greenNum').text(greenNum);
                         $('#changedSpan').text($('#changedShow').text());
@@ -171,16 +172,10 @@ function deleteProduction(id){
  * 查询生产
 
  */
-function  queryProduction (variety,currentPage,pageSize) {
+function  queryProduction (bodyParam,currentPage,pageSize) {
 
     //分页显示的页码数  必须为奇数
     var showPage=7;
-    if(variety==null||variety==''){
-        var bodyParam={'page':currentPage,'size':pageSize};
-    }
-    else{
-        var bodyParam={'page':currentPage,'size':pageSize,'variety':'%'+variety+'%'};
-    }
 
     var httpR = new createHttpR(url+'listProduction','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
@@ -193,23 +188,35 @@ function  queryProduction (variety,currentPage,pageSize) {
             var html='';
 
             for(var o in data){
-                html+='<tr index='+o+' class="gradeX">\n' +
-                    '<td class="deleteCheckBoxTr">\n' +
-                    '<input index='+o+' class="delCheckbox" type="checkbox" >\n' +
-                    '</td>' +
-                    '<td>'+data[o].variety+'</td>\n' +
-                    '<td>'+data[o].yield+'</td>\n' +
-                    '<td>'+data[o].rhythm+'</td>\n' +
-                    '<td>'+data[o].production+'</td>\n' +
-                    '<td>'+data[o].capacity+'</td>\n' +
-                    '<td>'+data[o].changtime+'</td>\n' +
-                    '<td>'+data[o].creater+'</td>\n' +
-                    '<td>'+data[o].adddate+'</td>\n' ;
+                html+='<tr index='+o+' class="gradeX">\n' ;
 
-                html+='<td><a class="deleteProduction" href="" index='+o+' data-toggle="modal" data-target="#delete-box-pzqd"><span class="label label-danger">删除</span></a></td>\n';
+                    if(data[o].flag=='1'){html+='<td>旋压A线</td>\n' ;}
+                    else if(data[o].flag=='2'){html+='<td>旋压B线</td>\n' ;}
+                    else if(data[o].flag=='3'){html+='<td>滚型轮辋</td>\n' ;}
+                    else if(data[o].flag=='4'){html+='<td>型钢轮辋</td>\n' ;}
+                    else if(data[o].flag=='5'){html+='<td>旋压轮辐</td>\n' ;}
+                    else if(data[o].flag=='6'){html+='<td>滚型轮辐</td>\n' ;}
+                    else{html+='<td></td>\n' ;}
+
+
+
+
+                html+='<td>'+data[o].plancomp+'</td>\n' +
+                    '<td>'+data[o].actualcomp+'</td>\n' +
+                    '<td>'+((data[o].actualcomp/data[o].plancomp)*100).toFixed(0)+'</td>\n' +
+                    '<td>'+data[o].starttime+'</td>\n';
+
+                if(data[o].actualcomp!=''&&data[o].power!=''){
+                    html+='<td>'+((data[o].actualcomp/data[o].power)*100).toFixed(0)+'</td>\n';
+                }
+                else{
+                    html+='<td></td>\n';
+                }
+                html+='<td>'+data[o].adddate+'</td>\n' ;
+
                 html+='</tr>';
             }
-            $('#pzqdTbody').html(html);
+            $('#productionTbody').html(html);
             var num=msg['num'];
             if(num>0) {
                 var pageHtml = '';
