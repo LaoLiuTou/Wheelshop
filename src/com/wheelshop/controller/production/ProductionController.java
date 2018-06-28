@@ -9,9 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,14 +24,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.IntArraySerializer;
 import com.wheelshop.service.production.IProductionService;
+import com.wheelshop.utils.ExcelUtil;
 import com.wheelshop.chat.common.NettyChannelMap;
 import com.wheelshop.model.device.Device;
+import com.wheelshop.model.dstate.Dstate;
 import com.wheelshop.model.production.Production;
 @Controller
 public class ProductionController {
 	@Autowired
 	private IProductionService iProductionService;
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	Logger logger = Logger.getLogger("WheelshopLogger");
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -378,6 +387,113 @@ public class ProductionController {
 		return resultMap;
 	}
 	
-	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/exportProduction")
+	public void export(HttpServletRequest request, HttpServletResponse response,Production production)
+			throws ServletException, IOException {
+		Map resultMap=new HashMap();
+		try {
+			
+			Map paramMap=new HashMap();
+			paramMap.put("id",production.getId());
+			paramMap.put("production",production.getProduction());
+			paramMap.put("changed",production.getChanged());
+			paramMap.put("yield",production.getYield());
+			paramMap.put("prodstop",production.getProdstop());
+			paramMap.put("power",production.getPower());
+			paramMap.put("rate",production.getRate());
+			paramMap.put("variety",production.getVariety());
+			paramMap.put("rhythm",production.getRhythm());
+			paramMap.put("plancomp",production.getPlancomp());
+			paramMap.put("equipstop",production.getEquipstop());
+			String starttimeFrom=request.getParameter("starttimeFrom");
+			String starttimeTo=request.getParameter("starttimeTo");
+			if(starttimeFrom!=null&&!starttimeFrom.equals(""))
+			paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
+			if(starttimeTo!=null&&!starttimeTo.equals(""))
+			paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+			paramMap.put("actualcomp",production.getActualcomp());
+			paramMap.put("toolstop",production.getToolstop());
+			paramMap.put("overtime",production.getOvertime());
+			paramMap.put("prodstate",production.getProdstate());
+			paramMap.put("creater",production.getCreater());
+			String adddateFrom=request.getParameter("adddateFrom");
+			String adddateTo=request.getParameter("adddateTo");
+			if(adddateFrom!=null&&!adddateFrom.equals(""))
+			paramMap.put("adddateFrom", sdf.parse(adddateFrom));
+			if(adddateTo!=null&&!adddateTo.equals(""))
+			paramMap.put("adddateTo", sdf.parse(adddateTo));
+			paramMap.put("flag",production.getFlag());
+			List<Production> list=iProductionService.selectAllProductionByParam(paramMap);
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			List<String[]> exportList = new ArrayList<>();
+			//float sum_1=0,sum_2=0,sum_3=0;
+			for(int index=0;index<list.size();index++){
+				Production temp = list.get(index);
+				String productionName="";
+				if(temp.getFlag()!=null){
+					switch (temp.getFlag()) {
+					case "1":
+						productionName="旋压A线";
+						break;
+					case "2":
+						productionName="旋压B线";
+						break;
+					case "3":
+						productionName="滚型轮辋";
+						break;
+					case "4":
+						productionName="型钢轮辋";
+						break;
+					case "5":
+						productionName="旋压轮辐";
+						break;
+					case "6":
+						productionName="滚型轮辐";
+						break;
+					default:
+						break;
+					}
+				}
+				Float comRate = null;
+				if(StringUtils.isNumeric(temp.getActualcomp())&&StringUtils.isNumeric(temp.getPlancomp())){
+					comRate= (Float.parseFloat(temp.getActualcomp())/Float.parseFloat(temp.getPlancomp()))*100;
+				}
+				Float rate = null;
+				if(StringUtils.isNumeric(temp.getActualcomp())&&StringUtils.isNumeric(temp.getPower())){
+					rate= (Float.parseFloat(temp.getActualcomp())/Float.parseFloat(temp.getPower()))*100;
+				}
+				String  comRateStr="",rateStr="";
+				if(comRate!=null){
+					comRateStr=String.format("%.0f", comRate);
+				}
+				if(rate!=null){
+					rateStr=String.format("%.0f", rate);
+				}
+				
+				String[] strings = {(index+1)+"", productionName, temp.getPlancomp(),temp.getActualcomp(),  
+						comRateStr,"",rateStr,sdf1.format(temp.getAdddate())};
+				exportList.add(strings);
+			}
+			/*String[] strings = {"合计", "", "", "", "","", "", "","","", 
+					String.format("%.3f", sum_1), String.format("%.2f", sum_2), String.format("%.2f", sum_3),
+					"", "","", "", ""};
+			exportList.add(strings);*/
+			 
+			ServletOutputStream out=response.getOutputStream();
+			String fileName = "生产完成统计"+sdf1.format(new Date());
+			response.setContentType("application/vnd.ms-excel;charset=utf-8");
+			response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xls");
+			String[] titles = { "序号","生产线", "计划完成", "实际完成", "完成率", "生产时间", "可动率", "日期"}; 
+			ExcelUtil.export(titles, out, exportList);
+			
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "查询失败！");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		//return resultMap;
+	}
 	
 }

@@ -15,6 +15,8 @@ public interface IDstateService {
 	*/ 
 	@SuppressWarnings("rawtypes")
 	public List<Dstate> selectDstateByParam(Map paramMap); 
+	@SuppressWarnings("rawtypes")
+	public List<Dstate> selectAllDstateByParam(Map paramMap); 
 
 	/**
 	* 通过查询参数获取总条数

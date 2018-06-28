@@ -151,7 +151,7 @@
                                 <div class="form-group col-md-3 mr10">
                                     <label class="control-label col-md-3 form-sm-title pdnone">生产线：</label>
                                     <div class="col-md-9 pdnone">
-                                        <select class="form-control m-bot15" prod="2"  id="production" >
+                                        <select class="form-control m-bot15"  id="production" >
                                             <option value="">全部</option>
                                             <option value="1">旋压A线</option>
                                             <option value="2">旋压B线</option>
@@ -166,13 +166,13 @@
                                 <div class="form-group col-md-3 mr10">
                                     <label class="control-label col-md-3 form-sm-title pdnone">选择日期：</label>
                                     <div class="col-md-4 pdnone">
-                                        <input class="form-control  m-bot15 default-date-picker" keyIndex="3" id="adddate_from" size="16" type="text"  />
+                                        <input class="form-control  m-bot15 default-date-picker" id="adddate_from" size="16" type="text"  />
                                     </div>
                                     <div class="col-md-1 pdnone">
                                         <label class="control-label ml10">--</label>
                                     </div>
                                     <div class="col-md-4 pdnone">
-                                        <input class="form-control  m-bot15 default-date-picker" keyIndex="3" id="adddate_to" size="16" type="text"  />
+                                        <input class="form-control  m-bot15 default-date-picker"  id="adddate_to" size="16" type="text"  />
                                     </div>
 
                                 </div>
@@ -342,6 +342,31 @@
 
         $('.default-date-picker').datepicker({
             format: 'yyyy-mm-dd'
+        });
+
+
+
+        //导出
+        $('#exportBtn').on('click',function(){
+            var htmlExport=url+'exportProduction?1=1';
+
+            if($('#production').val()!=''){
+                htmlExport+='&flag='+$('#production').val();
+            }
+            if($('#adddate_from').val()!=''){
+                htmlExport+='&adddateFrom='+$('#adddate_from').val()+' 00:00:00';
+            }
+            if($('#adddate_to').val()!=''){
+                htmlExport+='&adddateTo='+$('#adddate_to').val()+' 23:59:59';
+            }
+
+            window.open(htmlExport);
+        });
+
+        //重置
+        $('#resetBtn').click(function () {
+            $('form select').val("");
+            $('form input').val("");
         });
     });
 

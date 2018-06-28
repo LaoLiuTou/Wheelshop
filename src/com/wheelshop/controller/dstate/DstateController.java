@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
@@ -22,10 +25,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wheelshop.service.device.IDeviceService;
 import com.wheelshop.service.dstate.IDstateService;
 import com.wheelshop.service.production.IProductionService;
+import com.wheelshop.utils.ExcelUtil;
 import com.wheelshop.chat.common.NettyChannelMap;
 import com.wheelshop.model.device.Device;
 import com.wheelshop.model.dstate.Dstate;
-import com.wheelshop.model.production.Production;
+import com.wheelshop.model.production.Production; 
 @Controller
 public class DstateController {
 	@Autowired
@@ -257,5 +261,96 @@ public class DstateController {
 			e.printStackTrace();
 		}
 		return resultMap;
+	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/exportDstate")
+	public void export(HttpServletRequest request, HttpServletResponse response,Dstate dstate)
+			throws ServletException, IOException {
+		Map resultMap=new HashMap();
+		try {
+				Map paramMap=new HashMap();
+				paramMap.put("id",dstate.getId());
+				paramMap.put("production",dstate.getProduction());
+				paramMap.put("deviceno",dstate.getDeviceno());
+				paramMap.put("state",dstate.getState());
+				String adddateFrom=request.getParameter("adddateFrom");
+				String adddateTo=request.getParameter("adddateTo");
+				if(adddateFrom!=null&&!adddateFrom.equals(""))
+					paramMap.put("adddateFrom", sdf.parse(adddateFrom));
+				if(adddateTo!=null&&!adddateTo.equals(""))
+					paramMap.put("adddateTo", sdf.parse(adddateTo));
+				paramMap.put("comment",dstate.getComment());
+				paramMap.put("flag",dstate.getFlag());
+				List<Dstate> list=iDstateService.selectAllDstateByParam(paramMap);
+				
+				List<String[]> exportList = new ArrayList<>();
+				//float sum_1=0,sum_2=0,sum_3=0;
+				for(int index=0;index<list.size();index++){
+					Dstate temp = list.get(index);
+					String production="",state="";
+					if(temp.getProduction()!=null){
+						switch (temp.getProduction()) {
+						case "1":
+							production="旋压A线";
+							break;
+						case "2":
+							production="旋压B线";
+							break;
+						case "3":
+							production="滚型轮辋";
+							break;
+						case "4":
+							production="型钢轮辋";
+							break;
+						case "5":
+							production="旋压轮辐";
+							break;
+						case "6":
+							production="滚型轮辐";
+							break;
+						default:
+							break;
+						}
+					}
+					if(temp.getState()!=null){
+						switch (temp.getState()) {
+						case "01":
+							state="设备异常";
+							break;
+						case "02":
+							state="工装异常";
+							break;
+						case "03":
+							state="生产异常";
+							break;
+						default:
+							break;
+						}
+					}
+					
+					String[] strings = {(index+1)+"", production, state, "", temp.getDeviceno(), 
+							sdf.format(temp.getAdddate()), temp.getComment()};
+					exportList.add(strings);
+				}
+				/*String[] strings = {"合计", "", "", "", "","", "", "","","", 
+						String.format("%.3f", sum_1), String.format("%.2f", sum_2), String.format("%.2f", sum_3),
+						"", "","", "", ""};
+				exportList.add(strings);*/
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				ServletOutputStream out=response.getOutputStream();
+				String fileName = "停台数据统计"+sdf1.format(new Date());
+				response.setContentType("application/vnd.ms-excel;charset=utf-8");
+				response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xls");
+				String[] titles = { "序号","生产线", "停台类型号", "停台时长（秒）", "停台设备", "日期", "备注"}; 
+			 
+				ExcelUtil.export(titles, out, exportList);
+			
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "查询失败！");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		//return resultMap;
 	}
 }

@@ -153,11 +153,11 @@ public class Production {
 		this.adddate = adddate;
 	}
 	/**  */
-	private  Long flag;
-	public Long getFlag() {
+	private  String flag;
+	public String getFlag() {
 		return flag;
 	}
-	public void setFlag(Long flag) {
+	public void setFlag(String flag) {
 		this.flag = flag;
 	}
 

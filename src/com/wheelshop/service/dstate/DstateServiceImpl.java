@@ -25,6 +25,10 @@ public class DstateServiceImpl  implements IDstateService {
 	public List<Dstate> selectDstateByParam(Map paramMap){ 
 		return iDstateMapper.selectdstateByParam(paramMap);
 	}
+	@SuppressWarnings("rawtypes")
+	public List<Dstate> selectAllDstateByParam(Map paramMap){ 
+		return iDstateMapper.selectalldstateByParam(paramMap);
+	}
 
 	/**
 	* 通过查询参数获取总条数

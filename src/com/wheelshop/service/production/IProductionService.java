@@ -15,6 +15,8 @@ public interface IProductionService {
 	*/ 
 	@SuppressWarnings("rawtypes")
 	public List<Production> selectProductionByParam(Map paramMap); 
+	@SuppressWarnings("rawtypes")
+	public List<Production> selectAllProductionByParam(Map paramMap); 
 
 	/**
 	* 通过查询参数获取总条数

@@ -10,6 +10,24 @@
 		DELETE FROM dstate WHERE ID=#{id}
 	</delete>
 
+	<select id="selectalldstateByParam" parameterType="java.util.Map" resultType="Dstate">
+		SELECT *
+		FROM dstate
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
+			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="comment != null"> AND COMMENT =#{comment} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+			AND STATE IN ('01','02','03') 
+		</trim>  
+		ORDER BY ID DESC 
+		 
+	</select>
 	<select id="selectdstateByParam" parameterType="java.util.Map" resultType="Dstate">
 		SELECT *
 		FROM dstate

@@ -10,6 +10,36 @@
 		DELETE FROM production WHERE ID=#{id}
 	</delete>
 
+	<select id="selectallproductionByParam" parameterType="java.util.Map" resultType="Production">
+		SELECT *
+		FROM production
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="changed != null"> AND CHANGED =#{changed} </if>
+			<if test="yield != null"> AND YIELD =#{yield} </if>
+			<if test="prodstop != null"> AND PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND POWER =#{power} </if>
+			<if test="rate != null"> AND RATE =#{rate} </if>
+			<if test="variety != null"> AND VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="plancomp != null"> AND PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
+			<if test="actualcomp != null"> AND ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+		ORDER BY ID DESC 
+	</select>
 	<select id="selectproductionByParam" parameterType="java.util.Map" resultType="Production">
 		SELECT *
 		FROM production

@@ -25,6 +25,10 @@ public class ProductionServiceImpl  implements IProductionService {
 	public List<Production> selectProductionByParam(Map paramMap){ 
 		return iProductionMapper.selectproductionByParam(paramMap);
 	}
+	@SuppressWarnings("rawtypes")
+	public List<Production> selectAllProductionByParam(Map paramMap){ 
+		return iProductionMapper.selectallproductionByParam(paramMap);
+	}
 
 	/**
 	* 通过查询参数获取总条数
