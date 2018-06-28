@@ -43,7 +43,6 @@ public class DstateController {
 		Map resultMap=new HashMap();
 		try {
 			iDstateService.addDstate(dstate);
-			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			//查询对应的设备编号
@@ -72,10 +71,14 @@ public class DstateController {
 					//Map equipstopmap=mapper.readValue(plist.get(0).getEquipstop(), Map.class);
 					//Map toolstopmap=mapper.readValue(plist.get(0).getToolstop(), Map.class);
 					prodstopmap.put(list.get(0).getNodeno(), dstate.getState());
-					Production temp=new Production();
-					temp.setId(plist.get(0).getId());
-					temp.setProdstop(mapper.writeValueAsString(prodstopmap));
-					iProductionService.updateProduction(temp);
+					
+					if(dstate!=null&&dstate.getState()!=null&&!dstate.getState().equals("05")){
+						Production temp=new Production();
+						temp.setId(plist.get(0).getId());
+						temp.setProdstop(mapper.writeValueAsString(prodstopmap));
+						iProductionService.updateProduction(temp);
+					}
+					
 				}
 				
 				
@@ -233,6 +236,7 @@ public class DstateController {
 				paramMap.put("adddateFrom", sdf.parse(adddateFrom));
 				if(adddateTo!=null&&!adddateTo.equals(""))
 				paramMap.put("adddateTo", sdf.parse(adddateTo));
+				paramMap.put("comment",dstate.getComment());
 				paramMap.put("flag",dstate.getFlag());
 				List<Dstate> list=iDstateService.selectDstateByParam(paramMap);
 				int totalnumber=iDstateService.selectCountDstateByParam(paramMap);

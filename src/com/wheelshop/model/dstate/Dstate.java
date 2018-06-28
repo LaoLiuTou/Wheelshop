@@ -47,6 +47,15 @@ public class Dstate {
 	public void setAdddate(Date adddate) {
 		this.adddate = adddate;
 	}
+	
+	/** 备注 */
+	private  String comment;
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 	/**  */
 	private  String flag;
 	public String getFlag() {
