@@ -157,7 +157,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">生产线</label>
                                             <div class="col-sm-9">
-                                                <input type="text" prod="6"  id="production" class="form-control" placeholder="请输入">
+                                                <input type="text" prod="6" readonly id="production" class="form-control" placeholder="请输入">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -504,14 +504,13 @@
                     params[$(this).attr('id')]=$(this).val();
             });
             var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
-            params['creater']=userinfo['username'];
             /*if($('#actualcomp').val()!=''&&$('#power').val()!=''){
                 params['rate']=(($('#actualcomp').val()/$('#power').val())*100).toFixed(0);
             }*/
             params['creater']=userinfo['username'];
 
             params['changed']=JSON.stringify(changed);
-            params['flag']=production;
+            params['prodnum']=production;
             addProduction(params);
         });
 

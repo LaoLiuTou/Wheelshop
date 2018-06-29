@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wheelshop.service.varieties.IVarietiesService;
+import com.wheelshop.utils.ExcelUtil;
+import com.wheelshop.model.dstate.Dstate;
 import com.wheelshop.model.varieties.Varieties;
 @Controller
 public class VarietiesController {
@@ -230,4 +235,63 @@ public class VarietiesController {
 		}
 		return resultMap;
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/exportVarieties")
+	public void export(HttpServletRequest request, HttpServletResponse response,Varieties varieties)
+			throws ServletException, IOException {
+		Map resultMap=new HashMap();
+		try {
+			Map paramMap=new HashMap();
+			paramMap.put("id",varieties.getId());
+			paramMap.put("variety",varieties.getVariety());
+			paramMap.put("yield",varieties.getYield());
+			paramMap.put("rhythm",varieties.getRhythm());
+			paramMap.put("production",varieties.getProduction());
+			paramMap.put("capacity",varieties.getCapacity());
+			paramMap.put("changtime",varieties.getChangtime());
+			paramMap.put("required",varieties.getRequired());
+			paramMap.put("creater",varieties.getCreater());
+			String adddateFrom=request.getParameter("adddateFrom");
+			String adddateTo=request.getParameter("adddateTo");
+			if(adddateFrom!=null&&!adddateFrom.equals(""))
+				paramMap.put("adddateFrom", sdf.parse(adddateFrom));
+			if(adddateTo!=null&&!adddateTo.equals(""))
+				paramMap.put("adddateTo", sdf.parse(adddateTo));
+			paramMap.put("type",varieties.getType());
+			paramMap.put("flag",varieties.getFlag());
+			int totalnumber=iVarietiesService.selectCountVarietiesByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",totalnumber); 
+			List<Varieties> list=iVarietiesService.selectVarietiesByParam(paramMap);
+				
+			List<String[]> exportList = new ArrayList<>();
+			//float sum_1=0,sum_2=0,sum_3=0;
+			for(int index=0;index<list.size();index++){
+				Varieties temp = list.get(index);
+				 
+				String[] strings = {(index+1)+"", temp.getVariety(), temp.getYield(), temp.getRhythm(),
+						temp.getProduction(), temp.getCapacity(),temp.getChangtime(),temp.getCreater(),
+						sdf.format(temp.getAdddate())};
+				exportList.add(strings);
+			}
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			ServletOutputStream out=response.getOutputStream();
+			String fileName = "品种清单"+sdf1.format(new Date());
+			response.setContentType("application/vnd.ms-excel;charset=utf-8");
+			response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xls");
+			String[] titles = { "序号","品种", "计划产量", "节拍", "生产线", "产能", "换模时间", "添加人", "添加时间"}; 
+		 
+			ExcelUtil.export(titles, out, exportList);
+			
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "查询失败！");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		//return resultMap;
+	}
+	
+	
 }

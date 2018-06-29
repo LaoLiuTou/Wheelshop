@@ -287,31 +287,8 @@ public class DstateController {
 				//float sum_1=0,sum_2=0,sum_3=0;
 				for(int index=0;index<list.size();index++){
 					Dstate temp = list.get(index);
-					String production="",state="";
-					if(temp.getProduction()!=null){
-						switch (temp.getProduction()) {
-						case "1":
-							production="旋压A线";
-							break;
-						case "2":
-							production="旋压B线";
-							break;
-						case "3":
-							production="滚型轮辋";
-							break;
-						case "4":
-							production="型钢轮辋";
-							break;
-						case "5":
-							production="旋压轮辐";
-							break;
-						case "6":
-							production="滚型轮辐";
-							break;
-						default:
-							break;
-						}
-					}
+					String state="";
+					 
 					if(temp.getState()!=null){
 						switch (temp.getState()) {
 						case "01":
@@ -328,7 +305,7 @@ public class DstateController {
 						}
 					}
 					
-					String[] strings = {(index+1)+"", production, state, "", temp.getDeviceno(), 
+					String[] strings = {(index+1)+"", temp.getProduction(), state, "", temp.getDeviceno(), 
 							sdf.format(temp.getAdddate()), temp.getComment()};
 					exportList.add(strings);
 				}

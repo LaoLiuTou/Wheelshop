@@ -75,4 +75,14 @@ http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 </bean>
 <bean id="iDeviceService" class="com.wheelshop.service.device.DeviceServiceImpl"></bean>
+<bean id="iProdnumMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.wheelshop.dao.prodnum.IProdnumMapper "/>
+	<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+</bean>
+<bean id="iProdnumService" class="com.wheelshop.service.prodnum.ProdnumServiceImpl"></bean>
+<bean id="iTimerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<property name="mapperInterface" value="com.wheelshop.dao.timer.ITimerMapper "/>
+	<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+</bean>
+<bean id="iTimerService" class="com.wheelshop.service.timer.TimerServiceImpl"></bean>
 </beans>

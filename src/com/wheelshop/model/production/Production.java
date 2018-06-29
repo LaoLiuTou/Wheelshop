@@ -14,6 +14,15 @@ public class Production {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	/** 生产线编号 */
+	private  String prodnum;
+	 
+	public String getProdnum() {
+		return prodnum;
+	}
+	public void setProdnum(String prodnum) {
+		this.prodnum = prodnum;
+	}
 	/** 生产线名称 */
 	private  String production;
 	public String getProduction() {

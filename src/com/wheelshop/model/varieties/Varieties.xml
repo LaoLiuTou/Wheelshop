@@ -38,7 +38,7 @@
 		FROM varieties 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="id != null"> AND ID =#{id} </if>
-			<if test="variety != null"> AND VARIETY =#{variety} </if>
+			<if test="variety != null"> AND VARIETY LIKE #{variety} </if>
 			<if test="yield != null"> AND YIELD =#{yield} </if>
 			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
 			<if test="production != null"> AND PRODUCTION =#{production} </if>

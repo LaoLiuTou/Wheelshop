@@ -188,20 +188,9 @@ function  queryProduction (bodyParam,currentPage,pageSize) {
             var html='';
 
             for(var o in data){
-                html+='<tr index='+o+' class="gradeX">\n' ;
-
-                    if(data[o].flag=='1'){html+='<td>旋压A线</td>\n' ;}
-                    else if(data[o].flag=='2'){html+='<td>旋压B线</td>\n' ;}
-                    else if(data[o].flag=='3'){html+='<td>滚型轮辋</td>\n' ;}
-                    else if(data[o].flag=='4'){html+='<td>型钢轮辋</td>\n' ;}
-                    else if(data[o].flag=='5'){html+='<td>旋压轮辐</td>\n' ;}
-                    else if(data[o].flag=='6'){html+='<td>滚型轮辐</td>\n' ;}
-                    else{html+='<td></td>\n' ;}
-
-
-
-
-                html+='<td>'+data[o].plancomp+'</td>\n' +
+                html+='<tr index='+o+' class="gradeX">\n'+
+                    '<td>'+data[o].production+'</td>\n' +
+                    '<td>'+data[o].plancomp+'</td>\n' +
                     '<td>'+data[o].actualcomp+'</td>\n' +
                     '<td>'+((data[o].actualcomp/data[o].plancomp)*100).toFixed(0)+'</td>\n' +
                     '<td>'+data[o].starttime+'</td>\n';

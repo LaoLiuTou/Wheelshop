@@ -1,85 +1,195 @@
-///////////
-//初始化变量
-var interval;
-var hour,minute,second;//时 分 秒
-hour=minute=second=0;//初始化
-var millisecond=0;//毫秒
-//计时函数
-function timer()
-{
-    millisecond=millisecond+1000;
-    if(millisecond>=1000)
-    {
-        millisecond=0;
-        second=second+1;
-    }
-    if(second>=60)
-    {
-        second=0;
-        minute=minute+1;
-    }
-
-    if(minute>=60)
-    {
-        minute=0;
-        hour=hour+1;
-    }
-
-    if($('#timeslot').val() == PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2)){
-        clearInterval(interval);
-        playEndSound();
-    }
+$(document).ready(function(){
 
 
-    //$('#repairTime').text("检修时间："+hour+'时'+minute+'分'+second+'秒'+millisecond+'毫秒')
-    $('#timeSpan').text(PrefixInteger(hour,2)+'时'+PrefixInteger(minute,2)+'分'+PrefixInteger(second,2)+'秒');
+    //选取的Timer
+    var timerList;
+    var timerIndex;
+    var currentTimer;
+});
 
-}
-function PrefixInteger(num, length) {
-    return (Array(length).join('0') + num).slice(-length);
-}
-//////////////////
 
-Date.prototype.format = function(fmt) {
-    var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
-    };
-    if(/(y+)/.test(fmt)) {
-        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-    }
-    for(var k in o) {
-        if(new RegExp("("+ k +")").test(fmt)){
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////品种管理////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+/**
+ * 添加品种
+ */
+function addTimer(){
+    var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
+    var bodyParam={'prodnum':$('#prodnum').val(),'type':$('#type').val(),'starttime':$('#starttime').val(),
+        'endtime':$('#endtime').val(),'creater':userinfo['username']};
+    var httpR = new createHttpR(url+'addTimer','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            alert("新建成功！");
+            window.location.reload();
+            //window.location.href="interface.html?index="+interfaceIndex;
         }
-    }
-    return fmt;
+    });
 }
 
-/////////
-function playStartSound(){
-    var audio = new Audio();
-    if (audio.canPlayType("audio/mp3")) {
-        audio.src = "audio/audio.mp3";
-    }else if(audio.canPlayType("audio/ogg")) {
-        audio.src = "audio/audio.ogg";
-    }
-    audio.loop = true;
-    //播放(继续播放)
-    audio.play();
+/**
+ * 修改品种
+ * @param id
+ */
+function updateTimer(bodyParam){
+
+    var httpR = new createHttpR(url+'updateTimer','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            alert("修改成功！");
+            window.location.reload();
+            //window.location.href="interface.html?index="+interfaceIndex;
+        }
+    });
 }
-function playEndSound(){
-    var audio = new Audio();
-    if (audio.canPlayType("audio/mp3")) {
-        audio.src = "audio/audio.mp3";
-    }else if(audio.canPlayType("audio/ogg")) {
-        audio.src = "audio/audio.ogg";
-    }
-    //播放(继续播放)
-    audio.play();
+
+/**
+ * 删除品种
+ * @param id
+ */
+function deleteTimer(id){
+    var bodyParam={'ids':'('+id+')'};
+    var httpR = new createHttpR(url+'deleteTimer','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            alert("删除成功！");
+            window.location.reload();
+        }
+    });
 }
+/**
+ * 查询品种
+
+ */
+function  queryTimer (prodnum,type,currentPage,pageSize) {
+
+    //分页显示的页码数  必须为奇数
+    var showPage=7;
+    var bodyParam={'page':currentPage,'size':pageSize};
+    if(prodnum!=null&&prodnum!=''){
+        bodyParam['prodnum']=prodnum;
+    }
+    if(type!=null&&type!=''){
+        bodyParam['type']=type;
+    }
+
+
+    var httpR = new createHttpR(url+'listTimer','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        var msg = obj['msg'];
+        if(status=='0'){
+            var data=msg['data'];
+            timerList=msg['data'];
+            var html='';
+
+            for(var o in data){
+                html+='<tr index='+o+' class="gradeX">\n' +
+                    '<td class="deleteCheckBoxTr">\n' +
+                    '<input index='+o+' class="delCheckbox" type="checkbox" >\n' +
+                    '</td>' +
+                    '<td>'+data[o].production+'</td>\n' +
+                    '<td>'+data[o].type+'</td>\n' +
+                    '<td>'+data[o].starttime+'-'+data[o].endtime+'</td>\n' +
+                    '<td>'+data[o].creater+'</td>\n' +
+                    '<td>'+data[o].adddate+'</td>\n' ;
+
+                html+='<td><a class="deleteTimer" href="" index='+o+' data-toggle="modal" data-target="#delete-box-timer"><span class="label label-danger">删除</span></a></td>\n';
+                html+='</tr>';
+            }
+            $('#timerTbody').html(html);
+            var num=msg['num'];
+            if(num>0) {
+                var pageHtml = '';
+                var totalPage = 0;
+                if (num % pageSize == 0) {
+                    totalPage = num / pageSize;
+                }
+                else {
+                    totalPage = Math.ceil(num / pageSize);
+                }
+
+                if (currentPage == 1) {
+                    pageHtml += '<li class="disabled"><a href="#">|&laquo;</a></li>';
+                    pageHtml += '<li class="disabled"><a href="#">&laquo;</a></li>';
+                }
+                else {
+                    pageHtml += '<li ><a href="#" class="pageBtn" index="1">|&laquo;</a></li>';
+                    pageHtml += '<li ><a href="#" class="prevBtn" index="">&laquo;</a></li>';
+                }
+                if (totalPage <= showPage) {
+                    for (var i = 1; i < Number(totalPage) + 1; i++) {
+                        if (currentPage == i) {
+                            pageHtml += '<li class="active"><a href="#" >' + i + '</a></li>';
+                        }
+                        else {
+                            pageHtml += '<li><a href="#" class="pageBtn" index="' + i + '">' + i + '</a></li>';
+                        }
+                    }
+                }
+                else {
+                    if (currentPage <= (showPage - 1) / 2) {
+                        for (var i = 1; i <= showPage; i++) {
+                            if (currentPage == i) {
+                                pageHtml += '<li class="active"><a href="#" >' + i + '</a></li>';
+                            }
+                            else {
+                                pageHtml += '<li><a href="#" class="pageBtn" index="' + i + '">' + i + '</a></li>';
+                            }
+                        }
+                    }
+                    else if (totalPage - currentPage < (showPage - 1) / 2) {
+                        for (var i = Number(totalPage) - showPage; i <= totalPage; i++) {
+                            if (currentPage == i) {
+                                pageHtml += '<li class="active"><a href="#" >' + i + '</a></li>';
+                            }
+                            else {
+                                pageHtml += '<li><a href="#" class="pageBtn" index="' + i + '">' + i + '</a></li>';
+                            }
+                        }
+                    }
+                    else {
+                        for (var i = Number(currentPage) - (showPage - 1) / 2; i <= Number(currentPage) + (showPage - 1) / 2; i++) {
+                            if (currentPage == i) {
+                                pageHtml += '<li class="active"><a href="#" >' + i + '</a></li>';
+                            }
+                            else {
+                                pageHtml += '<li><a href="#" class="pageBtn" index="' + i + '">' + i + '</a></li>';
+                            }
+                        }
+                    }
+
+
+                }
+
+                if (currentPage == totalPage) {
+                    pageHtml += '<li class="disabled"><a href="#">&raquo;</a></li>';
+                    pageHtml += '<li class="disabled"><a href="#">&raquo;|</a></li>';
+                }
+                else {
+                    pageHtml += '<li class="nextBtn" index=""><a href="#">&raquo;</a></li>';
+                    pageHtml += '<li class="pageBtn" index="' + totalPage + '"><a href="#">&raquo;|</a></li>';
+                }
+                /* pageHtml+='<li><input type="text" id="jumpPageText" class="paging-inpbox form-control"></li>\n' +
+                     '<li><button type="button" id="jumpBtn" class="paging-btnbox btn btn-primary">跳转</button></li>\n' +
+                     '<li><span class="number-of-pages">共'+totalPage+'页</span></li>';*/
+
+                $('.pagination').html(pageHtml);
+            }
+
+
+        }
+    });
+}
+

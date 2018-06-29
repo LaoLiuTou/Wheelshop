@@ -11,64 +11,68 @@
 	</delete>
 
 	<select id="selectallproductionByParam" parameterType="java.util.Map" resultType="Production">
-		SELECT *
-		FROM production
+		SELECT a.*,b.production as production 
+		FROM production a 
+		LEFT JOIN prodnum b on a.prodnum=b.id 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="id != null"> AND ID =#{id} </if>
-			<if test="production != null"> AND PRODUCTION =#{production} </if>
-			<if test="changed != null"> AND CHANGED =#{changed} </if>
-			<if test="yield != null"> AND YIELD =#{yield} </if>
-			<if test="prodstop != null"> AND PRODSTOP =#{prodstop} </if>
-			<if test="power != null"> AND POWER =#{power} </if>
-			<if test="rate != null"> AND RATE =#{rate} </if>
-			<if test="variety != null"> AND VARIETY =#{variety} </if>
-			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
-			<if test="plancomp != null"> AND PLANCOMP =#{plancomp} </if>
-			<if test="equipstop != null"> AND EQUIPSTOP =#{equipstop} </if>
-			<if test="starttimeFrom != null"> AND unix_timestamp(STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
-			<if test="starttimeTo != null"> AND unix_timestamp(STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
-			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
-			<if test="actualcomp != null"> AND ACTUALCOMP =#{actualcomp} </if>
-			<if test="toolstop != null"> AND TOOLSTOP =#{toolstop} </if>
-			<if test="overtime != null"> AND OVERTIME =#{overtime} </if>
-			<if test="prodstate != null"> AND PRODSTATE =#{prodstate} </if>
-			<if test="creater != null"> AND CREATER =#{creater} </if>
-			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
-			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
-			<if test="flag != null"> AND FLAG =#{flag} </if>
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
+			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
+			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND a.POWER =#{power} </if>
+			<if test="rate != null"> AND a.RATE =#{rate} </if>
+			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND a.PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND a.CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+			<if test="production != null"> AND b.PRODUCTION LIKE #{production} </if>
 		</trim>  
-		ORDER BY ID DESC 
+		ORDER BY a.ID DESC 
 	</select>
 	<select id="selectproductionByParam" parameterType="java.util.Map" resultType="Production">
-		SELECT *
-		FROM production
+		SELECT a.*,b.production as production 
+		FROM production a 
+		LEFT JOIN prodnum b on a.prodnum=b.id 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="id != null"> AND ID =#{id} </if>
-			<if test="production != null"> AND PRODUCTION =#{production} </if>
-			<if test="changed != null"> AND CHANGED =#{changed} </if>
-			<if test="yield != null"> AND YIELD =#{yield} </if>
-			<if test="prodstop != null"> AND PRODSTOP =#{prodstop} </if>
-			<if test="power != null"> AND POWER =#{power} </if>
-			<if test="rate != null"> AND RATE =#{rate} </if>
-			<if test="variety != null"> AND VARIETY =#{variety} </if>
-			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
-			<if test="plancomp != null"> AND PLANCOMP =#{plancomp} </if>
-			<if test="equipstop != null"> AND EQUIPSTOP =#{equipstop} </if>
-			<if test="starttimeFrom != null"> AND unix_timestamp(STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
-			<if test="starttimeTo != null"> AND unix_timestamp(STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
-			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
-			<if test="actualcomp != null"> AND ACTUALCOMP =#{actualcomp} </if>
-			<if test="toolstop != null"> AND TOOLSTOP =#{toolstop} </if>
-			<if test="overtime != null"> AND OVERTIME =#{overtime} </if>
-			<if test="prodstate != null"> AND PRODSTATE =#{prodstate} </if>
-			<if test="creater != null"> AND CREATER =#{creater} </if>
-			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
-			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
-			<if test="flag != null"> AND FLAG =#{flag} </if>
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
+			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
+			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND a.POWER =#{power} </if>
+			<if test="rate != null"> AND a.RATE =#{rate} </if>
+			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND a.PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND a.CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+			<if test="production != null"> AND b.PRODUCTION LIKE #{production} </if>
 		</trim>  
-		ORDER BY ID DESC 
+		ORDER BY a.ID DESC 
 		LIMIT #{fromPage},#{toPage} 
 	</select>
 
@@ -77,7 +81,7 @@
 		FROM production 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="id != null"> AND ID =#{id} </if>
-			<if test="production != null"> AND PRODUCTION =#{production} </if>
+			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
 			<if test="changed != null"> AND CHANGED =#{changed} </if>
 			<if test="yield != null"> AND YIELD =#{yield} </if>
 			<if test="prodstop != null"> AND PRODSTOP =#{prodstop} </if>
@@ -106,7 +110,7 @@
 		UPDATE production 
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="id != null">ID=#{id}, </if>
-			<if test="production != null">PRODUCTION=#{production}, </if>
+			<if test="prodnum != null">PRODNUM=#{prodnum}, </if>
 			<if test="changed != null">CHANGED=#{changed}, </if>
 			<if test="yield != null">YIELD=#{yield}, </if>
 			<if test="prodstop != null">PRODSTOP=#{prodstop}, </if>
@@ -131,7 +135,7 @@
 	<insert id="addproduction" parameterType="Production" keyProperty="id" useGeneratedKeys="true">
 		INSERT INTO production 
 		<trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="production != null">PRODUCTION, </if>
+			<if test="prodnum != null">PRODNUM, </if>
 			<if test="changed != null">CHANGED, </if>
 			<if test="yield != null">YIELD, </if>
 			<if test="prodstop != null">PRODSTOP, </if>
@@ -151,7 +155,7 @@
 			<if test="flag != null">FLAG, </if>
 		</trim>
 		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
-			<if test="production != null">#{production}, </if>
+			<if test="prodnum != null">#{prodnum}, </if>
 			<if test="changed != null">#{changed}, </if>
 			<if test="yield != null">#{yield}, </if>
 			<if test="prodstop != null">#{prodstop}, </if>
@@ -178,7 +182,7 @@
 			INSERT INTO production 
 			<trim prefix="(" suffix=")" suffixOverrides="," >
 				<if test="item.id != null">ID, </if>
-				<if test="item.production != null">PRODUCTION, </if>
+				<if test="item.prodnum != null">PRODNUM, </if>
 				<if test="item.changed != null">CHANGED, </if>
 				<if test="item.yield != null">YIELD, </if>
 				<if test="item.prodstop != null">PRODSTOP, </if>
@@ -199,7 +203,7 @@
 			</trim>
 			<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
 				<if test="item.id != null">#{item.id}, </if>
-				<if test="item.production != null">#{item.production}, </if>
+				<if test="item.prodnum != null">#{item.prodnum}, </if>
 				<if test="item.changed != null">#{item.changed}, </if>
 				<if test="item.yield != null">#{item.yield}, </if>
 				<if test="item.prodstop != null">#{item.prodstop}, </if>

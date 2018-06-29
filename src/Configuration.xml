@@ -24,6 +24,8 @@
 		<typeAlias alias="Production" type="com.wheelshop.model.production.Production" />  
 		<typeAlias alias="Dstate" type="com.wheelshop.model.dstate.Dstate" /> 
 		<typeAlias alias="Device" type="com.wheelshop.model.device.Device" /> 
+		<typeAlias alias="Prodnum" type="com.wheelshop.model.prodnum.Prodnum" /> 
+		<typeAlias alias="Timer" type="com.wheelshop.model.timer.Timer" /> 
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/wheelshop/model/user/User.xml"/> 
@@ -31,5 +33,7 @@
 		<mapper resource="com/wheelshop/model/production/Production.xml"/> 
 		<mapper resource="com/wheelshop/model/dstate/Dstate.xml"/> 
 		<mapper resource="com/wheelshop/model/device/Device.xml"/> 
+		<mapper resource="com/wheelshop/model/prodnum/Prodnum.xml"/> 
+		<mapper resource="com/wheelshop/model/timer/Timer.xml"/> 
 	</mappers>  
 </configuration>

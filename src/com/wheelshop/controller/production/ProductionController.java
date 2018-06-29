@@ -256,6 +256,7 @@ public class ProductionController {
 				paramMap.put("fromPage",(Integer.parseInt(page)-1)*Integer.parseInt(size));
 				paramMap.put("toPage",Integer.parseInt(size)); 
 				paramMap.put("id",production.getId());
+				paramMap.put("prodnum",production.getProdnum());
 				paramMap.put("production",production.getProduction());
 				paramMap.put("changed",production.getChanged());
 				paramMap.put("yield",production.getYield());
@@ -338,6 +339,7 @@ public class ProductionController {
 				paramMap.put("fromPage",(Integer.parseInt(page)-1)*Integer.parseInt(size));
 				paramMap.put("toPage",Integer.parseInt(size)); 
 				paramMap.put("id",production.getId());
+				paramMap.put("prodnum",production.getProdnum());
 				paramMap.put("production",production.getProduction());
 				paramMap.put("changed",production.getChanged());
 				paramMap.put("yield",production.getYield());
@@ -396,6 +398,7 @@ public class ProductionController {
 			
 			Map paramMap=new HashMap();
 			paramMap.put("id",production.getId());
+			paramMap.put("prodnum",production.getProdnum());
 			paramMap.put("production",production.getProduction());
 			paramMap.put("changed",production.getChanged());
 			paramMap.put("yield",production.getYield());
@@ -430,31 +433,7 @@ public class ProductionController {
 			//float sum_1=0,sum_2=0,sum_3=0;
 			for(int index=0;index<list.size();index++){
 				Production temp = list.get(index);
-				String productionName="";
-				if(temp.getFlag()!=null){
-					switch (temp.getFlag()) {
-					case "1":
-						productionName="旋压A线";
-						break;
-					case "2":
-						productionName="旋压B线";
-						break;
-					case "3":
-						productionName="滚型轮辋";
-						break;
-					case "4":
-						productionName="型钢轮辋";
-						break;
-					case "5":
-						productionName="旋压轮辐";
-						break;
-					case "6":
-						productionName="滚型轮辐";
-						break;
-					default:
-						break;
-					}
-				}
+				
 				Float comRate = null;
 				if(StringUtils.isNumeric(temp.getActualcomp())&&StringUtils.isNumeric(temp.getPlancomp())){
 					comRate= (Float.parseFloat(temp.getActualcomp())/Float.parseFloat(temp.getPlancomp()))*100;
@@ -471,7 +450,7 @@ public class ProductionController {
 					rateStr=String.format("%.0f", rate);
 				}
 				
-				String[] strings = {(index+1)+"", productionName, temp.getPlancomp(),temp.getActualcomp(),  
+				String[] strings = {(index+1)+"", temp.getProduction(), temp.getPlancomp(),temp.getActualcomp(),  
 						comRateStr,"",rateStr,sdf1.format(temp.getAdddate())};
 				exportList.add(strings);
 			}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wheelshop.dao.timer.ITimerMapper"> 
+	<select id="selecttimerById" parameterType="String" resultType="Timer">
+		SELECT * FROM timer WHERE ID=#{id}
+	</select>
+
+	<delete id="deletetimer" parameterType="String"> 
+		DELETE FROM timer WHERE ID  IN ${_parameter}
+	</delete>
+
+	<select id="selecttimerByParam" parameterType="java.util.Map" resultType="Timer">
+	 
+		SELECT a.*,b.production as production 
+		FROM timer a 
+		LEFT JOIN prodnum b on a.prodnum=b.id 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
+			<if test="type != null"> AND a.TYPE =#{type} </if>
+			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="endtime != null"> AND a.ENDTIME =#{endtime} </if>
+			<if test="creater != null"> AND a.CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND a.ADDDATE =#{adddate} </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+			<if test="production != null"> AND b.PRODUCTION =#{production} </if>
+		</trim>  
+		ORDER BY ID DESC 
+		LIMIT #{fromPage},#{toPage} 
+	</select>
+
+	<select id="selectCounttimerByParam" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(id) 
+		FROM timer 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND ID =#{id} </if>
+			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
+			<if test="type != null"> AND TYPE =#{type} </if>
+			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
+			<if test="endtime != null"> AND ENDTIME =#{endtime} </if>
+			<if test="creater != null"> AND CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="flag != null"> AND FLAG =#{flag} </if>
+		</trim>  
+	</select>
+
+	<update id="updatetimer" parameterType="Timer">
+		UPDATE timer 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="id != null">ID=#{id}, </if>
+			<if test="prodnum != null">PRODNUM=#{prodnum}, </if>
+			<if test="type != null">TYPE=#{type}, </if>
+			<if test="starttime != null">STARTTIME=#{starttime}, </if>
+			<if test="endtime != null">ENDTIME=#{endtime}, </if>
+			<if test="creater != null">CREATER=#{creater}, </if>
+			<if test="adddate != null">ADDDATE=#{adddate}, </if>
+			<if test="flag != null">FLAG=#{flag}, </if>
+		</trim>
+		WHERE ID=#{id}
+	</update>
+
+	<insert id="addtimer" parameterType="Timer" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO timer 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="prodnum != null">PRODNUM, </if>
+			<if test="type != null">TYPE, </if>
+			<if test="starttime != null">STARTTIME, </if>
+			<if test="endtime != null">ENDTIME, </if>
+			<if test="creater != null">CREATER, </if>
+			<if test="adddate != null">ADDDATE, </if>
+			<if test="flag != null">FLAG, </if>
+		</trim>
+		<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+			<if test="prodnum != null">#{prodnum}, </if>
+			<if test="type != null">#{type}, </if>
+			<if test="starttime != null">#{starttime}, </if>
+			<if test="endtime != null">#{endtime}, </if>
+			<if test="creater != null">#{creater}, </if>
+			<if test="adddate != null">#{adddate}, </if>
+			<if test="flag != null">#{flag}, </if>
+		</trim>
+	</insert>
+
+	<insert id="muladdtimer" parameterType="java.util.List" keyProperty="id" useGeneratedKeys="true">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			INSERT INTO timer 
+			<trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">ID, </if>
+				<if test="item.prodnum != null">PRODNUM, </if>
+				<if test="item.type != null">TYPE, </if>
+				<if test="item.starttime != null">STARTTIME, </if>
+				<if test="item.endtime != null">ENDTIME, </if>
+				<if test="item.creater != null">CREATER, </if>
+				<if test="item.adddate != null">ADDDATE, </if>
+				<if test="item.flag != null">FLAG, </if>
+			</trim>
+			<trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+				<if test="item.id != null">#{item.id}, </if>
+				<if test="item.prodnum != null">#{item.prodnum}, </if>
+				<if test="item.type != null">#{item.type}, </if>
+				<if test="item.starttime != null">#{item.starttime}, </if>
+				<if test="item.endtime != null">#{item.endtime}, </if>
+				<if test="item.creater != null">#{item.creater}, </if>
+				<if test="item.adddate != null">#{item.adddate}, </if>
+				<if test="item.flag != null">#{item.flag}, </if>
+			</trim>
+		</foreach>
+	</insert>
+</mapper>
