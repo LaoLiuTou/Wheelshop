@@ -10,11 +10,6 @@
 
   <title>停台数据统计</title>
 
-  <!--icheck-->
-  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
-  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
-  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
-  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
 
     <!--pickers css-->
     <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker-custom.css" />
@@ -191,7 +186,7 @@
                                     <button id="searchBtn" type="button" class="btn btn-info popovers mb10">查询</button>
                                     <button id="resetBtn" type="button"  class="btn btn-default mb10">重置</button>
                                     <button id="exportBtn" type="button" class="btn btn-default mb10">导出</button>
-                                    <button id="statisticBtn" type="button" class="btn btn-default mb10">统计图</button>
+                                    <button id="statisticBtn" data-toggle="modal" data-target="#statistic-box" type="button" class="btn btn-default mb10">统计图</button>
                                 </div>
 
 
@@ -240,6 +235,62 @@
     </div>
     <!-- main content end-->
 </section>
+<!-- modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="update-box" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">编辑备注</h4>
+            </div>
+            <div class="modal-body">
+
+                <form role="form">
+
+                    <div class="form-group">
+                        <label>备注</label>
+                        <textarea class="form-control" rows="6" id="comment" placeholder="请输入"></textarea>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="clearfix"></div>
+            <div class="modal-footer">
+                <button class="btn btn-info popovers" type="button" id="updateBtn">保存</button>
+                <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="statistic-box" class="modal fade">
+    <div class="modal-dialog" style="width:900px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">统计图</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <section class="panel">
+
+                            <div class="panel-body">
+                                <div class="chartJS">
+                                    <canvas id="bar-chart-js" height="250" width="800" ></canvas>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+</div>
 
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="js/jquery-1.10.2.min.js"></script>
@@ -248,7 +299,9 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/modernizr.min.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
-
+<!--Chart JS-->
+<script src="js/chart-js/Chart.js"></script>
+<!--<script src="js/chart-js/chartjs.init.js"></script>-->
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
 
@@ -259,6 +312,8 @@
 <script type="text/javascript" src="js/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 <script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+
+
 
 
 <script src="js/main/config.js"></script>
@@ -396,6 +451,49 @@
             $('form select').val("");
             $('form input').val("");
         });
+
+        //修改
+        $('#dstateTbody').on('click','.updateDstate',function () {
+            dstateIndex=$(this).attr('index');
+            currentDstate=dstateList[dstateIndex];
+        });
+        $('#updateBtn').click(function () {
+            if($('#comment').val()==''){
+                alert('备注不能为空！');
+                return false;
+            }
+
+            var bodyParam={'id':currentDstate.id,'comment':$('#comment').val()};
+            updateDstate(bodyParam);
+        });
+
+
+        //统计
+        $('#statisticBtn').click(function(){
+            var barChartData = {
+                labels : ["January","February","March","April","May","June","July"],
+                datasets : [
+                    {
+                        fillColor : "#2a323f",
+                        strokeColor : "#2a323f",
+                        data : [65,59,90,81,56,55,40]
+                    },
+                    {
+                        fillColor : "#6dc5a3",
+                        strokeColor : "#6dc5a3",
+                        data : [28,48,40,19,96,27,100]
+                    },
+                    {
+                        fillColor : "#6dc5a3",
+                        strokeColor : "#6dc5a3",
+                        data : [28,48,40,19,96,27,100]
+                    }
+                ]
+
+            }
+            var myLine = new Chart(document.getElementById("bar-chart-js").getContext("2d")).Bar(barChartData);
+        });
+
     });
 
 </script>

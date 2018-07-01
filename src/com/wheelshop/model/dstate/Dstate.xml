@@ -18,12 +18,13 @@
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
 			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="duration != null"> AND DURATION =#{duration} </if>
 			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
 			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = #{adddate} </if>
 			<if test="comment != null"> AND COMMENT =#{comment} </if>
 			<if test="flag != null"> AND FLAG =#{flag} </if>
-			AND STATE IN ('01','02','03') 
+			<if test="statein != null"> AND STATE IN ('01','02','03')  </if>
 		</trim>  
 		ORDER BY ID DESC 
 		 
@@ -36,12 +37,13 @@
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
 			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="duration != null"> AND DURATION =#{duration} </if>
 			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
 			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = #{adddate} </if>
 			<if test="comment != null"> AND COMMENT =#{comment} </if>
 			<if test="flag != null"> AND FLAG =#{flag} </if>
-			AND STATE IN ('01','02','03') 
+			<if test="statein != null"> AND STATE IN ('01','02','03')  </if>
 		</trim>  
 		ORDER BY ID DESC 
 		LIMIT #{fromPage},#{toPage} 
@@ -55,12 +57,13 @@
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
 			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="duration != null"> AND DURATION =#{duration} </if>
 			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
 			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = #{adddate} </if>
 			<if test="comment != null"> AND COMMENT =#{comment} </if>
 			<if test="flag != null"> AND FLAG =#{flag} </if>
-			AND STATE IN ('01','02','03') 
+			<if test="statein != null"> AND STATE IN ('01','02','03')  </if>
 		</trim>  
 	</select>
 
@@ -71,6 +74,7 @@
 			<if test="production != null">PRODUCTION=#{production}, </if>
 			<if test="deviceno != null">DEVICENO=#{deviceno}, </if>
 			<if test="state != null">STATE=#{state}, </if>
+			<if test="duration != null">DURATION=#{duration}, </if>
 			<if test="adddate != null">ADDDATE=#{adddate}, </if>
 			<if test="comment != null">COMMENT=#{comment}, </if>
 			<if test="flag != null">FLAG=#{flag}, </if>
@@ -84,6 +88,7 @@
 			<if test="production != null">PRODUCTION, </if>
 			<if test="deviceno != null">DEVICENO, </if>
 			<if test="state != null">STATE, </if>
+			<if test="duration != null">DURATION, </if>
 			<if test="adddate != null">ADDDATE, </if>
 			<if test="comment != null">COMMENT, </if>
 			<if test="flag != null">FLAG, </if>
@@ -92,6 +97,7 @@
 			<if test="production != null">#{production}, </if>
 			<if test="deviceno != null">#{deviceno}, </if>
 			<if test="state != null">#{state}, </if>
+			<if test="duration != null">#{duration}, </if>
 			<if test="adddate != null">#{adddate}, </if>
 			<if test="comment != null">#{comment}, </if>
 			<if test="flag != null">#{flag}, </if>
@@ -107,6 +113,7 @@
 				<if test="item.production != null">PRODUCTION, </if>
 				<if test="item.deviceno != null">DEVICENO, </if>
 				<if test="item.state != null">STATE, </if>
+				<if test="item.duration != null">DURATION, </if>
 				<if test="item.adddate != null">ADDDATE, </if>
 				<if test="item.comment != null">COMMENT, </if>
 				<if test="item.flag != null">FLAG, </if>
@@ -116,6 +123,7 @@
 				<if test="item.production != null">#{item.production}, </if>
 				<if test="item.deviceno != null">#{item.deviceno}, </if>
 				<if test="item.state != null">#{item.state}, </if>
+				<if test="item.duration != null">#{item.duration}, </if>
 				<if test="item.adddate != null">#{item.adddate}, </if>
 				<if test="item.comment != null">#{item.comment}, </if>
 				<if test="item.flag != null">#{item.flag}, </if>

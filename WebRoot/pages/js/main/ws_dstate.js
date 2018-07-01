@@ -91,7 +91,7 @@ function  queryDstates (bodyParam,currentPage,pageSize) {
                 else{html+='<td></td>\n' ;}
 
 
-                html+='<td>'+data[o].state+'</td>\n' +
+                html+='<td>'+data[o].duration+'</td>\n' +
                     '<td>'+data[o].deviceno+'</td>\n' +
                     '<td>'+data[o].adddate+'</td>\n' +
                     '<td>'+data[o].comment+'</td>\n' ;

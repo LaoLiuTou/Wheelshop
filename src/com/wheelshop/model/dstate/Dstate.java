@@ -38,6 +38,15 @@ public class Dstate {
 	public void setState(String state) {
 		this.state = state;
 	}
+	/** 持续的时间 */
+	private  String duration;
+	
+	public String getDuration() {
+		return duration;
+	}
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
 	/** 添加时间 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private  Date adddate;

@@ -26,6 +26,7 @@ import com.wheelshop.service.device.IDeviceService;
 import com.wheelshop.service.dstate.IDstateService;
 import com.wheelshop.service.production.IProductionService;
 import com.wheelshop.utils.ExcelUtil;
+import com.wheelshop.utils.TimeUtils;
 import com.wheelshop.chat.common.NettyChannelMap;
 import com.wheelshop.model.device.Device;
 import com.wheelshop.model.dstate.Dstate;
@@ -75,13 +76,35 @@ public class DstateController {
 					//Map equipstopmap=mapper.readValue(plist.get(0).getEquipstop(), Map.class);
 					//Map toolstopmap=mapper.readValue(plist.get(0).getToolstop(), Map.class);
 					prodstopmap.put(list.get(0).getNodeno(), dstate.getState());
-					
+					//05关闭声音
 					if(dstate!=null&&dstate.getState()!=null&&!dstate.getState().equals("05")){
 						Production temp=new Production();
 						temp.setId(plist.get(0).getId());
 						temp.setProdstop(mapper.writeValueAsString(prodstopmap));
 						iProductionService.updateProduction(temp);
+						
+						//04判断持续时间
+						if(dstate.getState().equals("04")){
+							SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+							paramMap=new HashMap();
+							 
+							paramMap.put("deviceno",dstate.getDeviceno());
+							paramMap.put("production",dstate.getProduction());
+							paramMap.put("adddate",sdf1.format(new Date()));
+							paramMap.put("statein","123");
+							List<Dstate> dlist=iDstateService.selectAllDstateByParam(paramMap);
+							for(Dstate d:dlist){
+								if(d.getDuration()==null||d.getDuration().equals("")){
+									dstate=iDstateService.selectDstateById(dstate.getId()+"");
+									Long times=dstate.getAdddate().getTime()-d.getAdddate().getTime();
+									//d.setDuration(TimeUtils.formatTime(times));
+									d.setDuration((times/1000)+"");
+									iDstateService.updateDstate(d);
+								}
+							}
+						}
 					}
+					
 					
 				}
 				
@@ -234,6 +257,7 @@ public class DstateController {
 				paramMap.put("production",dstate.getProduction());
 				paramMap.put("deviceno",dstate.getDeviceno());
 				paramMap.put("state",dstate.getState());
+				paramMap.put("duration",dstate.getDuration());
 				String adddateFrom=request.getParameter("adddateFrom");
 				String adddateTo=request.getParameter("adddateTo");
 				if(adddateFrom!=null&&!adddateFrom.equals(""))
@@ -242,6 +266,7 @@ public class DstateController {
 				paramMap.put("adddateTo", sdf.parse(adddateTo));
 				paramMap.put("comment",dstate.getComment());
 				paramMap.put("flag",dstate.getFlag());
+				paramMap.put("statein","123");
 				List<Dstate> list=iDstateService.selectDstateByParam(paramMap);
 				int totalnumber=iDstateService.selectCountDstateByParam(paramMap);
 				Map tempMap=new HashMap();
@@ -273,6 +298,7 @@ public class DstateController {
 				paramMap.put("production",dstate.getProduction());
 				paramMap.put("deviceno",dstate.getDeviceno());
 				paramMap.put("state",dstate.getState());
+				paramMap.put("duration",dstate.getDuration());
 				String adddateFrom=request.getParameter("adddateFrom");
 				String adddateTo=request.getParameter("adddateTo");
 				if(adddateFrom!=null&&!adddateFrom.equals(""))
@@ -281,6 +307,7 @@ public class DstateController {
 					paramMap.put("adddateTo", sdf.parse(adddateTo));
 				paramMap.put("comment",dstate.getComment());
 				paramMap.put("flag",dstate.getFlag());
+				paramMap.put("statein","123");
 				List<Dstate> list=iDstateService.selectAllDstateByParam(paramMap);
 				
 				List<String[]> exportList = new ArrayList<>();
@@ -305,7 +332,7 @@ public class DstateController {
 						}
 					}
 					
-					String[] strings = {(index+1)+"", temp.getProduction(), state, "", temp.getDeviceno(), 
+					String[] strings = {(index+1)+"", temp.getProduction(), state,temp.getDuration(), temp.getDeviceno(), 
 							sdf.format(temp.getAdddate()), temp.getComment()};
 					exportList.add(strings);
 				}
