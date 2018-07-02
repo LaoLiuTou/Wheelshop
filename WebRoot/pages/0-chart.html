@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>C3 Charts</title>
+
+  <!--C3 Chart-->
+  <!--<link href="js/c3-chart/c3.css" rel="stylesheet"/>-->
+
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+    <!--echarts-->
+    <script src="js/build/dist/echarts.js"></script>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="sticky-header">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href=""><img src="images/logo.png" alt=""></a>
+        </div>
+
+        <div class="logo-icon text-center" id="title">
+            <!--<a href=""><img src="images/logo_icon.png" alt=""></a>-->
+        </div>
+        <!--logo and iconic logo end-->
+
+
+        <div class="left-side-inner">
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li id="menu1"><a href="index.html"><i class="fa fa-home"></i> <span>首页</span></a></li>
+                <li id="menu2" class="menu-list active"><a href=""><i class="fa fa-desktop"></i> <span>生产大屏控制</span></a>
+                    <ul class="sub-menu-list">
+                        <li id="menu2-1"><a href="ws_first1.html">旋压A线</a></li>
+                        <li id="menu2-2"><a href="ws_second1.html">旋压B线</a></li>
+                        <li id="menu2-3"  ><a href="ws_third1.html">滚型轮辋</a></li>
+                        <li id="menu2-4"><a href="ws_fourth1.html">型钢轮辋</a></li>
+                        <li id="menu2-5" class="active"><a href="ws_fifth1.html">旋压轮辐</a></li>
+                        <li id="menu2-6"><a href="ws_sixth1.html">滚型轮辐</a></li>
+                    </ul>
+                </li>
+                <li id="menu3" class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>生产数据统计</span></a>
+                    <ul class="sub-menu-list">
+                        <li id="menu3-1"><a href="ws_statistics_stop.html">停台数据统计</a></li>
+                        <li id="menu3-2"><a href="ws_statistics_comp.html">生产完成统计</a></li>
+                    </ul>
+                </li>
+                <li id="menu4" class="menu-list "><a href=""><i class="fa fa-cogs"></i> <span>系统设置</span></a>
+                    <ul class="sub-menu-list">
+                        <li id="menu4-1" ><a href="ws_user.html">账号管理</a></li>
+                        <li id="menu4-2" ><a href="ws_permission.html">权限管理</a></li>
+                        <li id="menu4-3"><a href="ws_datamanager.html">数据管理</a></li>
+                        <li id="menu4-4" ><a href="ws_timer.html">时间管理</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+    
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+            <!--search start-->
+            <!--<form class="searchform" action="index.html" method="post">
+                <input type="text" class="form-control" name="keyword" placeholder="请输入您要搜索的内容..." />
+            </form>-->
+            <!--search end-->
+
+            <!--notification menu start -->
+            <div class="menu-right">
+                <ul class="notification-menu">
+
+                    <li>
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <img src="images/photos/user-avatar.png" alt="" />
+                            <span id="loginName"></span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="#"><i class="fa fa-user"></i>  个人信息</a></li>
+                            <li><a href="#" ><i class="fa fa-cog"></i>  设置</a></li>
+                            <li><a href="#" id="logoutBtn"><i class="fa fa-sign-out"></i> 退出</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+            <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="#">chart</a>
+                </li>
+                <li class="active">堆积</li>
+            </ul>
+
+        </div>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+
+            <!--<div class="row">-->
+                <!--<div class="col-sm-12">-->
+                    <!--<section class="panel">-->
+                        <!--<header class="panel-heading">-->
+                            <!--堆积柱状图-c3-->
+                        <!--</header>-->
+                        <!--<div class="panel-body">-->
+
+                            <!--<div class="chart">-->
+                                <!--<div id="combine-chart"></div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</section>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            堆积柱状图-echarts
+                        </header>
+                        <div class="panel-body">
+                            <div class="chart">
+                                <div id="main" style="height: 400px;"></div>
+                                <script type="text/javascript">
+                                    // 路径配置
+                                    require.config({
+                                        paths: {
+                                            echarts: 'js/build/dist'
+                                        }
+                                    });
+
+                                    // 使用
+                                    require(
+                                        [
+                                            'echarts',
+                                            'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                                        ],
+                                        function (ec) {
+                                            // 基于准备好的dom，初始化echarts图表
+                                            var myChart = ec.init(document.getElementById('main'));
+
+                                            var option = {
+//                                                title : {
+//                                                    text: 'title',
+//                                                },
+                                                tooltip : {
+                                                    trigger: 'axis',
+                                                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                                                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                                                    }
+                                                },
+                                                legend: {
+                                                    data:['工装停台','设备停台','生产停台']
+                                                },
+
+                                                calculable : true,
+                                                xAxis : [
+                                                    {
+                                                        type : 'category',
+                                                        data:['滚型B线-1','滚型轮辐线-2','旋压A线-3','旋压B线-4']
+                                                    }
+                                                ],
+                                                yAxis : [
+                                                    {
+                                                        type : 'value'
+                                                    }
+                                                ],
+                                                series : [
+                                                    {
+                                                        name:'工装停台',
+                                                        type:'bar',
+                                                        stack: '停台',
+                                                        data:[12, 13, 10, 14],
+//                                                        barWidth: 100,
+                                                        itemStyle:{
+                                                            normal: {
+                                                                color:'#9bbb59'
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        name:'设备停台',
+                                                        type:'bar',
+                                                        stack: '停台',
+                                                        data:[20, 12, 11, 4],
+//                                                        barWidth: 100,
+                                                        itemStyle:{
+                                                            normal:{
+                                                                color:'#c0504d'
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        name:'生产停台',
+                                                        type:'bar',
+                                                        stack: '停台',
+                                                        data:[15, 2, 10, 14],
+//                                                        barWidth: 100,
+                                                        itemStyle:{
+                                                            normal:{
+                                                                color:'#4f81bd'
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            };
+
+                                            // 为echarts对象加载数据
+                                            myChart.setOption(option);
+                                        }
+                                    );
+                                </script>
+                            </div>
+                        </div>
+
+
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            标准柱状图-echarts
+                        </header>
+                        <div class="panel-body">
+                            <div class="chart">
+                                <div id="main1" style="height: 400px;"></div>
+                                <script type="text/javascript">
+                                    // 路径配置
+                                    require.config({
+                                        paths: {
+                                            echarts: 'js/build/dist'
+                                        }
+                                    });
+
+                                    // 使用
+                                    require(
+                                        [
+                                            'echarts',
+                                            'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                                        ],
+                                        function (ec) {
+                                            // 基于准备好的dom，初始化echarts图表
+                                            var myChart = ec.init(document.getElementById('main1'));
+
+                                            var option = {
+
+                                                tooltip : {
+                                                    trigger: 'axis'
+                                                },
+                                                legend: {
+                                                    data:['实际完成','计划完成']
+                                                },
+
+                                                calculable : true,
+                                                xAxis : [
+                                                    {
+                                                        type : 'category',
+                                                        data : ['6月1日','6月2日','6月3日','6月4日'],
+                                                    }
+                                                ],
+                                                yAxis : [
+                                                    {
+                                                        type : 'value'
+                                                    }
+                                                ],
+                                                series : [
+                                                    {
+                                                        name:'实际完成',
+                                                        type:'bar',
+                                                        data:[800,800,800,800],
+                                                        itemStyle:{
+                                                            normal: {
+                                                                color:'#c0504d'
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        name:'计划完成',
+                                                        type:'bar',
+                                                        data:[1000,1000,1000,1000],
+                                                        itemStyle:{
+                                                            normal: {
+                                                                color:'#4f81bd'
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            };
+
+                                            // 为echarts对象加载数据
+                                            myChart.setOption(option);
+                                        }
+                                    );
+                                </script>
+                            </div>
+                        </div>
+
+
+                    </section>
+                </div>
+            </div>
+
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer>
+            版权所有 ©
+        </footer>
+        <!--footer section end-->
+
+
+    </div>
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--&lt;!&ndash;C3 Chart&ndash;&gt;-->
+<!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
+<!--<script src="js/c3-chart/c3.js"></script>-->
+<!--<script src="js/c3-chart/c3-chart.init.js"></script>-->
+
+
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+</body>
+</html>

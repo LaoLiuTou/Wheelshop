@@ -87,6 +87,15 @@ public class Production {
 	public void setRhythm(String rhythm) {
 		this.rhythm = rhythm;
 	}
+	/** 换模时间*/
+	private  String changtime;
+	 
+	public String getChangtime() {
+		return changtime;
+	}
+	public void setChangtime(String changtime) {
+		this.changtime = changtime;
+	}
 	/** 计划完成 */
 	private  String plancomp;
 	public String getPlancomp() {
@@ -169,7 +178,15 @@ public class Production {
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
-
-
+	
+	/** 生产时间 */
+	private  String prodtime;
+	public String getProdtime() {
+		return prodtime;
+	}
+	public void setProdtime(String prodtime) {
+		this.prodtime = prodtime;
+	}
+	 
 
 }

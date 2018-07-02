@@ -19,8 +19,15 @@
 			<if test="id != null"> AND a.ID =#{id} </if>
 			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
 			<if test="type != null"> AND a.TYPE =#{type} </if>
+			
+			<if test="starttimeFrom != null"> AND a.STARTTIME &gt;#{starttimeFrom} </if>
+			<if test="starttimeTo != null"> AND a.STARTTIME &lt;#{starttimeTo} </if>
 			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			
+			<if test="endtimeFrom != null"> AND a.ENDTIME &gt;#{endtimeFrom} </if>
+			<if test="endtimeTo != null"> AND a.ENDTIME &lt;#{endtimeTo} </if>
 			<if test="endtime != null"> AND a.ENDTIME =#{endtime} </if>
+			
 			<if test="creater != null"> AND a.CREATER =#{creater} </if>
 			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
 			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
@@ -39,8 +46,15 @@
 			<if test="id != null"> AND ID =#{id} </if>
 			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
 			<if test="type != null"> AND TYPE =#{type} </if>
+			
+			<if test="starttimeFrom != null"> AND STARTTIME &gt;#{starttimeFrom} </if>
+			<if test="starttimeTo != null"> AND STARTTIME &lt;#{starttimeTo} </if>
 			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
+			
+			<if test="endtimeFrom != null"> AND ENDTIME &gt;#{endtimeFrom} </if>
+			<if test="endtimeTo != null"> AND ENDTIME &lt;#{endtimeTo} </if>
 			<if test="endtime != null"> AND ENDTIME =#{endtime} </if>
+			
 			<if test="creater != null"> AND CREATER =#{creater} </if>
 			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
 			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>

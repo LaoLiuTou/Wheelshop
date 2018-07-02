@@ -193,7 +193,7 @@ function  queryProduction (bodyParam,currentPage,pageSize) {
                     '<td>'+data[o].plancomp+'</td>\n' +
                     '<td>'+data[o].actualcomp+'</td>\n' +
                     '<td>'+((data[o].actualcomp/data[o].plancomp)*100).toFixed(0)+'</td>\n' +
-                    '<td>'+data[o].starttime+'</td>\n';
+                    '<td>'+data[o].prodtime+'</td>\n';
 
                 if(data[o].actualcomp!=''&&data[o].power!=''){
                     html+='<td>'+((data[o].actualcomp/data[o].power)*100).toFixed(0)+'</td>\n';

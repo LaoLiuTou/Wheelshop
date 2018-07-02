@@ -26,16 +26,21 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.IntArraySerializer;
 import com.wheelshop.service.production.IProductionService;
+import com.wheelshop.service.timer.ITimerService;
+import com.wheelshop.service.varieties.IVarietiesService;
 import com.wheelshop.utils.ExcelUtil;
 import com.wheelshop.chat.common.NettyChannelMap;
 import com.wheelshop.model.device.Device;
 import com.wheelshop.model.dstate.Dstate;
 import com.wheelshop.model.production.Production;
+import com.wheelshop.model.timer.Timer;
+import com.wheelshop.model.varieties.Varieties;
 @Controller
 public class ProductionController {
 	@Autowired
 	private IProductionService iProductionService;
-	
+	@Autowired
+	private ITimerService iTimerService;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	Logger logger = Logger.getLogger("WheelshopLogger");
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -370,11 +375,15 @@ public class ProductionController {
 				paramMap.put("flag",production.getFlag());
 				List<Production> list=iProductionService.selectProductionByParam(paramMap);
 				int totalnumber=iProductionService.selectCountProductionByParam(paramMap);
+				
 				Map tempMap=new HashMap();
 				resultMap.put("status", "0");
 				tempMap.put("num", totalnumber);
 				tempMap.put("data", list);
 				resultMap.put("msg", tempMap);
+				
+				 
+				
 			}
 			else{
 				resultMap.put("status", "-1");
@@ -451,7 +460,7 @@ public class ProductionController {
 				}
 				
 				String[] strings = {(index+1)+"", temp.getProduction(), temp.getPlancomp(),temp.getActualcomp(),  
-						comRateStr,"",rateStr,sdf1.format(temp.getAdddate())};
+						comRateStr,temp.getProdtime(),rateStr,sdf1.format(temp.getAdddate())};
 				exportList.add(strings);
 			}
 			/*String[] strings = {"合计", "", "", "", "","", "", "","","", 

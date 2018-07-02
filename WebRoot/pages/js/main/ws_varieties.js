@@ -215,7 +215,7 @@ function  selectVarieties (production) {
             var html='';
             html+='<option value="" rhythm="" yield=""></option>\n';
             for(var o in data){
-                html+='<option value="'+data[o].variety+'" rhythm="'+data[o].rhythm+'" yield="'+data[o].yield+'">'+data[o].variety+'</option>\n';
+                html+='<option value="'+data[o].variety+'" rhythm="'+data[o].rhythm+'" changtime="'+data[o].changtime+'" yield="'+data[o].yield+'">'+data[o].variety+'</option>\n';
             }
             $('#variety').html(html);
 

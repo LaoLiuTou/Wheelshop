@@ -35,10 +35,30 @@ public class TimerController {
 	public Map add(Timer timer){
 		Map resultMap=new HashMap();
 		try {
-			iTimerService.addTimer(timer);
-			resultMap.put("status", "0");
-			resultMap.put("msg", timer.getId());
-			logger.info("新建成功，主键："+timer.getId());
+			
+			Map paramMap=new HashMap();
+			paramMap.put("starttimeTo",timer.getStarttime());
+			paramMap.put("endtimeFrom",timer.getStarttime());
+			paramMap.put("prodnum",timer.getProdnum());
+			int startnumber=iTimerService.selectCountTimerByParam(paramMap);
+			paramMap=new HashMap();
+			paramMap.put("starttimeTo",timer.getEndtime());
+			paramMap.put("endtimeFrom",timer.getEndtime());
+			paramMap.put("prodnum",timer.getProdnum());
+			int endnumber=iTimerService.selectCountTimerByParam(paramMap);
+			
+			if(startnumber>0||endnumber>0){
+				resultMap.put("status", "-1");
+				resultMap.put("msg", "该时段已经存在！");
+				logger.info("新建失败："+"该时段已经存在！");
+			}
+			else{
+				iTimerService.addTimer(timer);
+				resultMap.put("status", "0");
+				resultMap.put("msg", timer.getId());
+				logger.info("新建成功，主键："+timer.getId());
+			}
+			
 		} catch (Exception e) {
 			resultMap.put("status", "-1");
 			resultMap.put("msg", "新建失败！");

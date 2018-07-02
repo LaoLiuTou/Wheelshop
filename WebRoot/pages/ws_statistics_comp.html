@@ -264,7 +264,7 @@
         var currentPage=1;
         var pageSize=10;
         var bodyParam={'page':currentPage,'size':pageSize};
-        if($('#production').val()!=''){
+        /*if($('#production').val()!=''){
             bodyParam['flag']=$('#production').val();
         }
         if($('#adddate_from').val()!=''){
@@ -272,12 +272,34 @@
         }
         if($('#adddate_to').val()!=''){
             bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+        }*/
+
+        if($('#adddate_from').val()==''){
+            var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+            bodyParam['adddateFrom']=currentTime+' 00:00:00';
         }
+        if($('#adddate_to').val()==''){
+            var currentTime = new Date().format("yyyy-MM-dd");
+            bodyParam['adddateTo']=currentTime+' 23:59:59';
+        }
+
         queryProduction(bodyParam,currentPage,pageSize);
 
 
         //搜索
         $('#searchBtn').click(function () {
+            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+                var oDate1, oDate2;
+                oDate1 = new Date($('#adddate_from').val()).getTime();
+                oDate2 = new Date($('#adddate_to').val()).getTime();
+                var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
+                if(TotalMilliseconds>31*24*60*60*1000){
+                    alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+            }
+
+
             currentPage=1;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
@@ -285,9 +307,25 @@
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
+                if($('#adddate_to').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+                }
             }
             if($('#adddate_to').val()!=''){
                 bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+                if($('#adddate_from').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                }
+            }
+            if($('#adddate_from').val()==''){
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            }
+            if($('#adddate_to').val()==''){
+                var currentTime = new Date().format("yyyy-MM-dd");
+                bodyParam['adddateTo']=currentTime+' 23:59:59';
             }
             queryProduction(bodyParam,currentPage,pageSize);
         });
@@ -295,6 +333,16 @@
 
 
         $('.pagination').on('click','.pageBtn',function(){
+            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+                var oDate1, oDate2;
+                oDate1 = new Date($('#adddate_from').val()).getTime();
+                oDate2 = new Date($('#adddate_to').val()).getTime();
+                var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
+                if(TotalMilliseconds>31*24*60*60*1000){
+                    alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+            }
             currentPage=$(this).attr('index');
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
@@ -302,13 +350,40 @@
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
+                if($('#adddate_to').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+                }
             }
             if($('#adddate_to').val()!=''){
                 bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+                if($('#adddate_from').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                }
             }
+            if($('#adddate_from').val()==''){
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            }
+            if($('#adddate_to').val()==''){
+                var currentTime = new Date().format("yyyy-MM-dd");
+                bodyParam['adddateTo']=currentTime+' 23:59:59';
+            }
+
             queryProduction(bodyParam,currentPage,pageSize);
         });
         $('.pagination').on('click','.prevBtn',function(){
+            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+                var oDate1, oDate2;
+                oDate1 = new Date($('#adddate_from').val()).getTime();
+                oDate2 = new Date($('#adddate_to').val()).getTime();
+                var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
+                if(TotalMilliseconds>31*24*60*60*1000){
+                    alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+            }
             currentPage--;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
@@ -316,14 +391,41 @@
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
+                if($('#adddate_to').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+                }
             }
             if($('#adddate_to').val()!=''){
                 bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+                if($('#adddate_from').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                }
+            }
+            if($('#adddate_from').val()==''){
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            }
+            if($('#adddate_to').val()==''){
+                var currentTime = new Date().format("yyyy-MM-dd");
+                bodyParam['adddateTo']=currentTime+' 23:59:59';
             }
             queryProduction(bodyParam,currentPage,pageSize);
 
         });
         $('.pagination').on('click','.nextBtn',function(){
+            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+                var oDate1, oDate2;
+                oDate1 = new Date($('#adddate_from').val()).getTime();
+                oDate2 = new Date($('#adddate_to').val()).getTime();
+                var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
+                if(TotalMilliseconds>31*24*60*60*1000){
+                    alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+            }
+
             currentPage++;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
@@ -331,9 +433,25 @@
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
+                if($('#adddate_to').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+                }
             }
             if($('#adddate_to').val()!=''){
                 bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+                if($('#adddate_from').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                }
+            }
+            if($('#adddate_from').val()==''){
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            }
+            if($('#adddate_to').val()==''){
+                var currentTime = new Date().format("yyyy-MM-dd");
+                bodyParam['adddateTo']=currentTime+' 23:59:59';
             }
             queryProduction(bodyParam,currentPage,pageSize);
         });

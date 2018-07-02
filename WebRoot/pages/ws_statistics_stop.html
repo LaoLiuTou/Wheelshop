@@ -272,17 +272,8 @@
                 <h4 class="modal-title">统计图</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <section class="panel">
-
-                            <div class="panel-body">
-                                <div class="chartJS">
-                                    <canvas id="bar-chart-js" height="250" width="800" ></canvas>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
+                <div class="chart">
+                    <div id="main" style="height: 400px;"></div>
                 </div>
 
             </div>
@@ -319,6 +310,10 @@
 <script src="js/main/config.js"></script>
 <script src="js/main/md5.js"></script>
 <script src="js/main/ws_dstate.js"></script>
+
+
+<!--echarts-->
+<script src="js/build/dist/echarts.js"></script>
 <script>
 
     $(document).ready(function(){
@@ -345,6 +340,7 @@
 
         //搜索
         $('#searchBtn').click(function () {
+
             currentPage=1;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
@@ -470,29 +466,97 @@
 
         //统计
         $('#statisticBtn').click(function(){
-            var barChartData = {
-                labels : ["January","February","March","April","May","June","July"],
-                datasets : [
-                    {
-                        fillColor : "#2a323f",
-                        strokeColor : "#2a323f",
-                        data : [65,59,90,81,56,55,40]
-                    },
-                    {
-                        fillColor : "#6dc5a3",
-                        strokeColor : "#6dc5a3",
-                        data : [28,48,40,19,96,27,100]
-                    },
-                    {
-                        fillColor : "#6dc5a3",
-                        strokeColor : "#6dc5a3",
-                        data : [28,48,40,19,96,27,100]
-                    }
-                ]
 
-            }
-            var myLine = new Chart(document.getElementById("bar-chart-js").getContext("2d")).Bar(barChartData);
+
         });
+
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'js/build/dist'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+                var option = {
+//                                                title : {
+//                                                    text: 'title',
+//                                                },
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        data:['工装停台','设备停台','生产停台']
+                    },
+
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data:['滚型B线-1','滚型轮辐线-2','旋压A线-3','旋压B线-4']
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'工装停台',
+                            type:'bar',
+                            stack: '停台',
+                            data:[12, 13, 10, 14],
+//                                                        barWidth: 100,
+                            itemStyle:{
+                                normal: {
+                                    color:'#9bbb59'
+                                }
+                            }
+                        },
+                        {
+                            name:'设备停台',
+                            type:'bar',
+                            stack: '停台',
+                            data:[20, 12, 11, 4],
+//                                                        barWidth: 100,
+                            itemStyle:{
+                                normal:{
+                                    color:'#c0504d'
+                                }
+                            }
+                        },
+                        {
+                            name:'生产停台',
+                            type:'bar',
+                            stack: '停台',
+                            data:[15, 2, 10, 14],
+//                                                        barWidth: 100,
+                            itemStyle:{
+                                normal:{
+                                    color:'#4f81bd'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
 
     });
 

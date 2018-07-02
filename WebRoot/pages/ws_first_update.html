@@ -201,16 +201,17 @@
                                             <label class="col-sm-2 col-sm-2 control-label">计划完成</label>
                                             <div class="col-sm-9">
                                                 <input type="text" prod="1"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
+                                                <input type="text" prod="1"  id="changtime" class="form-control hide" >
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">加班时长</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control m-bot15" prod="1"  id="overtime">
-                                                    <option value="0分">0分</option>
-                                                    <option value="60分">60分</option>
-                                                    <option value="90分">90分</option>
-                                                    <option value="120分">120分</option>
+                                                    <option value="0">0分</option>
+                                                    <option value="60">60分</option>
+                                                    <option value="90">90分</option>
+                                                    <option value="120">120分</option>
                                                 </select>
 
                                             </div>
@@ -539,6 +540,7 @@
         $('#variety').change(function(){
             $('#rhythm').val($(this).find("option:selected").attr("rhythm"));
             $('#plancomp').val($(this).find("option:selected").attr("yield"));
+            $('#changtime').val($(this).find("option:selected").attr("changtime"));
 
         });
 
