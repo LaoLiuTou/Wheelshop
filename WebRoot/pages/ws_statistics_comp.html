@@ -286,7 +286,7 @@
         var pageSize=10;
         var bodyParam={'page':currentPage,'size':pageSize};
         /*if($('#production').val()!=''){
-            bodyParam['flag']=$('#production').val();
+            bodyParam['prodnum']=$('#production').val();
         }
         if($('#adddate_from').val()!=''){
             bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
@@ -324,7 +324,7 @@
             currentPage=1;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
-                bodyParam['flag']=$('#production').val();
+                bodyParam['prodnum']=$('#production').val();
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
@@ -367,7 +367,7 @@
             currentPage=$(this).attr('index');
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
-                bodyParam['flag']=$('#production').val();
+                bodyParam['prodnum']=$('#production').val();
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
@@ -408,7 +408,7 @@
             currentPage--;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
-                bodyParam['flag']=$('#production').val();
+                bodyParam['prodnum']=$('#production').val();
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
@@ -516,118 +516,135 @@
 
         $("#statistic-box").on("shown.bs.modal",function(){
 
-            //统计
-            var ECharts;
-            // 路径配置
-            require.config({
-                paths: {
-                    echarts: 'js/build/dist'
+            var names=[];    //类别数组
+            var plancomps=[];    //计划
+            var actualcomps=[];    //实际
+
+            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+                var oDate1, oDate2;
+                oDate1 = new Date($('#adddate_from').val()).getTime();
+                oDate2 = new Date($('#adddate_to').val()).getTime();
+                var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
+                if(TotalMilliseconds>31*24*60*60*1000){
+                    alert("查询时间区间不能大于一个月！");
+                    return;
                 }
-            });
+            }
 
-            // 使用
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
-                ],
-                function (ec) {
-                    ECharts=ec;
-                    var option = {
-
-                        tooltip : {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            data:['实际完成','计划完成']
-                        },
-
-                        calculable : true,
-                        xAxis : [
-                            {
-                                type : 'category',
-                                data : ['6月1日','6月2日','6月3日','6月4日'],
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type : 'value'
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'实际完成',
-                                type:'bar',
-                                data:[800,800,800,800],
-                                itemStyle:{
-                                    normal: {
-                                        color:'#c0504d'
-                                    }
-                                }
-                            },
-                            {
-                                name:'计划完成',
-                                type:'bar',
-                                data:[1000,1000,1000,1000],
-                                itemStyle:{
-                                    normal: {
-                                        color:'#4f81bd'
-                                    }
-                                }
-                            }
-                        ]
-                    };
-
-                    //接下来我们就可以进行图表的init操作了
-                    var myChart = ECharts.init(document.getElementById("main"));
-                    myChart.setOption(option);
-
-                    myChart.showLoading();
+            bodyParam={};
+            if($('#production').val()!=''){
+                bodyParam['prodnum']=$('#production').val();
+            }
+            if($('#adddate_from').val()!=''){
+                bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
+                if($('#adddate_to').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+                }
+            }
+            if($('#adddate_to').val()!=''){
+                bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+                if($('#adddate_from').val()==''){
+                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                }
+            }
+            if($('#adddate_from').val()==''){
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            }
+            if($('#adddate_to').val()==''){
+                var currentTime = new Date().format("yyyy-MM-dd");
+                bodyParam['adddateTo']=currentTime+' 23:59:59';
+            }
 
 
-                    var names=[];    //类别数组（实际用来盛放X轴坐标值）
-                    var nums=[];    //销量数组（实际用来盛放Y坐标值）
+            var httpR = new createHttpR(url+'statisticProduction','post','text',bodyParam,'callBack');
+            httpR.HttpRequest(function(response){
+                var obj = JSON.parse(response);
+                var status = obj['status'];
+                var msg = obj['msg'];
+                if(status=='0'){
 
-                    $.ajax({
-                        type : "post",
-                        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-                        url : url+"statisticProduction",    //请求发送到
-                        data : {},
-                        dataType : "json",        //返回数据形式为json
-                        success : function(result) {
-                            //请求成功时执行该函数内容，result即为服务器返回的json对象
-                            if (result) {
-                                for(var i=0;i<result.length;i++){
-                                    names.push(result[i].name);    //挨个取出类别并填入类别数组
-                                }
-                                for(var i=0;i<result.length;i++){
-                                    nums.push(result[i].num);    //挨个取出销量并填入销量数组
-                                }
-                                myChart.hideLoading();    //隐藏加载动画
-                                myChart.setOption({        //加载数据图表
-                                    xAxis: {
-                                        data: names
-                                    },
-                                    series: [{
-                                        // 根据名字对应到相应的系列
-                                        name: '销量',
-                                        data: nums
-                                    }]
-                                });
+                    for(var i=0;i<msg.length;i++){
+                        var currentTime = new Date(msg[i].adddate).format("MM月dd日");
+                        names.push(currentTime);
+                        plancomps.push(msg[i].plancomp);
+                        actualcomps.push(msg[i].actualcomp);
 
-                            }
+                    }
 
-                        },
-                        error : function(errorMsg) {
-                            //请求失败时执行该函数
-                            alert("图表请求数据失败!");
-                            myChart.hideLoading();
+                    //统计
+                    var ECharts;
+                    // 路径配置
+                    require.config({
+                        paths: {
+                            echarts: 'js/build/dist'
                         }
                     });
 
+                    // 使用
+                    require(
+                        [
+                            'echarts',
+                            'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                        ],
+                        function (ec) {
+                            ECharts = ec;
+                            var option = {
 
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data: ['实际完成', '计划完成']
+                                },
+
+                                calculable: true,
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        data: names,
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value'
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name: '实际完成',
+                                        type: 'bar',
+                                        data: plancomps,
+                                        itemStyle: {
+                                            normal: {
+                                                color: '#c0504d'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name: '计划完成',
+                                        type: 'bar',
+                                        data: actualcomps,
+                                        itemStyle: {
+                                            normal: {
+                                                color: '#4f81bd'
+                                            }
+                                        }
+                                    }
+                                ]
+                            };
+
+                            //接下来我们就可以进行图表的init操作了
+                            var myChart = ECharts.init(document.getElementById("main"));
+                            myChart.setOption(option);
+                        } );
                 }
-            );
+                else{
+                    alert("图表请求数据失败!");
+                }
+            });
 
 
         });

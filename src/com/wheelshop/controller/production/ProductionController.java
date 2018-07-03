@@ -492,58 +492,46 @@ public class ProductionController {
 		throws ServletException, IOException {
 		Map resultMap=new HashMap();
 		try {
-			String page=request.getParameter("page");
-			String size=request.getParameter("size");
-			if(page!=null&&size!=null){
-				Map paramMap=new HashMap();
-				paramMap.put("fromPage",(Integer.parseInt(page)-1)*Integer.parseInt(size));
-				paramMap.put("toPage",Integer.parseInt(size)); 
-				paramMap.put("id",production.getId());
-				paramMap.put("prodnum",production.getProdnum());
-				paramMap.put("production",production.getProduction());
-				paramMap.put("changed",production.getChanged());
-				paramMap.put("yield",production.getYield());
-				paramMap.put("prodstop",production.getProdstop());
-				paramMap.put("power",production.getPower());
-				paramMap.put("rate",production.getRate());
-				paramMap.put("variety",production.getVariety());
-				paramMap.put("rhythm",production.getRhythm());
-				paramMap.put("plancomp",production.getPlancomp());
-				paramMap.put("equipstop",production.getEquipstop());
-				String starttimeFrom=request.getParameter("starttimeFrom");
-				String starttimeTo=request.getParameter("starttimeTo");
-				if(starttimeFrom!=null&&!starttimeFrom.equals(""))
-				paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
-				if(starttimeTo!=null&&!starttimeTo.equals(""))
-				paramMap.put("starttimeTo", sdf.parse(starttimeTo));
-				paramMap.put("actualcomp",production.getActualcomp());
-				paramMap.put("toolstop",production.getToolstop());
-				paramMap.put("overtime",production.getOvertime());
-				paramMap.put("prodstate",production.getProdstate());
-				paramMap.put("creater",production.getCreater());
-				String adddateFrom=request.getParameter("adddateFrom");
-				String adddateTo=request.getParameter("adddateTo");
-				if(adddateFrom!=null&&!adddateFrom.equals(""))
-				paramMap.put("adddateFrom", sdf.parse(adddateFrom));
-				if(adddateTo!=null&&!adddateTo.equals(""))
-				paramMap.put("adddateTo", sdf.parse(adddateTo));
-				paramMap.put("flag",production.getFlag());
-				List<Production> list=iProductionService.selectProductionByParam(paramMap);
-				int totalnumber=iProductionService.selectCountProductionByParam(paramMap);
+		
+			Map paramMap=new HashMap();
+		
+			paramMap.put("id",production.getId());
+			paramMap.put("prodnum",production.getProdnum());
+			paramMap.put("production",production.getProduction());
+			paramMap.put("changed",production.getChanged());
+			paramMap.put("yield",production.getYield());
+			paramMap.put("prodstop",production.getProdstop());
+			paramMap.put("power",production.getPower());
+			paramMap.put("rate",production.getRate());
+			paramMap.put("variety",production.getVariety());
+			paramMap.put("rhythm",production.getRhythm());
+			paramMap.put("plancomp",production.getPlancomp());
+			paramMap.put("equipstop",production.getEquipstop());
+			String starttimeFrom=request.getParameter("starttimeFrom");
+			String starttimeTo=request.getParameter("starttimeTo");
+			if(starttimeFrom!=null&&!starttimeFrom.equals(""))
+			paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
+			if(starttimeTo!=null&&!starttimeTo.equals(""))
+			paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+			paramMap.put("actualcomp",production.getActualcomp());
+			paramMap.put("toolstop",production.getToolstop());
+			paramMap.put("overtime",production.getOvertime());
+			paramMap.put("prodstate",production.getProdstate());
+			paramMap.put("creater",production.getCreater());
+			String adddateFrom=request.getParameter("adddateFrom");
+			String adddateTo=request.getParameter("adddateTo");
+			if(adddateFrom!=null&&!adddateFrom.equals(""))
+			paramMap.put("adddateFrom", sdf.parse(adddateFrom));
+			if(adddateTo!=null&&!adddateTo.equals(""))
+			paramMap.put("adddateTo", sdf.parse(adddateTo));
+			paramMap.put("flag",production.getFlag());
+			List<Production> list=iProductionService.selectStatisticproductionByParam(paramMap);
+			
+			Map tempMap=new HashMap();
+			resultMap.put("status", "0");
+			resultMap.put("msg", list);
 				
-				Map tempMap=new HashMap();
-				resultMap.put("status", "0");
-				tempMap.put("num", totalnumber);
-				tempMap.put("data", list);
-				resultMap.put("msg", tempMap);
-				
-				 
-				
-			}
-			else{
-				resultMap.put("status", "-1");
-				resultMap.put("msg", "分页参数不能为空！");
-			}
+			
 		} catch (Exception e) {
 			resultMap.put("status", "-1");
 			resultMap.put("msg", "查询失败！");

@@ -16,6 +16,8 @@ import com.wheelshop.model.production.Production;
 	public List<Production> selectproductionByParam(Map paramMap); 
  @SuppressWarnings("rawtypes")
  	public List<Production> selectallproductionByParam(Map paramMap); 
+ @SuppressWarnings("rawtypes")
+ 	public List<Production> selectStatisticproductionByParam(Map paramMap); 
 	/**
 		* 通过查询参数获取总条数
 	    * @return

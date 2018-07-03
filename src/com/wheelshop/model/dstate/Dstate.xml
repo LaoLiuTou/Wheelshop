@@ -67,6 +67,32 @@
 		</trim>  
 	</select>
 
+
+	<select id="selectStatisticdstateByParam" parameterType="java.util.Map" resultType="Dstate">
+		SELECT 
+		 CONCAT(b.PRODUCTION,'_',a.DEVICENO) as production ,
+		SUM(CASE WHEN a.STATE='01' THEN a.DURATION ELSE 0 END)  as deviceno, 
+		SUM(CASE WHEN a.STATE='02' THEN a.DURATION ELSE 0 END)  as state, 
+		SUM(CASE WHEN a.STATE='03' THEN a.DURATION ELSE 0 END)  as duration  
+		FROM dstate a 
+		LEFT JOIN prodnum b on a.production=b.id 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="production != null"> AND a.PRODUCTION =#{production} </if>
+			<if test="deviceno != null"> AND a.DEVICENO =#{deviceno} </if>
+			<if test="state != null"> AND a.STATE =#{state} </if>
+			<if test="duration != null"> AND a.DURATION =#{duration} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = #{adddate} </if>
+			<if test="comment != null"> AND a.COMMENT =#{comment} </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if> 
+		</trim>  
+		GROUP by  CONCAT(b.PRODUCTION,'_',a.DEVICENO) 
+		 
+	</select>
+	
+	
 	<update id="updatedstate" parameterType="Dstate">
 		UPDATE dstate 
 		<trim prefix="SET" suffixOverrides=",">

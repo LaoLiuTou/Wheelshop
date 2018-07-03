@@ -178,6 +178,11 @@ public class ProductionServiceImpl  implements IProductionService {
 		return list;
 	}
 
+	 
+	@SuppressWarnings("rawtypes")
+	public List<Production> selectStatisticproductionByParam(Map paramMap){ 
+		return iProductionMapper.selectStatisticproductionByParam(paramMap);
+	}
 	/**
 	* 通过查询参数获取总条数
 	* @return

@@ -357,4 +357,37 @@ public class DstateController {
 		}
 		//return resultMap;
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/statisticDstate")
+	@ResponseBody
+	public Map statistic(HttpServletRequest request, HttpServletResponse response,Dstate dstate)
+			throws ServletException, IOException {
+		Map resultMap=new HashMap();
+		try {
+			Map paramMap=new HashMap();
+			paramMap.put("id",dstate.getId());
+			paramMap.put("production",dstate.getProduction());
+			paramMap.put("deviceno",dstate.getDeviceno());
+			paramMap.put("state",dstate.getState());
+			paramMap.put("duration",dstate.getDuration());
+			String adddateFrom=request.getParameter("adddateFrom");
+			String adddateTo=request.getParameter("adddateTo");
+			if(adddateFrom!=null&&!adddateFrom.equals(""))
+				paramMap.put("adddateFrom", sdf.parse(adddateFrom));
+			if(adddateTo!=null&&!adddateTo.equals(""))
+				paramMap.put("adddateTo", sdf.parse(adddateTo));
+			paramMap.put("comment",dstate.getComment());
+			paramMap.put("flag",dstate.getFlag());
+			List<Dstate> list=iDstateService.selectStatisticdstateByParam(paramMap);
+			resultMap.put("status", "0");
+			resultMap.put("msg", list);
+			
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "查询失败！");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 }

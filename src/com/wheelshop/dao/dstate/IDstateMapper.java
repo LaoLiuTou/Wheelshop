@@ -16,6 +16,8 @@ import com.wheelshop.model.dstate.Dstate;
 	public List<Dstate> selectdstateByParam(Map paramMap); 
  @SuppressWarnings("rawtypes")
  	public List<Dstate> selectalldstateByParam(Map paramMap); 
+ @SuppressWarnings("rawtypes")
+ 	public List<Dstate> selectStatisticdstateByParam(Map paramMap); 
 	/**
 		* 通过查询参数获取总条数
 	    * @return

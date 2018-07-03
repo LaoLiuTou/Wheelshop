@@ -104,9 +104,44 @@
 			<if test="creater != null"> AND CREATER =#{creater} </if>
 			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
 			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND ADDDATE =#{adddate} </if>
+			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
 			<if test="flag != null"> AND FLAG =#{flag} </if>
 		</trim>  
+	</select>
+	
+	<select id="selectStatisticproductionByParam" parameterType="java.util.Map" resultType="Production">
+		SELECT SUM(a.plancomp) as plancomp,
+		SUM(a.actualcomp) as actualcomp,
+		 a.adddate as adddate 
+		FROM production a
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
+			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
+			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND a.POWER =#{power} </if>
+			<if test="rate != null"> AND a.RATE =#{rate} </if>
+			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
+			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND a.PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND a.CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+		</trim>  
+		GROUP BY DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') 
+		ORDER BY a.ADDDATE
 	</select>
 
 	<update id="updateproduction" parameterType="Production">

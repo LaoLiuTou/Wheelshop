@@ -466,140 +466,130 @@
 
         //统计
         $("#statistic-box").on("shown.bs.modal",function(){
-            //统计
-            var ECharts;
-            // 路径配置
-            require.config({
-                paths: {
-                    echarts: 'js/build/dist'
-                }
-            });
-
-            // 使用
-            require(
-                [
-                    'echarts',
-                    'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
-                ],
-                function (ec) {
-                    ECharts=ec;
-                    var option = {
-//                                                title : {
-//                                                    text: 'title',
-//                                                },
-                        tooltip : {
-                            trigger: 'axis',
-                            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                            }
-                        },
-                        legend: {
-                            data:['工装停台','设备停台','生产停台']
-                        },
-
-                        calculable : true,
-                        xAxis : [
-                            {
-                                type : 'category',
-                                data:['滚型B线-1','滚型轮辐线-2','旋压A线-3','旋压B线-4']
-                            }
-                        ],
-                        yAxis : [
-                            {
-                                type : 'value'
-                            }
-                        ],
-                        series : [
-                            {
-                                name:'工装停台',
-                                type:'bar',
-                                stack: '停台',
-                                data:[12, 13, 10, 14],
-//                                                        barWidth: 100,
-                                itemStyle:{
-                                    normal: {
-                                        color:'#9bbb59'
-                                    }
-                                }
-                            },
-                            {
-                                name:'设备停台',
-                                type:'bar',
-                                stack: '停台',
-                                data:[20, 12, 11, 4],
-//                                                        barWidth: 100,
-                                itemStyle:{
-                                    normal:{
-                                        color:'#c0504d'
-                                    }
-                                }
-                            },
-                            {
-                                name:'生产停台',
-                                type:'bar',
-                                stack: '停台',
-                                data:[15, 2, 10, 14],
-//                                                        barWidth: 100,
-                                itemStyle:{
-                                    normal:{
-                                        color:'#4f81bd'
-                                    }
-                                }
-                            }
-                        ]
-                    };
 
 
-                    //接下来我们就可以进行图表的init操作了
-                    var myChart = ECharts.init(document.getElementById("main"));
-                    myChart.setOption(option);
 
-                    myChart.showLoading();
+            var names=[];    //类别数组
+            var stop01=[];    //设备
+            var stop02=[];    //工装
+            var stop03=[];    //生产
+
+            bodyParam={};
+            if($('#production').val()!=''){
+                bodyParam['production']=$('#production').val();
+            }
+            if($('#adddate_from').val()!=''){
+                bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
+            }
+            if($('#adddate_to').val()!=''){
+                bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+            }
+            if($('#state').val()!=''){
+                bodyParam['state']=$('#state').val();
+            }
 
 
-                    var names=[];    //类别数组（实际用来盛放X轴坐标值）
-                    var nums=[];    //销量数组（实际用来盛放Y坐标值）
+            var httpR = new createHttpR(url+'statisticDstate','post','text',bodyParam,'callBack');
+            httpR.HttpRequest(function(response){
+                var obj = JSON.parse(response);
+                var status = obj['status'];
+                var msg = obj['msg'];
+                if(status=='0'){
 
-                    $.ajax({
-                        type : "post",
-                        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-                        url : "TestServlet",    //请求发送到TestServlet处
-                        data : {},
-                        dataType : "json",        //返回数据形式为json
-                        success : function(result) {
-                            //请求成功时执行该函数内容，result即为服务器返回的json对象
-                            if (result) {
-                                for(var i=0;i<result.length;i++){
-                                    names.push(result[i].name);    //挨个取出类别并填入类别数组
-                                }
-                                for(var i=0;i<result.length;i++){
-                                    nums.push(result[i].num);    //挨个取出销量并填入销量数组
-                                }
-                                myChart.hideLoading();    //隐藏加载动画
-                                myChart.setOption({        //加载数据图表
-                                    xAxis: {
-                                        data: names
-                                    },
-                                    series: [{
-                                        // 根据名字对应到相应的系列
-                                        name: '销量',
-                                        data: nums
-                                    }]
-                                });
+                    for(var i=0;i<msg.length;i++){
+                        names.push(msg[i].production);
+                        stop01.push(msg[i].deviceno);
+                        stop02.push(msg[i].state);
+                        stop03.push(msg[i].duration);
+                    }
 
-                            }
-
-                        },
-                        error : function(errorMsg) {
-                            //请求失败时执行该函数
-                            alert("图表请求数据失败!");
-                            myChart.hideLoading();
+                    //统计
+                    var ECharts;
+                    // 路径配置
+                    require.config({
+                        paths: {
+                            echarts: 'js/build/dist'
                         }
                     });
 
+                    // 使用
+                    require(
+                        [
+                            'echarts',
+                            'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                        ],
+                        function (ec) {
+                            ECharts = ec;
+                            var option = {
 
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data:['工装停台','设备停台','生产停台']
+                                },
+
+                                calculable: true,
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        data: names,
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value'
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name:'工装停台',
+                                        type:'bar',
+                                        stack: '停台',
+                                        data:stop02,
+//                                                        barWidth: 100,
+                                        itemStyle:{
+                                            normal: {
+                                                color:'#9bbb59'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name:'设备停台',
+                                        type:'bar',
+                                        stack: '停台',
+                                        data:stop01,
+//                                                        barWidth: 100,
+                                        itemStyle:{
+                                            normal:{
+                                                color:'#c0504d'
+                                            }
+                                        }
+                                    },
+                                    {
+                                        name:'生产停台',
+                                        type:'bar',
+                                        stack: '停台',
+                                        data:stop03,
+//                                                        barWidth: 100,
+                                        itemStyle:{
+                                            normal:{
+                                                color:'#4f81bd'
+                                            }
+                                        }
+                                    }
+                                ]
+                            };
+
+                            //接下来我们就可以进行图表的init操作了
+                            var myChart = ECharts.init(document.getElementById("main"));
+                            myChart.setOption(option);
+                        } );
                 }
-            );
+                else{
+                    alert("图表请求数据失败!");
+                }
+            });
 
         });
 
