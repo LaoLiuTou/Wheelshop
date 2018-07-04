@@ -308,28 +308,33 @@
                     </div>
                     <div class="form-group">
                         <label>计划产量</label>
-                        <input type="text" class="form-control" id="yield" placeholder="请输入">
+                        <input type="text" class="form-control" id="yield" placeholder="请输入" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
                     <div class="form-group">
                         <label>节拍</label>
-                        <input type="text" class="form-control" id="rhythm" placeholder="请输入">
+                        <input type="text" class="form-control" id="rhythm" placeholder="请输入" onkeyup="this.value=this.value.replace(/[^\-?\d.]/g,'')" onafterpaste="this.value=this.value.replace(/[^\-?\d.]/g,'')">
                     </div>
 
                     <div class="form-group">
                         <label>生产线</label>
-                        <select class="form-control m-bot15" id="production">
-                            <option value=""></option>
-                            <option value="卡车车轮">卡车车轮</option>
-                            <option value="轿车车轮">轿车车轮</option>
+                        <select class="form-control m-bot15"  id="production" >
+                            <!--<option value="">全部</option>
+                            <option value="旋压A线">旋压A线</option>
+                            <option value="旋压B线">旋压B线</option>
+                            <option value="滚型轮辋">滚型轮辋</option>
+                            <option value="型钢轮辋">型钢轮辋</option>
+                            <option value="旋压轮辐">旋压轮辐</option>
+                            <option value="滚型轮辐">滚型轮辐</option>-->
+
                         </select>
                     </div>
                     <div class="form-group">
                         <label>产能</label>
-                        <input type="text" class="form-control" id="capacity" placeholder="请输入">
+                        <input type="text" class="form-control" id="capacity" placeholder="请输入" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
                     <div class="form-group">
                         <label>换模时间</label>
-                        <input type="text" class="form-control" data-mask="99:99:99" id="changtime" placeholder="请输入">
+                        <input type="text" class="form-control" id="changtime" placeholder="请输入" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
 
                 </form>
@@ -421,11 +426,15 @@
 <script src="js/main/config.js"></script>
 <script src="js/main/md5.js"></script>
 <script src="js/main/ws_varieties.js"></script>
+<script src="js/main/ws_production.js"></script>
 <script>
     //列表
     var currentPage=1;
     var pageSize=10;
     $(document).ready(function(){
+
+        selectProdnum (1);
+
 
         //多选
         $('#mulDelCheckbox').on('click',function () {
@@ -480,6 +489,10 @@
         $('#pzqd_addBtn').click(function () {
             if($('#variety').val()==''){
                 alert('品种不能为空！');
+                return false;
+            }
+            if($('#changtime').val()==''){
+                alert('换模时间不能为空！');
                 return false;
             }
 

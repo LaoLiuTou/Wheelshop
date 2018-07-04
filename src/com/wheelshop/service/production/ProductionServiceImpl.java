@@ -89,10 +89,7 @@ public class ProductionServiceImpl  implements IProductionService {
 			//换模时间
 			int changeTime=0;
 			if(p.getChangtime()!=null){
-				String[] starttimes=p.getChangtime().split(":");
-				changeTime=Integer.parseInt(starttimes[0])*60*60+
-						Integer.parseInt(starttimes[1])*60+
-						Integer.parseInt(starttimes[2]);
+				changeTime=Integer.parseInt(p.getChangtime())*60;
 			}
 			
 			int prodtime= 8*60*60+overtime-rest-duration-changeTime;

@@ -93,6 +93,17 @@
     padding: 0;
 }
 
+.block-one i:first-child {
+    display: block;
+    margin: .2rem 0;
+}
+
+.block-one i:last-child {
+    display: block;
+    margin: .2rem 0;
+}
+
+
 .block-one .box-top {
     width: 80%;
     height: 1rem;
@@ -255,7 +266,7 @@
     position: absolute;
     z-index: 999;
     right: 6.5%;
-    top: 10.6rem;
+    top: 10rem;
     width: 5.4%;
 }
 
@@ -312,7 +323,7 @@
     padding: 0;
     position: absolute;
     z-index: 999;
-    top: 10.6rem;
+    top: 10rem;
     right: 13%;
     list-style: none;
     border: 1px solid #ccc;
@@ -356,7 +367,7 @@
 /*指示线1*/
 .line-box-one {
     width: calc( 95% - 75px );
-    height: 5rem;
+    height: 4.6rem;
     margin: 0 0.5% 0 4.5%;
     display: block;
     position: absolute;
@@ -376,7 +387,7 @@
 }
 .line-box-one .line-box-two {
     position: absolute;
-    top: 5rem;
+    top: 4.6rem;
     left: 0;
     width: 5%;
     height: 3.1rem;
@@ -397,7 +408,7 @@
 /*指示线2*/
 .line-box-one-2 {
     width: calc( 83% - 75px );
-    height: 5rem;
+    height: 4.6rem;
     margin: 0 0.5% 0 4.5%;
     display: block;
     position: absolute;
@@ -417,7 +428,7 @@
 }
 .line-box-one-2 .line-box-two {
     position: absolute;
-    top: 5rem;
+    top: 4.6rem;
     left: 0;
     width: 5%;
     height: 3.1rem;
@@ -451,26 +462,7 @@
 }
 
 @media only screen and (min-width: 1900px){
-    .tuli-box {
-        position: absolute;
-        z-index: 999;
-        right: 6.5%;
-        top: 11.5rem;
-        width: 5.4%;
-    }
-    .tuli-box-2 {
-        width: 10%;
-        height: calc( 4.6rem - 10px );
-        padding: 0;
-        position: absolute;
-        z-index: 999;
-        top: 11.5rem;
-        right: 13%;
-        list-style: none;
-        border: 1px solid #ccc;
-        border-bottom: none;
-        margin-top: 5px;
-    }
+
     /*指示线1*/
     .line-box-one {
         width: calc( 95% - 75px );
@@ -478,7 +470,7 @@
         margin: 0 0.5% 0 4.5%;
         display: block;
         position: absolute;
-        top: 12rem;
+        top: 13rem;
         /*background-color: rgba(0,0,0,.4);*/
         border-right: 4px solid #000;
         border-bottom: 4px solid #000;
@@ -519,7 +511,7 @@
         margin: 0 0.5% 0 4.5%;
         display: block;
         position: absolute;
-        top: 12rem;
+        top: 13rem;
         /*background-color: rgba(0,0,0,.4);*/
         border-right: 4px solid #000;
         border-bottom: 4px solid #000;
@@ -555,7 +547,7 @@
 
     .table-bordered {
         border: 2px solid #aaa;
-        font-size: 1.6rem;
+        font-size: 2rem;
         font-weight: bolder;
         color: #222!important;
     }
@@ -574,8 +566,8 @@
         text-align: center;
         color: #ff0000;
         font-size: 4.2rem;
-        line-height: 6.1rem!important;
-        height: 253px;
+        line-height: 311px!important;
+        height: 311px;
     }
 }
 
@@ -590,20 +582,6 @@
     margin-left: 15%;
 
 }
-
-.mtrem1 { margin-top: .8rem;}
-.mbrem1 { margin-bottom: .8rem;}
-
-.block-one-third i:first-child {
-    display: block;
-    margin: .2rem 0;
-}
-
-.block-one-third i:last-child {
-    display: block;
-    margin: .2rem 0;
-}
-
 
 /*左右开头部分-third*/
 .block-right-third {
@@ -678,7 +656,7 @@
     width: 10%;
     display: block;
     position: absolute;
-    top: 9.1rem;
+    top: 8.5rem;
     left: 3.5%;
     float: left;
     text-align: center;
@@ -751,7 +729,7 @@
     list-style-type:none;
     float: left;
     position: relative;
-    top: 3.6rem;
+    top: 3.3rem;
 }
 .center-block-third li {
     width: 20%;
@@ -768,7 +746,7 @@
 /*指示线third*/
 .line-box-third {
     width: 30%;
-    height: 7.5rem;
+    height: 6.5rem;
     margin: 0 0.5% 0 49%;
     display: block;
     position: absolute;
@@ -798,10 +776,6 @@
 }
 /*图例-third*/
 
-.tuli-box-third-pz {
-    top: 10.8rem!important;
-    width: 5.4%;
-}
 
 .tuli-box-2-third {
     width: 10%;
@@ -864,7 +838,7 @@
         width: 10%;
         display: block;
         position: absolute;
-        top: 9.5rem;
+        top: 8.5rem;
         left: 3.5%;
         float: left;
         text-align: center;
@@ -881,7 +855,7 @@
         list-style-type:none;
         float: left;
         position: relative;
-        top: 3.9rem;
+        top: 3.3rem;
     }
 }
 
@@ -894,6 +868,16 @@
     text-align: center;
     margin: 0;
     padding: 0;
+}
+
+.block-one-fourth i:first-child {
+    display: block;
+    margin: .2rem 0;
+}
+
+.block-one-fourth i:last-child {
+    display: block;
+    margin: .2rem 0;
 }
 
 .block-one-fourth .box-top {
@@ -991,8 +975,8 @@
     padding: 0;
     position: absolute;
     z-index: 999;
-    top: 10.6rem;
-    right: 10%;
+    top: 4.5rem;
+    right: 5.5%;
     list-style: none;
     border: 1px solid #ccc;
     border-bottom: none;
@@ -1012,13 +996,6 @@
 }
 
 @media only screen and (min-width: 1900px) {
-    .tuli-box-fourth {
-        position: absolute;
-        z-index: 999;
-        right: 4.5%;
-        top: 11.5rem;
-        width: 5.4%;
-    }
 
     .tuli-box-2-fourth {
         width: 10%;
@@ -1045,9 +1022,9 @@
 /*show-fifth1*/
 
 .box-body-fifth {
-    height: 16.6rem;
+    height: 15rem;
     overflow: hidden;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .block-one-fifth {
@@ -1058,6 +1035,16 @@
     text-align: center;
     margin: 0;
     padding: 0;
+}
+
+.block-one-fifth i:first-child {
+    display: block;
+    margin: .2rem 0;
+}
+
+.block-one-fifth i:last-child {
+    display: block;
+    margin: .2rem 0;
 }
 
 .block-one-fifth .box-top {
@@ -1093,10 +1080,10 @@
 }
 
 .tuli-fifth-pz {
-    top: 10rem!important;
+    top: 9rem!important;
 }
 
-/*third-left*/
+/*sixth-left*/
 .block-left-sixth {
     width: 10%;
     display: block;
@@ -1137,4 +1124,61 @@
     top: 11.5rem;
     left: .5rem;
     font-size: 1.4rem;
+}
+
+/*图例*/
+
+.tuli-box-2-sixth {
+    width: 10%;
+    height: calc( 4.6rem - 10px );
+    padding: 0;
+    position: absolute;
+    z-index: 999;
+    top: 5rem;
+    right: 11%;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    margin-top: 5px;
+}
+
+.tuli-box-2-sixth li {
+    width: 100%;
+    line-height: calc( 4.6rem - 10px );
+    font-size: 1.4rem;
+    font-weight: bolder;
+    border-bottom: 1px solid #ccc;
+    transition: all 0.2s linear 0s;
+    background-color: #00b050;
+    text-align: center;
+    color: #000;
+}
+@media only screen and (min-width: 1900px) {
+
+    .tuli-box-2-sixth {
+        width: 10%;
+        height: calc(4.6rem - 10px);
+        padding: 0;
+        position: absolute;
+        z-index: 999;
+        top: 5rem;
+        right: 10.5%;
+        list-style: none;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        margin-top: 5px;
+    }
+}
+
+.show-time {
+    text-align: center;
+    font-size: 4rem;
+    color: #222;
+    line-height: 8rem;
+    padding: 50px 0;
+    font-weight: bold;
+    margin-top: 250px;
+    background-color: #f9f9f9;
+    border: 1px solid #aaa;
+    position: relative;
 }

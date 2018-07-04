@@ -357,7 +357,104 @@ function initwebsocket(type){
             }
         }
         else if(msg['T']=='5'){
-            lastProduction(1,msg['PRO']);
+
+
+            //lastProduction(1,msg['PRO']);
+            var pageName="";
+            if(msg['PRO']=='1'){
+                if(msg['TYPE']=='生产时间'){
+                    pageName='show_first1.html';
+                }
+                else if(msg['TYPE']=='检修时间'){
+                    pageName='show_first2.html';
+                }
+                else if(msg['TYPE']=='换模时间'){
+                    pageName='show_time.html?restType='+ escape('换模')+'&prod='+msg['PRO']+'&times='+msg['TIMES'];
+                }
+
+            }
+            else if(msg['PRO']=='2'){
+                if(msg['TYPE']=='生产时间'){
+                    pageName='show_second1.html';
+                }
+                else if(msg['TYPE']=='检修时间'){
+                    pageName='show_second2.html';
+                }
+                else if(msg['TYPE']=='换模时间'){
+                    pageName='show_time.html?restType='+ escape('换模')+'&prod='+msg['PRO']+'&times='+msg['TIMES'];
+                }
+            }
+            else if(msg['PRO']=='3'){
+                if(msg['TYPE']=='生产时间'){
+                    pageName='show_third1.html';
+                }
+                else if(msg['TYPE']=='检修时间'){
+                    pageName='show_third2.html';
+                }
+                else if(msg['TYPE']=='换模时间'){
+                    pageName='show_time.html?restType='+ escape('换模')+'&prod='+msg['PRO']+'&times='+msg['TIMES'];
+                }
+            }
+            else if(msg['PRO']=='4'){
+                if(msg['TYPE']=='生产时间'){
+                    pageName='show_fourth1.html';
+                }
+                else if(msg['TYPE']=='检修时间'){
+                    pageName='show_fourth2.html';
+                }
+                else if(msg['TYPE']=='换模时间'){
+                    pageName='show_time.html?restType='+ escape('换模')+'&prod='+msg['PRO']+'&times='+msg['TIMES'];
+                }
+            }
+            else if(msg['PRO']=='5'){
+                if(msg['TYPE']=='生产时间'){
+                    pageName='show_fifth1.html';
+                }
+                else if(msg['TYPE']=='检修时间'){
+                    pageName='show_fifth2.html';
+                }
+                else if(msg['TYPE']=='换模时间'){
+                    pageName='show_time.html?restType='+ escape('换模')+'&prod='+msg['PRO']+'&times='+msg['TIMES'];
+                }
+            }
+            else if(msg['PRO']=='6'){
+                if(msg['TYPE']=='生产时间'){
+                    pageName='show_sixth1.html';
+                }
+                else if(msg['TYPE']=='检修时间'){
+                    pageName='show_sixth2.html';
+                }
+                else if(msg['TYPE']=='换模时间'){
+                    pageName='show_time.html?restType='+ escape('换模')+'&prod='+msg['PRO']+'&times='+msg['TIMES'];
+                }
+            }
+            window.location.href=pageName;
+        }
+        else if(msg['T']=='6'){
+            window.location.href='show_time.html?restType='+ escape(msg['TYPE'])+'&prod='+msg['PRO']+'&times='+msg['TIMES'];
+        }
+        else if(msg['T']=='7'){
+            var pageName="";
+            if(msg['PRO']=='1'){
+                pageName='show_first1.html';
+            }
+            else if(msg['PRO']=='2'){
+                pageName='show_second1.html';
+            }
+            else if(msg['PRO']=='3'){
+                pageName='show_third1.html';
+            }
+            else if(msg['PRO']=='4'){
+                pageName='show_fourth1.html';
+            }
+            else if(msg['PRO']=='5'){
+                pageName='show_fifth1.html';
+            }
+            else if(msg['PRO']=='6'){
+                pageName='show_sixth1.html';
+            }
+
+            window.location.href=pageName;
         }
 
     }
@@ -410,11 +507,10 @@ function timer()
         hour=hour+1;
     }
 
-    if($('#timeslot').val() == PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2)){
+    /*if($('#timeslot').val() == PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2)){
         clearInterval(interval);
         playEndSound();
-    }
-
+    }*/
 
     //$('#repairTime').text("检修时间："+hour+'时'+minute+'分'+second+'秒'+millisecond+'毫秒')
     $('#timeSpan').text(PrefixInteger(hour,2)+'时'+PrefixInteger(minute,2)+'分'+PrefixInteger(second,2)+'秒');
@@ -504,7 +600,7 @@ function timer()
 
 
     //$('#repairTime').text("检修时间："+hour+'时'+minute+'分'+second+'秒'+millisecond+'毫秒')
-    $('#timeSpan').text(PrefixInteger(hour,2)+'时'+PrefixInteger(minute,2)+'分'+PrefixInteger(second,2)+'秒');
+    $('#timeSpan').text(PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2));
 
 }
 function PrefixInteger(num, length) {

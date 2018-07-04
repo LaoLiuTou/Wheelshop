@@ -1,12 +1,25 @@
 package com.wheelshop.utils;
 
  
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wheelshop.chat.common.NettyChannelMap;
+import com.wheelshop.model.timer.Timer;
+import com.wheelshop.service.timer.ITimerService;
 /**
  * @author lt
  * @version 1.0 
@@ -64,9 +77,9 @@ public class TokenUtils {
     } 
     
     private static long removeTime = 60*60*1000;//失效时间
-    Logger logger = Logger.getLogger("zysyLogger");
+    Logger logger = Logger.getLogger("WheelshopLogger");
     @SuppressWarnings("rawtypes")
-	@Scheduled(cron="0 0 0/1 * * ? ")  
+	//@Scheduled(cron="0 0 0/1 * * ? ")  
     public void cleanToken(){  
     	try {
 			String message ="清理过期token,起始token数量："+map.size();
@@ -88,6 +101,90 @@ public class TokenUtils {
 			e.printStackTrace();
 		}
     	 
-    }  
-    
+    } 
+
+    @Autowired
+	private ITimerService iTimerService;
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Scheduled(cron="0 0/1 * * * ? ")  
+    public void getRest(){  
+    	try {
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			
+			Map paramMap=new HashMap();
+			paramMap.put("starttime",sdf.format(new Date()));
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",1); 
+			List<Timer> list=iTimerService.selectTimerByParam(paramMap);
+			logger.info("查询间休午休开始时间:"+list.size());
+			if(list.size()>0){
+				//推送
+				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+		            if (entry.getKey().toString().substring(0, 1).equals(list.get(0).getProdnum())){
+		            	
+		            	String[] starttimes=list.get(0).getStarttime().split(":");
+						String[] endtimes=list.get(0).getEndtime().split(":");
+						 //t.getEndtime()-t.getStarttime();
+						int rest=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60)-
+								(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60);
+						
+						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+		            	Map<String, String> contentMap = new HashMap<String, String>();
+		            	contentMap.put("T", "6");
+		            	contentMap.put("NAME", "system");
+		            	contentMap.put("FI", entry.getKey().toString());  
+		            	contentMap.put("PRO", list.get(0).getProdnum());
+		            	contentMap.put("TYPE", list.get(0).getType());
+		            	contentMap.put("TIMES", rest+"");
+						ObjectMapper mapper = new ObjectMapper();
+						String json = "";
+						json = mapper.writeValueAsString(contentMap);
+						
+						if(channelHandlerContext!=null){
+							
+						   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+				        }
+		            }
+		        }
+			}
+			
+			
+			paramMap=new HashMap();
+			paramMap.put("endtime",sdf.format(new Date()));
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",1); 
+			list=iTimerService.selectTimerByParam(paramMap);
+			logger.info("查询间休午休结束时间:"+list.size()); 
+			if(list.size()>0){
+				//推送
+				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+		            if (entry.getKey().toString().substring(0, 1).equals(list.get(0).getProdnum())){
+		            	 
+						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+		            	Map<String, String> contentMap = new HashMap<String, String>();
+		            	contentMap.put("T", "7");
+		            	contentMap.put("NAME", "system");
+		            	contentMap.put("FI", entry.getKey().toString());  
+		            	contentMap.put("PRO", list.get(0).getProdnum());
+		            	contentMap.put("TYPE", list.get(0).getType());
+						ObjectMapper mapper = new ObjectMapper();
+						String json = "";
+						json = mapper.writeValueAsString(contentMap);
+						
+						if(channelHandlerContext!=null){
+							
+						   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+				        }
+		            }
+		        }
+			}
+			
+			
+		} catch (Exception e) {
+			logger.info("查询间休午休时间出错！");
+			e.printStackTrace();
+		}
+    	 
+    } 
 }

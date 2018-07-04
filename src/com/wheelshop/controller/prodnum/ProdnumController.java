@@ -171,4 +171,33 @@ public class ProdnumController {
 		}
 		return resultMap;
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/allProdnum")
+	@ResponseBody
+	public Map all(HttpServletRequest request, HttpServletResponse response,Prodnum prodnum)
+			throws ServletException, IOException {
+		Map resultMap=new HashMap();
+		try {
+			 
+				Map paramMap=new HashMap();
+				
+				paramMap.put("id",prodnum.getId());
+				paramMap.put("production",prodnum.getProduction());
+				paramMap.put("flag",prodnum.getFlag());
+				
+				int totalnumber=iProdnumService.selectCountProdnumByParam(paramMap);
+				paramMap.put("fromPage",0);
+				paramMap.put("toPage",totalnumber); 
+				List<Prodnum> list=iProdnumService.selectProdnumByParam(paramMap);
+				resultMap.put("status", "0");
+				resultMap.put("msg", list);
+			 
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "查询失败！");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 }

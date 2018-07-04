@@ -103,7 +103,7 @@ function  queryVarieties (variety,currentPage,pageSize) {
                     '<td>'+data[o].rhythm+'</td>\n' +
                     '<td>'+data[o].production+'</td>\n' +
                     '<td>'+data[o].capacity+'</td>\n' +
-                    '<td>'+data[o].changtime+'</td>\n' +
+                    '<td>'+data[o].changtime+'分</td>\n' +
                     '<td>'+data[o].creater+'</td>\n' +
                     '<td>'+data[o].adddate+'</td>\n' ;
 

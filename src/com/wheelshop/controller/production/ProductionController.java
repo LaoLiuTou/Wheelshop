@@ -54,7 +54,7 @@ public class ProductionController {
 			Map paramMap=new HashMap();
 			paramMap.put("fromPage",0);
 			paramMap.put("toPage",1); 
-			paramMap.put("flag",production.getFlag());
+			paramMap.put("production",production.getProdnum());
 			paramMap.put("adddate","1");
 			List<Production> plist=iProductionService.selectProductionByParam(paramMap);
 			if(plist.size()>0){
@@ -69,14 +69,19 @@ public class ProductionController {
 			
 			//推送
 			for (Map.Entry entry:NettyChannelMap.map.entrySet()){
-	            if (entry.getKey().toString().substring(0, 1).equals(production.getFlag()+"")){
-	            	 
+	            if (entry.getKey().toString().substring(0, 1).equals(production.getProdnum())){
+	            	int rest=0;
+	            	if(production.getChangtime()!=null){
+	            		rest=Integer.parseInt(production.getChangtime())*60;
+	            	}
 					ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 	            	Map<String, String> contentMap = new HashMap<String, String>();
 	            	contentMap.put("T", "5");
 	            	contentMap.put("NAME", "system");
 	            	contentMap.put("FI", entry.getKey().toString());  
-	            	contentMap.put("PRO", production.getFlag()+"");
+	            	contentMap.put("PRO", production.getProdnum());
+	            	contentMap.put("TYPE", production.getProdstate());
+	            	contentMap.put("TIMES", rest+"");
 					ObjectMapper mapper = new ObjectMapper();
 					String json = "";
 					json = mapper.writeValueAsString(contentMap);
@@ -109,12 +114,12 @@ public class ProductionController {
 		try {
 			//推送
 			for (Map.Entry entry:NettyChannelMap.map.entrySet()){
-	            if (entry.getKey().toString().substring(0, 1).equals(production.getProduction())){
+	            if (entry.getKey().toString().substring(0, 1).equals(production.getProdnum())){
 	            	//查询对应的设备编号
 	            	Map paramMap=new HashMap();
 					paramMap.put("fromPage",0);
 					paramMap.put("toPage",1); 
-					paramMap.put("flag",production.getProduction());
+					paramMap.put("flag",production.getProdnum());
 					List<Production> list=iProductionService.selectProductionByParam(paramMap);
 	            	
 					if(list.size()>0){
@@ -130,7 +135,7 @@ public class ProductionController {
 		            	contentMap.put("FI", entry.getKey().toString());  
 		            	contentMap.put("AC", production.getActualcomp());
 		            	contentMap.put("POWER", list.get(0).getPower());
-		            	contentMap.put("PRO", list.get(0).getProduction());
+		            	contentMap.put("PRO", list.get(0).getProdnum());
 						ObjectMapper mapper = new ObjectMapper();
 						String json = "";
 						json = mapper.writeValueAsString(contentMap);
@@ -145,7 +150,7 @@ public class ProductionController {
 			
 			resultMap.put("status", "0");
 			resultMap.put("msg", "修改成功！");
-			System.out.println(production.getProduction()+":"+production.getActualcomp());
+			System.out.println(production.getProdnum()+":"+production.getActualcomp());
 		} catch (Exception e) {
 			resultMap.put("status", "-1");
 			resultMap.put("msg", "修改失败！");

@@ -38,6 +38,8 @@ function lastProduction(type,production){
 
                     }
                     if(type==1){
+
+
                         //变化点
                         $('.box-body i').addClass('hidden');
                         var changedJO= jQuery.parseJSON(data[o]['changed']);
@@ -285,6 +287,39 @@ function  queryProduction (bodyParam,currentPage,pageSize) {
                 $('.pagination').html(pageHtml);
             }
 
+
+        }
+    });
+}
+
+/**
+ * 查询select
+
+ */
+function  selectProdnum (type) {
+
+    var bodyParam={};
+
+    var httpR = new createHttpR(url+'allProdnum','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        if(status=='0'){
+            var data= obj['msg'];
+            var html='';
+            html+='<option value="">全部</option>\n';
+            if(type==1){
+                for(var o in data){
+                    html+='<option value="'+data[o].production+'" >'+data[o].production+'</option>\n';
+                }
+            }
+            else{
+                for(var o in data){
+                    html+='<option value="'+data[o].id+'" >'+data[o].production+'</option>\n';
+                }
+            }
+
+            $('#production').html(html);
 
         }
     });

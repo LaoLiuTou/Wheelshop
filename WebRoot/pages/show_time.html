@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="keywords" content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>时间</title>
+
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+  <link href="js/iCheck/skins/minimal/green.css" rel="stylesheet">
+
+
+  <!--common-->
+    <link href="css/style_show.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="sticky-header">
+
+    <!--表格开始-->
+    <div class="row">
+        <div class="col-sm-12">
+            <section class="panel">
+                <!--<header class="panel-heading">
+                </header>-->
+                <div class="panel-body">
+
+                    <div class="show-time">
+                        <span id="restType"  >间休</span>时间：
+                        <span id="timeSpan"  >00:00:00</span>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+    <!--表格结束-->
+
+
+<!-- modal -->
+
+
+<!-- modal -->
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+
+<script src="js/main/config.js"></script>
+<script src="js/main/md5.js"></script>
+<script src="js/main/ws_production.js"></script>
+<script>
+
+    $(document).ready(function(){
+
+        guestLogin(GetQueryString('prod'));
+
+        //interval= setInterval(timer,1000);
+        $('#restType').text(GetQueryString('restType'));
+
+        timer = setInterval(CountDown, 1000);
+    });
+
+    var timer;
+    var maxtime =  GetQueryString('times');
+    function CountDown() {
+        if (maxtime >= 0) {
+            var hour = Math.floor(maxtime / (60*60));
+            var minutes = Math.floor((maxtime%(60*60)) / 60);
+            var seconds = Math.floor(maxtime % 60);
+            $('#timeSpan').text(PrefixInteger(hour,2)+':'+PrefixInteger(minutes,2)+':'+PrefixInteger(seconds,2));
+            --maxtime;
+        } else{
+            clearInterval(timer);
+            if(GetQueryString('restType')=='换模'){
+                playEndSound();
+            }
+
+        }
+    }
+    function playEndSound(){
+        var audio = new Audio();
+        if (audio.canPlayType("audio/mp3")) {
+            audio.src = "audio/audio.mp3";
+        }else if(audio.canPlayType("audio/ogg")) {
+            audio.src = "audio/audio.ogg";
+        }
+        //播放(继续播放)
+        audio.play();
+    }
+
+</script>
+</body>
+</html>
