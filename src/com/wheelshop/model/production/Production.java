@@ -96,6 +96,15 @@ public class Production {
 	public void setChangtime(String changtime) {
 		this.changtime = changtime;
 	}
+	/** 换模开始时间*/
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+	private  Date startctime;
+	public Date getStartctime() {
+		return startctime;
+	}
+	public void setStartctime(Date startctime) {
+		this.startctime = startctime;
+	}
 	/** 计划完成 */
 	private  String plancomp;
 	public String getPlancomp() {
@@ -187,6 +196,15 @@ public class Production {
 	public void setProdtime(String prodtime) {
 		this.prodtime = prodtime;
 	}
+	/** 停台记录 */
+	private  String stops;
+	public String getStops() {
+		return stops;
+	}
+	public void setStops(String stops) {
+		this.stops = stops;
+	}
+	 
 	 
 
 }

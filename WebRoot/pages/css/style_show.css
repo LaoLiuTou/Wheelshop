@@ -1182,3 +1182,17 @@
     border: 1px solid #aaa;
     position: relative;
 }
+
+/*设备异常*/
+.text-black-red{
+    /*transition: all 0.2s linear;*/
+    animation:blacked 1.5s infinite; /*animation 时间 播放次数*/
+    animation-direction:alternate; /*是否循环交替反向播放动画*/
+}
+@keyframes blacked
+{
+    0% {color:#fe0000;}
+    50% {color:#000;}
+    75% {color:#fe0000;}
+    100% {color:#000;}
+}

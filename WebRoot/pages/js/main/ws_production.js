@@ -58,27 +58,27 @@ function lastProduction(type,production){
 
                         }
 
-                        var prodstopJO= jQuery.parseJSON(data[o]['prodstop']);
+                        var stopsJO= jQuery.parseJSON(data[o]['stops']);
 
                         var prodstop=0,equipstop=0,toolstop=0;
-                        for(var key in prodstopJO ){
-                             if(prodstopJO[key]=='01'){//设备异常
+                        for(var key in stopsJO ){
+                             if(stopsJO[key]=='01'){//设备异常
                                 $('#'+key+'_01[prod="'+production+'"]').removeClass('bg-green').addClass('bg-green-red');
                                 equipstop++;
                             }
-                            else if(prodstopJO[key]=='02'){//工装异常
+                            else if(stopsJO[key]=='02'){//工装异常
                                  $('#'+key+'_02[prod="'+production+'"]').removeClass('bg-green').addClass('bg-green-red');
                                  toolstop++;
                             }
-                            else if(prodstopJO[key]=='03'){//生产异常
+                            else if(stopsJO[key]=='03'){//生产异常
                                  $('#'+key+'_03[prod="'+production+'"]').removeClass('bg-green').addClass('bg-green-red');
                                  prodstop++;
                             }
 
                         }
-                        $('#prodstop[prod="'+production+'"]').text(prodstop);
+                        /*$('#prodstop[prod="'+production+'"]').text(prodstop);
                         $('#equipstop[prod="'+production+'"]').text(equipstop);
-                        $('#toolstop[prod="'+production+'"]').text(toolstop);
+                        $('#toolstop[prod="'+production+'"]').text(toolstop);*/
                         if(equipstop>0){
                             $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
                         }
@@ -116,6 +116,104 @@ function lastProduction(type,production){
         }
     });
 }
+function lastProduction2(production){
+    var bodyParam={'page':1,'size':1,'flag':production};
+    var httpR = new createHttpR(url+'lastProduction','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        var msg = obj['msg'];
+        if(status=='0'){
+            var id,yield;
+            var data=msg['data'];
+            if(data.length>0){
+                for(var o in data) {
+                    //保存id
+                    id=data[o]['id'];
+                    yield=data[o]['yield'];
+
+                    for (var item in data[o]) {
+                        $('#'+item+'[prod="'+production+'"]').text(data[o][item]);
+                        if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
+                            $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
+                        }
+                    }
+
+                    //变化点
+                    $('.box-body i').addClass('hidden');
+                    var changedJO= jQuery.parseJSON(data[o]['changed']);
+                    var redNum=0;
+                    for(var k in changedJO ){
+                        if(changedJO[k]=='red'){
+                            redNum++;
+                        }
+                        $('#'+k+'[prod="'+production+'"]').removeClass('hidden').addClass('visible').addClass(changedJO[k]);
+                    }
+                    if(redNum!=0){
+                        $('#changed[prod="'+production+'"]').text(redNum);
+                    }
+                    else{
+                        $('#changedI[prod="'+production+'"]').addClass('hidden');
+
+                    }
+
+                    var stopsJO= jQuery.parseJSON(data[o]['stops']);
+
+                    var prodstop=0,equipstop=0,toolstop=0;
+                    for(var key in stopsJO ){
+                         if(stopsJO[key]=='01'){//设备异常
+                            $('#'+key+'_01[prod="'+production+'"]').removeClass('bg-green').addClass('bg-green-red');
+                            equipstop++;
+                        }
+                        else if(stopsJO[key]=='02'){//工装异常
+                             $('#'+key+'_02[prod="'+production+'"]').removeClass('bg-green').addClass('bg-green-red');
+                             toolstop++;
+                        }
+                        else if(stopsJO[key]=='03'){//生产异常
+                             $('#'+key+'_03[prod="'+production+'"]').removeClass('bg-green').addClass('bg-green-red');
+                             prodstop++;
+                        }
+
+                    }
+                    /*$('#prodstop[prod="'+production+'"]').text(prodstop);
+                    $('#equipstop[prod="'+production+'"]').text(equipstop);
+                    $('#toolstop[prod="'+production+'"]').text(toolstop);*/
+                    if(equipstop>0){
+                        $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
+                    }
+                    if(prodstop>0){
+                        $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
+                    }
+                    if(toolstop>0){
+                        $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
+                    }
+
+                }
+            }
+            else{
+
+            }
+
+
+            //计划完成
+            if($('#rhythm').text()!=''){
+
+                setInterval(function (){
+                    yield++ ;
+                    var params={};
+                    params['id']=id;
+                    params['yield']=yield;
+                    updateProduction(params);
+
+                 },$('#rhythm').text()*1000);
+               // alert(id+"dddd"+$('#rhythm').text());
+            }
+
+        }
+    });
+}
+
+
 /**
  * 添加生产
  */
@@ -146,8 +244,9 @@ function updateProduction(bodyParam){
         var status = obj['status'];
         //var msg = obj['msg'];
         if(status=='0'){
-            alert("修改成功！");
-            window.location.reload();
+            $('#yield').text(bodyParam['yield']);
+            //alert("修改成功！");
+            //window.location.reload();
             //window.location.href="interface.html?index="+interfaceIndex;
         }
     });

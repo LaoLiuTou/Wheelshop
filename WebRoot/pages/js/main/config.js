@@ -94,7 +94,7 @@ function guestLogin(prodction) {
                 sessionStorage.setItem('userinfo',userinfo);
                 sessionStorage.setItem('token',token);
 
-                lastProduction(1,prodction);
+                lastProduction2(prodction);
 
                 initwebsocket(prodction);
             }
@@ -293,6 +293,9 @@ function initwebsocket(type){
 
         if(msg['T']=='3'){
             if(msg['STATE']=='04'){//正常 取消按钮
+
+                lastProduction(1,msg['PRO']);
+
                 $('#'+msg['NUM']+'_01[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
                 $('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
                 $('#'+msg['NUM']+'_03[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
@@ -314,7 +317,7 @@ function initwebsocket(type){
             }
             else if(msg['STATE']=='01'){//设备异常
                 $('#'+msg['NUM']+'_01[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
-                $('#equipstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="01"][prod="'+msg['PRO']+'"]').length);
+                //$('#equipstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="01"][prod="'+msg['PRO']+'"]').length);
                 $('#shebei[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
 
                 //alert(msg['PRO']+"/1/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3");
@@ -323,14 +326,14 @@ function initwebsocket(type){
             }
             else if(msg['STATE']=='02'){//工装异常
                 $('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
-                $('#toolstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="02"][prod="'+msg['PRO']+'"]').length);
+                //$('#toolstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="02"][prod="'+msg['PRO']+'"]').length);
                 $('#gongzhuang[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
                 audio.src = "audio/"+msg['PRO']+"/2/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
             }
             else if(msg['STATE']=='03'){//生产异常
                 $('#'+msg['NUM']+'_03[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
-                $('#prodstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="03"][prod="'+msg['PRO']+'"]').length);
+                //$('#prodstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="03"][prod="'+msg['PRO']+'"]').length);
                 $('#shengchan[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
                 audio.src = "audio/"+msg['PRO']+"/3/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();

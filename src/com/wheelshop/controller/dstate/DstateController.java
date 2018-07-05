@@ -66,21 +66,21 @@ public class DstateController {
 				paramMap.put("flag",dstate.getProduction());
 				List<Production> plist=iProductionService.selectProductionByParam(paramMap);
 				if(plist.size()>0){
-					Map prodstopmap;
-					if(plist.get(0).getProdstop()!=null&&!plist.get(0).getProdstop().equals("")){ 
-					    prodstopmap=mapper.readValue(plist.get(0).getProdstop(), Map.class);
+					Map stopsmap;
+					if(plist.get(0).getStops()!=null&&!plist.get(0).getStops().equals("")){ 
+						stopsmap=mapper.readValue(plist.get(0).getStops(), Map.class);
 					}
 					else{
-						prodstopmap=new HashMap();
+						stopsmap=new HashMap();
 					}
 					//Map equipstopmap=mapper.readValue(plist.get(0).getEquipstop(), Map.class);
 					//Map toolstopmap=mapper.readValue(plist.get(0).getToolstop(), Map.class);
-					prodstopmap.put(list.get(0).getNodeno(), dstate.getState());
+					stopsmap.put(list.get(0).getNodeno(), dstate.getState());
 					//05关闭声音
 					if(dstate!=null&&dstate.getState()!=null&&!dstate.getState().equals("05")){
 						Production temp=new Production();
 						temp.setId(plist.get(0).getId());
-						temp.setProdstop(mapper.writeValueAsString(prodstopmap));
+						temp.setStops(mapper.writeValueAsString(stopsmap));
 						iProductionService.updateProduction(temp);
 						
 						//04判断持续时间

@@ -19,12 +19,14 @@
 			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
 			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
 			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="stops != null"> AND a.STOPS =#{stops} </if>
 			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
 			<if test="power != null"> AND a.POWER =#{power} </if>
 			<if test="rate != null"> AND a.RATE =#{rate} </if>
 			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
 			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
+			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
 			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
 			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
@@ -52,12 +54,14 @@
 			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
 			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
 			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="stops != null"> AND a.STOPS =#{stops} </if>
 			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
 			<if test="power != null"> AND a.POWER =#{power} </if>
 			<if test="rate != null"> AND a.RATE =#{rate} </if>
 			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
 			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
+			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
 			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
 			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
@@ -86,12 +90,14 @@
 			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
 			<if test="changed != null"> AND CHANGED =#{changed} </if>
 			<if test="yield != null"> AND YIELD =#{yield} </if>
+			<if test="stops != null"> AND STOPS =#{stops} </if>
 			<if test="prodstop != null"> AND PRODSTOP =#{prodstop} </if>
 			<if test="power != null"> AND POWER =#{power} </if>
 			<if test="rate != null"> AND RATE =#{rate} </if>
 			<if test="variety != null"> AND VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
 			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>
+			<if test="startctime != null"> AND STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND PLANCOMP =#{plancomp} </if>
 			<if test="equipstop != null"> AND EQUIPSTOP =#{equipstop} </if>
 			<if test="starttimeFrom != null"> AND unix_timestamp(STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
@@ -119,12 +125,14 @@
 			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
 			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
 			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="stops != null"> AND a.STOPS =#{stops} </if>
 			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
 			<if test="power != null"> AND a.POWER =#{power} </if>
 			<if test="rate != null"> AND a.RATE =#{rate} </if>
 			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
 			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
+			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
 			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
 			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
@@ -151,12 +159,14 @@
 			<if test="prodnum != null">PRODNUM=#{prodnum}, </if>
 			<if test="changed != null">CHANGED=#{changed}, </if>
 			<if test="yield != null">YIELD=#{yield}, </if>
+			<if test="stops != null">STOPS=#{stops}, </if>
 			<if test="prodstop != null">PRODSTOP=#{prodstop}, </if>
 			<if test="power != null">POWER=#{power}, </if>
 			<if test="rate != null">RATE=#{rate}, </if>
 			<if test="variety != null">VARIETY=#{variety}, </if>
 			<if test="rhythm != null">RHYTHM=#{rhythm}, </if>
 			<if test="changtime != null">CHANGTIME=#{changtime}, </if>
+			<if test="startctime != null">STARTCTIME=#{startctime}, </if>
 			<if test="plancomp != null">PLANCOMP=#{plancomp}, </if>
 			<if test="equipstop != null">EQUIPSTOP=#{equipstop}, </if>
 			<if test="starttime != null">STARTTIME=#{starttime}, </if>
@@ -177,12 +187,14 @@
 			<if test="prodnum != null">PRODNUM, </if>
 			<if test="changed != null">CHANGED, </if>
 			<if test="yield != null">YIELD, </if>
+			<if test="stops != null">STOPS, </if>
 			<if test="prodstop != null">PRODSTOP, </if>
 			<if test="power != null">POWER, </if>
 			<if test="rate != null">RATE, </if>
 			<if test="variety != null">VARIETY, </if>
 			<if test="rhythm != null">RHYTHM, </if>
 			<if test="changtime != null">CHANGTIME, </if>
+			<if test="startctime != null">STARTCTIME, </if>
 			<if test="plancomp != null">PLANCOMP, </if>
 			<if test="equipstop != null">EQUIPSTOP, </if>
 			<if test="starttime != null">STARTTIME, </if>
@@ -198,12 +210,14 @@
 			<if test="prodnum != null">#{prodnum}, </if>
 			<if test="changed != null">#{changed}, </if>
 			<if test="yield != null">#{yield}, </if>
+			<if test="stops != null">#{stops}, </if>
 			<if test="prodstop != null">#{prodstop}, </if>
 			<if test="power != null">#{power}, </if>
 			<if test="rate != null">#{rate}, </if>
 			<if test="variety != null">#{variety}, </if>
 			<if test="rhythm != null">#{rhythm}, </if>
 			<if test="changtime != null">#{changtime}, </if>
+			<if test="startctime != null">#{startctime}, </if>
 			<if test="plancomp != null">#{plancomp}, </if>
 			<if test="equipstop != null">#{equipstop}, </if>
 			<if test="starttime != null">#{starttime}, </if>
@@ -226,12 +240,14 @@
 				<if test="item.prodnum != null">PRODNUM, </if>
 				<if test="item.changed != null">CHANGED, </if>
 				<if test="item.yield != null">YIELD, </if>
+				<if test="item.stops != null">STOPS, </if>
 				<if test="item.prodstop != null">PRODSTOP, </if>
 				<if test="item.power != null">POWER, </if>
 				<if test="item.rate != null">RATE, </if>
 				<if test="item.variety != null">VARIETY, </if>
 				<if test="item.rhythm != null">RHYTHM, </if>
 				<if test="item.changtime != null">CHANGTIME, </if>
+				<if test="item.startctime != null">STARTCTIME, </if>
 				<if test="item.plancomp != null">PLANCOMP, </if>
 				<if test="item.equipstop != null">EQUIPSTOP, </if>
 				<if test="item.starttime != null">STARTTIME, </if>
@@ -248,12 +264,14 @@
 				<if test="item.prodnum != null">#{item.prodnum}, </if>
 				<if test="item.changed != null">#{item.changed}, </if>
 				<if test="item.yield != null">#{item.yield}, </if>
+				<if test="item.stops != null">#{item.stops}, </if>
 				<if test="item.prodstop != null">#{item.prodstop}, </if>
 				<if test="item.power != null">#{item.power}, </if>
 				<if test="item.rate != null">#{item.rate}, </if>
 				<if test="item.variety != null">#{item.variety}, </if>
 				<if test="item.rhythm != null">#{item.rhythm}, </if>
 				<if test="item.changtime != null">#{item.changtime}, </if>
+				<if test="item.startctime != null">#{item.startctime}, </if>
 				<if test="item.plancomp != null">#{item.plancomp}, </if>
 				<if test="item.equipstop != null">#{item.equipstop}, </if>
 				<if test="item.starttime != null">#{item.starttime}, </if>

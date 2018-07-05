@@ -54,11 +54,19 @@ public class ProductionController {
 			Map paramMap=new HashMap();
 			paramMap.put("fromPage",0);
 			paramMap.put("toPage",1); 
-			paramMap.put("production",production.getProdnum());
+			paramMap.put("prodnum",production.getProdnum());
 			paramMap.put("adddate","1");
 			List<Production> plist=iProductionService.selectProductionByParam(paramMap);
 			if(plist.size()>0){
 				production.setId(plist.get(0).getId());
+				if(plist.get(0).getProdstate().equals("换模时间")&&
+						production.getProdstate().equals("生产时间")){
+					long times=new Date().getTime()-plist.get(0).getStartctime().getTime();
+					production.setChangtime(times/60000+"");
+				}
+				else if(production.getProdstate().equals("换模时间")){
+					production.setStartctime(new Date());
+				}
 				iProductionService.updateProduction(production);
 			}
 			else{
@@ -119,7 +127,7 @@ public class ProductionController {
 	            	Map paramMap=new HashMap();
 					paramMap.put("fromPage",0);
 					paramMap.put("toPage",1); 
-					paramMap.put("flag",production.getProdnum());
+					paramMap.put("prodnum",production.getProdnum());
 					List<Production> list=iProductionService.selectProductionByParam(paramMap);
 	            	
 					if(list.size()>0){
@@ -308,6 +316,9 @@ public class ProductionController {
 					if(list.size()>0){
 						Production p=list.get(0);
 						p.setAdddate(new Date());
+						p.setProdstate("生产时间");
+						p.setOvertime("0");
+						p.setActualcomp(null);
 						p.setId(null);
 						iProductionService.addProduction(p);
 						list=iProductionService.selectProductionByParam(paramMap);
