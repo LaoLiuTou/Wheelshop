@@ -47,6 +47,26 @@ public class DstateController {
 	public Map add(Dstate dstate){
 		Map resultMap=new HashMap();
 		try {
+			/*工装  -- 02    02 
+			班长  -- 03   01
+			声音暂停 – 05  03
+			恢复正常 –04   04
+			设备 -- 01   05
+			 */			
+			
+			if(dstate.getState()!=null){
+				if(dstate.getState().equals("01")){
+					dstate.setState("03");
+				}
+				else if(dstate.getState().equals("03")){
+					dstate.setState("05");
+				}
+				else if(dstate.getState().equals("05")){
+					dstate.setState("01");
+				}
+			}
+			
+			
 			iDstateService.addDstate(dstate);
 			ObjectMapper mapper = new ObjectMapper();
 			
