@@ -59,8 +59,8 @@ public class ProductionServiceImpl  implements IProductionService {
 				String[] starttimes=t.getStarttime().split(":");
 				String[] endtimes=t.getEndtime().split(":");
 				 //t.getEndtime()-t.getStarttime();
-				rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60)-
-						(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60);
+				rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
+						(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
 			}
 			
 			//dstate
@@ -168,8 +168,8 @@ public class ProductionServiceImpl  implements IProductionService {
 			String[] starttimes=t.getStarttime().split(":");
 			String[] endtimes=t.getEndtime().split(":");
 			 //t.getEndtime()-t.getStarttime();
-			rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60)-
-					(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60);
+			rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
+					(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
 		}
 		
 		//dstate

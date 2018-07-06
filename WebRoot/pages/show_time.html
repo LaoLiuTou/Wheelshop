@@ -105,11 +105,8 @@
     }
     function playEndSound(){
         var audio = new Audio();
-        if (audio.canPlayType("audio/mp3")) {
-            audio.src = "audio/audio.mp3";
-        }else if(audio.canPlayType("audio/ogg")) {
-            audio.src = "audio/audio.ogg";
-        }
+        audio.src = "audio/huanmo.mp3";
+        audio.loop = true;
         //播放(继续播放)
         audio.play();
     }

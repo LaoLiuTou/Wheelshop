@@ -117,6 +117,7 @@ public class FileUploadController {
 		return resultMap;  
 	} 
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private String createVarieties(String uploadPath,String excelName){
 		String result="";
 		try {
@@ -140,21 +141,34 @@ public class FileUploadController {
 						message = "创建人不能为空";
 					}
 					else{
-						Varieties temp = new Varieties();
-						temp.setVariety(eu.getCellValue(row.getCell(1)).toString());
-						temp.setYield(eu.getCellValue(row.getCell(2)).toString());
-						temp.setRhythm(eu.getCellValue(row.getCell(3)).toString());
-						temp.setProduction(eu.getCellValue(row.getCell(4)).toString());
-						temp.setCapacity(eu.getCellValue(row.getCell(5)).toString());
-						temp.setChangtime(eu.getCellValue(row.getCell(6)).toString());
-						temp.setCreater(eu.getCellValue(row.getCell(7)).toString());
-						int resultSample =iVarietiesService.addVarieties(temp);
-						if(resultSample>0){
-							message = "成功";
+						Map paramMap= new HashMap();
+						paramMap.put("fromPage",0);
+						paramMap.put("toPage",1); 
+						paramMap.put("production", eu.getCellValue(row.getCell(4)).toString());
+						List<Prodnum> list=iProdnumService.selectProdnumByParam(paramMap);
+						if(list.size()>0){
+							Varieties temp = new Varieties();
+							temp.setVariety(eu.getCellValue(row.getCell(1)).toString());
+							temp.setYield(eu.getCellValue(row.getCell(2)).toString());
+							temp.setRhythm(eu.getCellValue(row.getCell(3)).toString());
+							temp.setProdnum(list.get(0).getId()+"");
+							temp.setProduction(eu.getCellValue(row.getCell(4)).toString());
+							temp.setCapacity(eu.getCellValue(row.getCell(5)).toString());
+							temp.setChangtime(eu.getCellValue(row.getCell(6)).toString());
+							temp.setCreater(eu.getCellValue(row.getCell(7)).toString());
+							int resultSample =iVarietiesService.addVarieties(temp);
+							if(resultSample>0){
+								message = "成功";
+							}
+							else{
+								message = "失败";
+							}
 						}
 						else{
-							message = "失败";
+							message = "系统内不存在该生产线";
 						}
+						
+						
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

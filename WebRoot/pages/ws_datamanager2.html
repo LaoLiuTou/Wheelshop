@@ -146,14 +146,14 @@
                         <header class="panel-heading custom-tab">
                             <ul class="nav nav-tabs">
 
-                                <li class="active">
-                                    <a data-toggle="tab" href="#pzqd">
+                                <li class="">
+                                    <a   href="ws_datamanager.html">
                                         <i class="fa fa-building-o"></i>
                                         品种清单
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a   href="ws_datamanager2.html">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#pzqd2">
                                         <i class="fa fa-building-o"></i>
                                         品种清单2
                                     </a>
@@ -163,8 +163,8 @@
                         </header>
                         <div class="panel-body">
                             <div class="tab-content">
-
-                                <div id="pzqd" class="tab-pane active">
+                                <div id="pzqd" class="tab-pane ">品种清单</div>
+                                <div id="pzqd2" class="tab-pane active">
 
 
                                     <!--表格开始-->
@@ -261,7 +261,6 @@
 
 
                                 </div>
-                                <div id="pzqd2" class="tab-pane ">换模时间</div>
                             </div>
                         </div>
                     </section>
@@ -328,6 +327,12 @@
                     </div>
                     <div class="form-group">
                         <label>换模时间</label>
+                        <input type="text" class="form-control" id="changtime" placeholder="请输入" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                    </div>
+                    <div class="form-group">
+                        <label>使用设备</label>
+
+                        多选
                         <input type="text" class="form-control" id="changtime" placeholder="请输入" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
                     </div>
 
@@ -427,7 +432,7 @@
     var pageSize=10;
     $(document).ready(function(){
 
-        selectProdnum (1);
+        selectProdnum (2);
 
 
         //多选

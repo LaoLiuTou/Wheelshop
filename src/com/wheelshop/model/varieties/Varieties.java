@@ -38,6 +38,15 @@ public class Varieties {
 	public void setRhythm(String rhythm) {
 		this.rhythm = rhythm;
 	}
+	/** 生产线编号 */
+	private  String prodnum;
+	
+	public String getProdnum() {
+		return prodnum;
+	}
+	public void setProdnum(String prodnum) {
+		this.prodnum = prodnum;
+	}
 	/** 生产线 */
 	private  String production;
 	public String getProduction() {

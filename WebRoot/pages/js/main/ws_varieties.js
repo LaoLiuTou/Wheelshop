@@ -17,7 +17,7 @@ $(document).ready(function(){
 function addVarieties(){
     var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
     var bodyParam={'variety':$('#variety').val(),'yield':$('#yield').val(),'rhythm':$('#rhythm').val(),
-        'production':$('#production').val(),'capacity':$('#capacity').val(),'changtime':$('#changtime').val(),
+        'prodnum':$('#production').val(),'production':$('#production').find('option:selected').text(),'capacity':$('#capacity').val(),'changtime':$('#changtime').val(),
         'creater':userinfo['username']};
     var httpR = new createHttpR(url+'addVarieties','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
@@ -76,11 +76,9 @@ function  queryVarieties (variety,currentPage,pageSize) {
 
     //分页显示的页码数  必须为奇数
     var showPage=7;
-    if(variety==null||variety==''){
-        var bodyParam={'page':currentPage,'size':pageSize};
-    }
-    else{
-        var bodyParam={'page':currentPage,'size':pageSize,'variety':'%'+variety+'%'};
+    var bodyParam={'page':currentPage,'size':pageSize};
+    if(variety!=''){
+        bodyParam['variety']='%'+variety+'%';
     }
 
     var httpR = new createHttpR(url+'listVarieties','post','text',bodyParam,'callBack');

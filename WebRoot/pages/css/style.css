@@ -42,6 +42,9 @@ h1, h2, h3, h4, h5 {
 .mtop10 {
     margin-top: 10px;
 }
+.mtop5 {
+    margin-top: 5px;
+}
 
 hr {
     border-color: #ddd;
@@ -4744,4 +4747,8 @@ ol.comment-list {
 }
 .table-striped td{
     line-height: 30px;
+}
+.font20 {
+    font-size: 20px;
+
 }

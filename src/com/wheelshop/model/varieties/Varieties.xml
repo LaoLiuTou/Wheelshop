@@ -18,6 +18,7 @@
 			<if test="variety != null"> AND VARIETY LIKE #{variety} </if>
 			<if test="yield != null"> AND YIELD =#{yield} </if>
 			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="capacity != null"> AND CAPACITY =#{capacity} </if>
 			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>
@@ -41,6 +42,7 @@
 			<if test="variety != null"> AND VARIETY LIKE #{variety} </if>
 			<if test="yield != null"> AND YIELD =#{yield} </if>
 			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="capacity != null"> AND CAPACITY =#{capacity} </if>
 			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>
@@ -61,6 +63,7 @@
 			<if test="variety != null">VARIETY=#{variety}, </if>
 			<if test="yield != null">YIELD=#{yield}, </if>
 			<if test="rhythm != null">RHYTHM=#{rhythm}, </if>
+			<if test="prodnum != null">PRODNUM=#{prodnum}, </if>
 			<if test="production != null">PRODUCTION=#{production}, </if>
 			<if test="capacity != null">CAPACITY=#{capacity}, </if>
 			<if test="changtime != null">CHANGTIME=#{changtime}, </if>
@@ -79,6 +82,7 @@
 			<if test="variety != null">VARIETY, </if>
 			<if test="yield != null">YIELD, </if>
 			<if test="rhythm != null">RHYTHM, </if>
+			<if test="prodnum != null">PRODNUM, </if>
 			<if test="production != null">PRODUCTION, </if>
 			<if test="capacity != null">CAPACITY, </if>
 			<if test="changtime != null">CHANGTIME, </if>
@@ -92,6 +96,7 @@
 			<if test="variety != null">#{variety}, </if>
 			<if test="yield != null">#{yield}, </if>
 			<if test="rhythm != null">#{rhythm}, </if>
+			<if test="prodnum != null">#{prodnum}, </if>
 			<if test="production != null">#{production}, </if>
 			<if test="capacity != null">#{capacity}, </if>
 			<if test="changtime != null">#{changtime}, </if>
@@ -112,6 +117,7 @@
 				<if test="item.variety != null">VARIETY, </if>
 				<if test="item.yield != null">YIELD, </if>
 				<if test="item.rhythm != null">RHYTHM, </if>
+				<if test="item.prodnum != null">PRODNUM, </if>
 				<if test="item.production != null">PRODUCTION, </if>
 				<if test="item.capacity != null">CAPACITY, </if>
 				<if test="item.changtime != null">CHANGTIME, </if>
@@ -126,6 +132,7 @@
 				<if test="item.variety != null">#{item.variety}, </if>
 				<if test="item.yield != null">#{item.yield}, </if>
 				<if test="item.rhythm != null">#{item.rhythm}, </if>
+				<if test="item.prodnum != null">#{item.prodnum}, </if>
 				<if test="item.production != null">#{item.production}, </if>
 				<if test="item.capacity != null">#{item.capacity}, </if>
 				<if test="item.changtime != null">#{item.changtime}, </if>

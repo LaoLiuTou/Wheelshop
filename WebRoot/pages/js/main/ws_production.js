@@ -15,7 +15,7 @@ $(document).ready(function(){
  * 查询生产
  */
 function lastProduction(type,production){
-    var bodyParam={'page':1,'size':1,'flag':production};
+    var bodyParam={'page':1,'size':1,'prodnum':production};
     var httpR = new createHttpR(url+'lastProduction','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
@@ -117,7 +117,7 @@ function lastProduction(type,production){
     });
 }
 function lastProduction2(production){
-    var bodyParam={'page':1,'size':1,'flag':production};
+    var bodyParam={'page':1,'size':1,'prodnum':production};
     var httpR = new createHttpR(url+'lastProduction','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
@@ -199,7 +199,7 @@ function lastProduction2(production){
             if($('#rhythm').text()!=''){
 
                 setInterval(function (){
-                    yield++ ;
+                    yield+=1;
                     var params={};
                     params['id']=id;
                     params['yield']=yield;
@@ -407,16 +407,27 @@ function  selectProdnum (type) {
             var data= obj['msg'];
             var html='';
             html+='<option value="">全部</option>\n';
-            if(type==1){
-                for(var o in data){
-                    html+='<option value="'+data[o].production+'" >'+data[o].production+'</option>\n';
-                }
-            }
-            else{
+            if(type==0){
                 for(var o in data){
                     html+='<option value="'+data[o].id+'" >'+data[o].production+'</option>\n';
                 }
             }
+            else if(type==1){
+                for(var o in data){
+                    if(data[o].id!='6'){
+                        html+='<option value="'+data[o].id+'" >'+data[o].production+'</option>\n';
+                    }
+
+                }
+            }
+            else if(type==2){
+                for(var o in data){
+                    if(data[o].id=='6'){
+                        html+='<option value="'+data[o].id+'" >'+data[o].production+'</option>\n';
+                    }
+                }
+            }
+
 
             $('#production').html(html);
 

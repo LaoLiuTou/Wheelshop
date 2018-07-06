@@ -18,7 +18,7 @@
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="flag != null"> AND FLAG =#{flag} </if>
 		</trim>  
-		ORDER BY ID DESC 
+		ORDER BY ID ASC 
 		LIMIT #{fromPage},#{toPage} 
 	</select>
 

@@ -22,7 +22,12 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
 
-
+    <!--pickers css-->
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker-custom.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-timepicker/css/timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-datetimepicker/css/datetimepicker-custom.css" />
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>
@@ -278,11 +283,11 @@
                     </div>
                     <div class="form-group">
                         <label>开始时间</label>
-                        <input type="text" class="form-control"  data-mask="29:59" id="starttime" placeholder="请输入">
+                        <input type="text" class="form-control timepicker-24"  id="starttime">
                     </div>
                     <div class="form-group">
                         <label>结束时间</label>
-                        <input type="text" class="form-control"  data-mask="29:59" id="endtime" placeholder="请输入">
+                        <input type="text" class="form-control timepicker-24"  id="endtime">
                     </div>
 
                 </form>
@@ -362,7 +367,13 @@
 <script src="js/jquery.nicescroll.js"></script>
 <!--bootstrap input mask-->
 <script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-
+<!--pickers plugins-->
+<script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
 
@@ -474,7 +485,13 @@
         });
 
 
-
+        $('.timepicker-24').timepicker({
+            autoclose: true,
+            minuteStep: 1,
+            secondStep:1,
+            showSeconds: true,
+            showMeridian: false
+        });
     });
     function uploadFile(){
         var myform = new FormData();
