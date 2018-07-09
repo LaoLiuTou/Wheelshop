@@ -23,6 +23,7 @@
   <link href="css/style-responsive.css" rel="stylesheet">
 
 
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>
@@ -205,6 +206,8 @@
                                                         <div class="btn-group">
                                                             <a href="templet/品种清单模板.xls">下载导入表格模板</a>
                                                         </div>
+                                                        <a data-original-title="所需设备" data-animation="false" data-easein="flipXIn" href="#"  rel="popover" data-placement="right" data-content="1,2,3,4,5">1111</a>
+
 
                                                     </div>
 
@@ -220,6 +223,7 @@
                                                                 <th>节拍</th>
                                                                 <th>生产线</th>
                                                                 <th>产能</th>
+                                                                <th>所需设备</th>
                                                                 <th>换模时间</th>
                                                                 <th>添加人</th>
                                                                 <th>添加时间</th>
@@ -331,9 +335,27 @@
                     </div>
                     <div class="form-group">
                         <label>使用设备</label>
+                        <select id="required" multiple="multiple" class="form-control">
+                            <option value="no01">设备1</option>
+                            <option value="no02">设备2</option>
+                            <option value="no03">设备3</option>
+                            <option value="no04">设备4</option>
+                            <option value="no05">设备5</option>
+                            <option value="no06">设备6</option>
+                            <option value="no07">设备7</option>
+                            <option value="no08">设备8</option>
+                            <option value="no09">设备9</option>
+                            <option value="no10">设备10</option>
+                            <option value="no11">设备11</option>
+                            <option value="no12">设备12</option>
+                            <option value="no13">设备13</option>
+                            <option value="no14">设备14</option>
+                            <option value="no15">设备15</option>
+                            <option value="no16">设备16</option>
+                            <option value="no17">设备17</option>
+                            <option value="no18">设备18</option>
 
-                        多选
-                        <input type="text" class="form-control" id="changtime" placeholder="请输入" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                        </select>
                     </div>
 
                 </form>
@@ -406,6 +428,7 @@
 </div>
 
 
+
 <!-- modal -->
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="js/jquery-1.10.2.min.js"></script>
@@ -417,20 +440,48 @@
 
 <!--bootstrap input mask-->
 <script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
-
-
+<!-- Include the plugin's CSS and JS: -->
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 <script src="js/main/config.js"></script>
 <script src="js/main/md5.js"></script>
 <script src="js/main/ws_varieties.js"></script>
 <script src="js/main/ws_production.js"></script>
 <script>
+    var prodnum='6';
     //列表
     var currentPage=1;
     var pageSize=10;
     $(document).ready(function(){
+
+        $('#required').multiselect({
+            //enableClickableOptGroups: true,
+           // enableCollapsibleOptGroups: true,
+            includeSelectAllOption: true,
+            dropRight: true,
+            maxHeight: 200,
+            /*onChange: function(option, checked) {
+                alert($('#required').val());
+                /!*alert($(option).val());
+                 if(条件) {
+                  this.clearSelection();//清除所有选择及显示
+                }*!/
+            },*/
+            nonSelectedText: '请选择',
+            numberDisplayed: 10,
+            //enableFiltering: true,
+            allSelectedText:'全部',
+        });
+
+
+        $('#pzqdTbody').on('mouseover','.required',function () {
+            $(this).find('.tips-box-2').removeClass("hide").addClass("show");
+        });
+        $('#pzqdTbody').on('mouseleave','.required',function () {
+            $(this).find('.tips-box-2').removeClass("show").addClass("hide");
+        });
+
 
         selectProdnum (2);
 
@@ -454,30 +505,30 @@
 
         //搜索
         $('#searchBtn').click(function () {
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties2($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
         });
 
 
-        queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+        queryVarieties2($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
 
         $('.pagination').on('click','.pageBtn',function(){
             currentPage=$(this).attr('index');
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties2($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
         });
         $('.pagination').on('click','.prevBtn',function(){
             currentPage--;
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties2($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
 
         });
         $('.pagination').on('click','.nextBtn',function(){
             currentPage++;
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties2($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
 
         });
         $('.pagination').on('click','#jumpBtn',function(){
             var reg=/^[1-9]\d*$|^0$/;
             if(reg.test($('#jumpPageText').val())==true){
-                queryVarieties($('#pzqd_searchText').val(),$('#jumpPageText').val(),pageSize);
+                queryVarieties2($('#pzqd_searchText').val(),prodnum,$('#jumpPageText').val(),pageSize);
             }else{
                 alert("页码输入有误！");
                 return false;
@@ -495,7 +546,7 @@
                 return false;
             }
 
-            addVarieties();
+            addVarieties2();
         });
 
         //删除
@@ -521,7 +572,9 @@
             if($('#pzqd_searchText').val()!=''){
                 htmlExport+='&variety='+'%25'+$('#pzqd_searchText').val()+'%25';
             }
-
+            if(prodnum!=''){
+                htmlExport+='&prodnum='+prodnum;
+            }
             window.open(htmlExport);
         });
 
@@ -546,7 +599,7 @@
                 if(data['status']=='0'){
                     $('#importResult').prop('href',data['data'][0]);
                     $('#delete-box-import').modal('show');
-                    queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+                    queryVarieties2($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
                 }
                 else{
                     alert("导入失败！");

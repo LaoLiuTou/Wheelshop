@@ -18,7 +18,7 @@
 			<if test="variety != null"> AND VARIETY LIKE #{variety} </if>
 			<if test="yield != null"> AND YIELD =#{yield} </if>
 			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
-			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
+			<if test="prodnum != null"> AND PRODNUM IN (${prodnum}) </if>
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="capacity != null"> AND CAPACITY =#{capacity} </if>
 			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>
@@ -42,7 +42,7 @@
 			<if test="variety != null"> AND VARIETY LIKE #{variety} </if>
 			<if test="yield != null"> AND YIELD =#{yield} </if>
 			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
-			<if test="prodnum != null"> AND PRODNUM =#{prodnum} </if>
+			<if test="prodnum != null"> AND PRODNUM IN (${prodnum}) </if>
 			<if test="production != null"> AND PRODUCTION =#{production} </if>
 			<if test="capacity != null"> AND CAPACITY =#{capacity} </if>
 			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>

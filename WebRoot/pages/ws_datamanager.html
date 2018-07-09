@@ -422,10 +422,12 @@
 <script src="js/main/ws_varieties.js"></script>
 <script src="js/main/ws_production.js"></script>
 <script>
+    var prodnum='1,2,3,4,5';
     //列表
     var currentPage=1;
     var pageSize=10;
     $(document).ready(function(){
+
 
         selectProdnum (1);
 
@@ -449,30 +451,30 @@
 
         //搜索
         $('#searchBtn').click(function () {
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
         });
 
 
-        queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+        queryVarieties($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
 
         $('.pagination').on('click','.pageBtn',function(){
             currentPage=$(this).attr('index');
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
         });
         $('.pagination').on('click','.prevBtn',function(){
             currentPage--;
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
 
         });
         $('.pagination').on('click','.nextBtn',function(){
             currentPage++;
-            queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+            queryVarieties($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
 
         });
         $('.pagination').on('click','#jumpBtn',function(){
             var reg=/^[1-9]\d*$|^0$/;
             if(reg.test($('#jumpPageText').val())==true){
-                queryVarieties($('#pzqd_searchText').val(),$('#jumpPageText').val(),pageSize);
+                queryVarieties($('#pzqd_searchText').val(),prodnum,$('#jumpPageText').val(),pageSize);
             }else{
                 alert("页码输入有误！");
                 return false;
@@ -516,6 +518,9 @@
             if($('#pzqd_searchText').val()!=''){
                 htmlExport+='&variety='+'%25'+$('#pzqd_searchText').val()+'%25';
             }
+            if(prodnum!=''){
+                htmlExport+='&prodnum='+prodnum;
+            }
 
             window.open(htmlExport);
         });
@@ -541,7 +546,7 @@
                 if(data['status']=='0'){
                     $('#importResult').prop('href',data['data'][0]);
                     $('#delete-box-import').modal('show');
-                    queryVarieties($('#pzqd_searchText').val(),currentPage,pageSize);
+                    queryVarieties($('#pzqd_searchText').val(),prodnum,currentPage,pageSize);
                 }
                 else{
                     alert("导入失败！");

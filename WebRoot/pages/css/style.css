@@ -4752,3 +4752,43 @@ ol.comment-list {
     font-size: 20px;
 
 }
+
+/*显示所需设备*/
+.tips-box-1 {
+    position: relative;
+    display: block;
+}
+.tips-content {
+    position: relative;
+    left: 0;
+    float: left;
+}
+.tips-box-2 {
+    display: block;
+    max-width: 200px;
+    height: auto;
+    line-height: 26px;
+    white-space: normal;
+    position: absolute;
+    z-index: 999;
+    left: 120px;
+    float: left;
+    padding: 5px;
+    border: 1px solid #65cea7;
+    background-color: #65cea7;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #f1f1f1;
+    /*word-break:break-all;*/
+    word-wrap:break-word;
+}
+.tips-box-2 .triangle {
+    display: block;
+    width: 0;
+    height: 0;
+    border-right: 10px solid #65cea7;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    left: -10px;
+    top: 8px;
+}

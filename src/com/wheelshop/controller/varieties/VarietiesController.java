@@ -158,6 +158,7 @@ public class VarietiesController {
 				paramMap.put("variety",varieties.getVariety());
 				paramMap.put("yield",varieties.getYield());
 				paramMap.put("rhythm",varieties.getRhythm());
+				paramMap.put("prodnum",varieties.getProdnum());
 				paramMap.put("production",varieties.getProduction());
 				paramMap.put("capacity",varieties.getCapacity());
 				paramMap.put("changtime",varieties.getChangtime());
@@ -204,6 +205,7 @@ public class VarietiesController {
 				paramMap.put("variety",varieties.getVariety());
 				paramMap.put("yield",varieties.getYield());
 				paramMap.put("rhythm",varieties.getRhythm());
+				paramMap.put("prodnum",varieties.getProdnum());
 				paramMap.put("production",varieties.getProduction());
 				paramMap.put("capacity",varieties.getCapacity());
 				paramMap.put("changtime",varieties.getChangtime());
@@ -247,6 +249,7 @@ public class VarietiesController {
 			paramMap.put("variety",varieties.getVariety());
 			paramMap.put("yield",varieties.getYield());
 			paramMap.put("rhythm",varieties.getRhythm());
+			paramMap.put("prodnum",varieties.getProdnum());
 			paramMap.put("production",varieties.getProduction());
 			paramMap.put("capacity",varieties.getCapacity());
 			paramMap.put("changtime",varieties.getChangtime());
