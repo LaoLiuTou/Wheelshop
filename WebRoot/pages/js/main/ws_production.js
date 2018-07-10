@@ -124,13 +124,13 @@ function lastProduction2(production){
         var status = obj['status'];
         var msg = obj['msg'];
         if(status=='0'){
-            var id,yield;
+            var id,yield=0;
             var data=msg['data'];
             if(data.length>0){
                 for(var o in data) {
                     //保存id
                     id=data[o]['id'];
-                    yield=data[o]['yield'];
+                    yield=Number(data[o]['yield']);
 
                     for (var item in data[o]) {
                         $('#'+item+'[prod="'+production+'"]').text(data[o][item]);

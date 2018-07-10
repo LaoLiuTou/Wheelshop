@@ -53,8 +53,8 @@
             <ul class="nav nav-pills nav-stacked custom-nav">
                 <li id="menu1"><a href="index.html"><i class="fa fa-home"></i> <span>首页</span></a></li>
                 <li id="menu2" class="menu-list active"><a href=""><i class="fa fa-desktop"></i> <span>生产大屏控制</span></a>
-<ul class="sub-menu-list">
-    <li id="menu2-1"><a href="ws_first1.html">旋压A线</a></li>
+                     <ul class="sub-menu-list">
+                        <li id="menu2-1"><a href="ws_first1.html">旋压A线</a></li>
                         <li id="menu2-2"><a href="ws_second1.html">旋压B线</a></li>
                         <li id="menu2-3"><a href="ws_third1.html">滚型轮辋</a></li>
                         <li id="menu2-4"><a href="ws_fourth1.html">型钢轮辋</a></li>
@@ -434,22 +434,16 @@
                         <div class="form-group col-md-5">
                             <label class="col-sm-4 mtop5">被替换设备：</label>
                             <div class="col-sm-8">
-                                <select class="form-control" prod="6" id="origEquip" index="1"  >
+                                <select class="form-control origEquip" id="origEquip" index="1"  >
                                     <option value="">请选择设备</option>
-                                    <option value="设备1">设备1</option>
-                                    <option value="设备2">设备2</option>
-                                    <option value="设备3">设备3</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group col-md-5">
                             <label class="col-sm-4 mtop5">替换设备：</label>
                             <div class="col-sm-8">
-                                <select class="form-control" prod="6" id="replaceEquip" index="1" >
+                                <select class="form-control replaceEquip" prod="6" id="replaceEquip" index="1" >
                                     <option value="">请选择设备</option>
-                                    <option value="设备1">设备1</option>
-                                    <option value="设备2">设备2</option>
-                                    <option value="设备3">设备3</option>
                                 </select>
                             </div>
                         </div>
@@ -493,6 +487,8 @@
     var production=6;
     //变化点
     var changed = {};
+    var devices=['no01','no02','no03','no04','no05','no06','no07','no08','no09','no10'
+                ,'no11','no12','no13','no14','no15','no16','no17','no18','no19','no20'];
     $(document).ready(function(){
 
 
@@ -580,22 +576,16 @@
                 '    <div class="form-group col-md-5">\n' +
                 '        <label class="col-sm-4 mtop5">被替换设备：</label>\n' +
                 '        <div class="col-sm-8">\n' +
-                '            <select class="form-control" prod="6" id="origEquip" index="'+index+'"  >\n' +
+                '            <select class="form-control origEquip"  id="origEquip" index="'+index+'"  >\n' +
                 '                <option value="">请选择设备</option>\n' +
-                '                <option value="设备1">设备1</option>\n' +
-                '                <option value="设备2">设备2</option>\n' +
-                '                <option value="设备3">设备3</option>\n' +
                 '            </select>\n' +
                 '        </div>\n' +
                 '    </div>\n' +
                 '    <div class="form-group col-md-5">\n' +
                 '        <label class="col-sm-4 mtop5">替换设备：</label>\n' +
                 '        <div class="col-sm-8">\n' +
-                '            <select class="form-control" prod="6" id="replaceEquip" index="'+index+'" >\n' +
+                '            <select class="form-control replaceEquip"  id="replaceEquip" index="'+index+'" >\n' +
                 '                <option value="">请选择设备</option>\n' +
-                '                <option value="设备1">设备1</option>\n' +
-                '                <option value="设备2">设备2</option>\n' +
-                '                <option value="设备3">设备3</option>\n' +
                 '            </select>\n' +
                 '        </div>\n' +
                 '    </div>\n' +
@@ -607,7 +597,81 @@
             $('#equipForm').append(html);
             $('.addEquip[index='+(index-1)+']').hide();
 
+            ////////
+            var selectHtml=' <option value="">请选择设备</option>';
+            for ( var i = 0; i <devices.length; i++){
+                var flag=true;
+                $('.origEquip:lt('+(index-1)+')').each(function () {
+                    if(devices[i]==$(this).val()){
+                        flag=false;
+                    }
+                });
+                $('.replaceEquip:lt('+(index-1)+')').each(function () {
+                    if(devices[i]==$(this).val()){
+                        flag=false;
+                    }
+                });
+                if(flag){
+                    selectHtml+=' <option value="'+devices[i]+'">'+devices[i]+'</option>';
+                }
+            }
+            $('.origEquip[index='+index+']').html(selectHtml);
+            $('.replaceEquip[index='+index+']').html(selectHtml);
+
         });
+
+        ///
+        var selectHtml=' <option value="">请选择设备</option>';
+        for ( var i = 0; i <devices.length; i++){
+            selectHtml+=' <option value="'+devices[i]+'">'+devices[i]+'</option>';
+        }
+        $('.origEquip[index=1]').html(selectHtml);
+        $('.replaceEquip[index=1]').html(selectHtml);
+
+        $('#equipForm').on('change','select',function(){
+            var currentDom=$(this);
+            //缓存已选择的值
+            var temp=[];
+            temp.push($(this).val());
+            $('#equipForm select').each(function(){
+                if($(this).val()!=''){
+                    temp.push($(this).val());
+                }
+            });
+
+            $('#equipForm select').each(function(){
+                if(!currentDom.is($(this))){
+                    var cvalue=$(this).val();
+                    var selectHtml=' <option value="">请选择设备</option>';
+                    for ( var i = 0; i <devices.length; i++){
+                        var flag=true;
+                        for ( var j = 0; j <temp.length; j++){
+                            if(devices[i]==temp[j]&&cvalue!=temp[j]){
+                                flag=false;
+                            }
+                        }
+                        if(flag){
+
+                            if(cvalue==devices[i]){
+                                selectHtml+=' <option value="'+devices[i]+'" selected>'+devices[i]+'</option>';
+                            }
+                            else{
+                                selectHtml+=' <option value="'+devices[i]+'">'+devices[i]+'</option>';
+                            }
+                        }
+                    }
+                    //alert(selectHtml);
+                    console.log(selectHtml);
+                    $(this).html(selectHtml);
+                    $(this).val(cvalue);
+                    console.log(cvalue);
+
+                }
+
+            });
+
+        });
+
 
     });
 
