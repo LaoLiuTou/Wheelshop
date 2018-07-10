@@ -32,7 +32,8 @@
 }
 
 
-
+.fl { float: left;}
+.fr { float: right;}
 .mt5 {margin-top: 5px!important;}
 .mt15 { margin-top: 15px!important;}
 .mr10 { margin-right: 10px!important;}
@@ -458,7 +459,7 @@
     text-align: center;
 }
 .font24 {
-    font-size: 2.4rem;
+    font-size: 2.1rem;
 }
 
 @media only screen and (min-width: 1900px){
@@ -547,14 +548,17 @@
 
     .table-bordered {
         border: 2px solid #aaa;
-        font-size: 2rem;
+        font-size: 1.65rem;
         font-weight: bolder;
         color: #222!important;
+        line-height: 103.9px;
     }
     .table-bordered td {
         border: 1px solid #aaa!important;
         white-space: nowrap;
         padding: 0 5px!important;
+        height: 103.9px;
+        line-height: 103.9px!important;
     }
     .table-bordered th {
         border-bottom: 1px solid #aaa!important;
@@ -1264,4 +1268,25 @@
     50% {color:#000;}
     75% {color:#fe0000;}
     100% {color:#000;}
+}
+.production-state-box {
+    width: 100%;
+    overflow: hidden;
+    text-align: left;
+    font-size: 2.2rem;
+    font-weight: bolder;
+    height: 130px;
+    line-height: 130px;
+    color: #222;
+    border: 1px solid #aaa;
+    border-top: none;
+    margin-top: -20px;
+}
+.state-content-in {
+    margin-right: 30px;
+    padding: 0 20px 0 10px;
+    border-right: 1px solid #aaa;
+}
+.currenttime-font {
+    color: #ff0000;
 }
