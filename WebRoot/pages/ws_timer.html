@@ -260,7 +260,7 @@
             </div>
             <div class="modal-body">
 
-                <form role="form">
+                <form role="form" id="addForm">
                     <div class="form-group">
                         <label>生产线</label>
                         <select class="form-control m-bot15"  id="prodnum" >
@@ -295,6 +295,7 @@
             <div class="clearfix"></div>
             <div class="modal-footer">
                 <button class="btn btn-info popovers" type="button" id="timer_addBtn">保存</button>
+                <button class="btn btn-info popovers" type="button" id="timer_addSaveBtn">保存并新增</button>
                 <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
             </div>
         </div>
@@ -446,7 +447,19 @@
                 return false;
             }
 
-            addTimer();
+            addTimer(1);
+        });
+        $('#timer_addSaveBtn').click(function () {
+            if($('#starttime').val()==''){
+                alert('开始时间不能为空！');
+                return false;
+            }
+            if($('#endtime').val()==''){
+                alert('结束时间不能为空！');
+                return false;
+            }
+
+            addTimer(2);
         });
 
         //删除

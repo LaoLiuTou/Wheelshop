@@ -97,8 +97,20 @@
         } else{
             clearInterval(timer);
             if(GetQueryString('restType')=='换模'){
-                playEndSound();
+                //playEndSound();
                 $('.show-time').addClass('text-black-red');
+                var audio = new Audio();
+                audio.src = "audio/huanmo.mp3";
+                //audio.loop = true;
+                //播放(继续播放)
+                audio.play();
+            }
+            else{
+                var audio = new Audio();
+                audio.src = "audio/rest.mp3";
+                //audio.loop = true;
+                //播放(继续播放)
+                audio.play();
             }
 
         }

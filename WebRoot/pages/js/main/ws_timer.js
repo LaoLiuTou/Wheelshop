@@ -14,7 +14,7 @@ $(document).ready(function(){
 /**
  * 添加品种
  */
-function addTimer(){
+function addTimer(type){
     var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
     var bodyParam={'prodnum':$('#prodnum').val(),'type':$('#type').val(),'starttime':$('#starttime').val(),
         'endtime':$('#endtime').val(),'creater':userinfo['username']};
@@ -24,8 +24,16 @@ function addTimer(){
         var status = obj['status'];
         //var msg = obj['msg'];
         if(status=='0'){
-            alert("新建成功！");
-            window.location.reload();
+            alert("数据已保存！");
+            if(type==1){
+                window.location.reload();
+            }
+            else if(type==2){
+                queryTimer($('#productionSearch').val(),$('#typeSearch').val(),currentPage,pageSize);
+                $('#addForm select').val("");
+                $('#addForm input').val("");
+            }
+
             //window.location.href="interface.html?index="+interfaceIndex;
         }
     });
