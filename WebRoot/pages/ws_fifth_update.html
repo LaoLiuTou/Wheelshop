@@ -198,7 +198,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 col-sm-2 control-label">计划完成</label>
+                                            <label class="col-sm-2 col-sm-2 control-label">计划产量</label>
                                             <div class="col-sm-9">
                                                 <input type="text" prod="5"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
                                                 <input type="text" prod="5"  id="changtime" class="form-control hide" >
@@ -478,10 +478,26 @@
             $('#rhythm').val($(this).find("option:selected").attr("rhythm"));
             $('#plancomp').val($(this).find("option:selected").attr("yield"));
             $('#changtime').val($(this).find("option:selected").attr("changtime"));
-
+            if($('#plancomp').val()!=''){
+                var plancompNumber=$('#plancomp').val();
+                var plancomp=(Number(plancompNumber)+Number((plancompNumber/8)*($('#overtime').val()/60))).toFixed(0);
+                $('#plancomp').val(plancomp);
+            }
         });
 
-
+        //加班时间变化
+        var previous;
+        $('#overtime').on('focus', function () {
+            previous = this.value;
+        }).change(function() {
+            if($('#plancomp').val()!=''){
+                var plancompNumber=$('#plancomp').val();
+                plancompNumber=plancompNumber/(8+previous/60)*8;
+                var plancomp=(Number(plancompNumber)+Number((plancompNumber/8)*($(this).val()/60))).toFixed(0);
+                $('#plancomp').val(plancomp);
+            }
+            previous = this.value;
+        });
         //数字判断
         /*$('#yield').blur(function () {
 
