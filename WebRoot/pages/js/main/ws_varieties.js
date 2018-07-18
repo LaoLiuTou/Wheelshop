@@ -33,9 +33,20 @@ function addVarieties(){
 }
 function addVarieties2(){
     var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
+    var requiredvar=[];
+
+    for(var key in $('#required').val()){
+        var temp={};
+        temp['index']=$('#required').val()[key];
+        temp['name']=$("#required option[value=" + $('#required').val()[key] + "]").text();
+        temp['replace']='';
+        requiredvar.push(temp)
+    }
+    //alert(JSON.stringify(requiredvar));
+
     var bodyParam={'variety':$('#variety').val(),'yield':$('#yield').val(),'rhythm':$('#rhythm').val(),
         'prodnum':$('#production').val(),'production':$('#production').find('option:selected').text(),'capacity':$('#capacity').val(),'changtime':$('#changtime').val(),
-        'required':JSON.stringify($('#required').val()),'creater':userinfo['username']};
+        'required':JSON.stringify(requiredvar),'creater':userinfo['username']};
     var httpR = new createHttpR(url+'addVarieties','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
@@ -241,13 +252,16 @@ function  queryVarieties2 (variety,prodnum,currentPage,pageSize) {
             for(var o in data){
                 var temp;
                 var required=jQuery.parseJSON(data[o].required);
-                if(required.length>3){
-                    temp=required[0]+"/"+required[1]+"/"+required[2];
+                var tempArray=[];
+                for(var key in required){
+                    tempArray.push(required[key]['name']);
+                }
+                if(tempArray.length>3){
+                    temp=tempArray[0]+"/"+tempArray[1]+"/"+tempArray[2];
                 }
                 else{
-                    temp=required.join('/');
+                    temp=tempArray.join('/');
                 }
-
 
 
                 html+='<tr index='+o+' class="gradeX">\n' +
@@ -263,7 +277,7 @@ function  queryVarieties2 (variety,prodnum,currentPage,pageSize) {
                     '<td class="required"><div class="tips-box-1">'+
                     '<div class="tips-content">'+temp+'</div>'+
                     '<div id="details" class="tips-box-2 hide">'+
-                    '<span class="triangle"></span>'+required.join('/')+
+                    '<span class="triangle"></span>'+tempArray.join('/')+
                     '</div>'+
                     '</div></td>\n' +
                     '<td>'+data[o].changtime+'分</td>\n' +
@@ -380,7 +394,7 @@ function  selectVarieties (production) {
             var html='';
             html+='<option value="" rhythm="" yield=""></option>\n';
             for(var o in data){
-                html+='<option value="'+data[o].variety+'" rhythm="'+data[o].rhythm+'" changtime="'+data[o].changtime+'" yield="'+data[o].yield+'">'+data[o].variety+'</option>\n';
+                html+='<option value="'+data[o].variety+'" rhythm="'+data[o].rhythm+'" changtime="'+data[o].changtime+'" yield="'+data[o].yield+'"  requiredeq=\''+data[o].required+'\'>'+data[o].variety+'</option>\n';
             }
             $('#variety').html(html);
 

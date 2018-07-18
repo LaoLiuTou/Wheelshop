@@ -202,6 +202,7 @@
                                             <div class="col-sm-9">
                                                 <input type="text" prod="6"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
                                                 <input type="text" prod="6"  id="changtime" class="form-control hide" >
+                                                <input type="text" prod="6"  id="required" class="form-control hide" >
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -284,105 +285,105 @@
             <div class="modal-body">
                 <form role="form" id="changedForm">
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-1：</label>
+                        <label style="width:20%">工位1：</label>
                         <input type="radio" name="radio11" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio11" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio12" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio12" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-2：</label>
+                        <label style="width:20%">工位2：</label>
                         <input type="radio" name="radio21" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio21" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio22" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio22" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-3：</label>
+                        <label style="width:20%">工位3：</label>
                         <input type="radio" name="radio31" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio31" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio32" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio32" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-4：</label>
+                        <label style="width:20%">工位4：</label>
                         <input type="radio" name="radio41" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio41" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio42" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio42" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位2-1：</label>
+                        <label style="width:20%">工位5：</label>
                         <input type="radio" name="radio51" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio51" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio52" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio52" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位2-2：</label>
+                        <label style="width:20%">工位6：</label>
                         <input type="radio" name="radio61" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio61" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio62" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio62" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位3-1：</label>
+                        <label style="width:20%">工位7：</label>
                         <input type="radio" name="radio71" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio71" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio72" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio72" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位3-2：</label>
+                        <label style="width:20%">工位8：</label>
                         <input type="radio" name="radio81" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio81" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio82" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio82" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位4-1：</label>
+                        <label style="width:20%">工位9：</label>
                         <input type="radio" name="radio91" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio91" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio92" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio92" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位4-2：</label>
+                        <label style="width:20%">工位10：</label>
                         <input type="radio" name="radio101" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio101" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio102" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio102" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位5：</label>
+                        <label style="width:20%">工位11：</label>
                         <input type="radio" name="radio111" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio111" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio112" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio112" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-1：</label>
+                        <label style="width:20%">工位12：</label>
                         <input type="radio" name="radio121" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio121" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio122" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio122" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-2：</label>
+                        <label style="width:20%">工位13：</label>
                         <input type="radio" name="radio131" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio131" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio132" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio132" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-3：</label>
+                        <label style="width:20%">工位14：</label>
                         <input type="radio" name="radio141" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio141" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio142" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio142" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-4：</label>
+                        <label style="width:20%">工位15：</label>
                         <input type="radio" name="radio151" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio151" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio152" value="red"/>红色2&nbsp;
@@ -391,18 +392,39 @@
 
 
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-5：</label>
+                        <label style="width:20%">工位16：</label>
                         <input type="radio" name="radio161" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio161" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio162" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio162" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-6：</label>
+                        <label style="width:20%">工位17：</label>
                         <input type="radio" name="radio171" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio171" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio172" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio172" value="green"/>绿色2&nbsp;
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label style="width:20%">工位18：</label>
+                        <input type="radio" name="radio181" value="red"/>红色1&nbsp;
+                        <input type="radio" name="radio181" value="green"/>绿色1&nbsp;
+                        <input type="radio" name="radio182" value="red"/>红色2&nbsp;
+                        <input type="radio" name="radio182" value="green"/>绿色2&nbsp;
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label style="width:20%">工位19：</label>
+                        <input type="radio" name="radio191" value="red"/>红色1&nbsp;
+                        <input type="radio" name="radio191" value="green"/>绿色1&nbsp;
+                        <input type="radio" name="radio192" value="red"/>红色2&nbsp;
+                        <input type="radio" name="radio192" value="green"/>绿色2&nbsp;
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label style="width:20%">工位20：</label>
+                        <input type="radio" name="radio201" value="red"/>红色1&nbsp;
+                        <input type="radio" name="radio201" value="green"/>绿色1&nbsp;
+                        <input type="radio" name="radio202" value="red"/>红色2&nbsp;
+                        <input type="radio" name="radio202" value="green"/>绿色2&nbsp;
                     </div>
 
 
@@ -487,8 +509,10 @@
     var production=6;
     //变化点
     var changed = {};
-    var devices=['no01','no02','no03','no04','no05','no06','no07','no08','no09','no10'
-                ,'no11','no12','no13','no14','no15','no16','no17','no18','no19','no20'];
+    var devices=['no01','no16','no17','no02','no03','no18','no04','no05','no06','no19'
+                ,'no07','no08','no09','no10','no20','no11','no12','no13','no14','no15'];
+
+
     $(document).ready(function(){
 
 
@@ -529,6 +553,7 @@
             $('#rhythm').val($(this).find("option:selected").attr("rhythm"));
             $('#plancomp').val($(this).find("option:selected").attr("yield"));
             $('#changtime').val($(this).find("option:selected").attr("changtime"));
+            $('#required').val($(this).find("option:selected").attr("requiredeq"));
 
             if($('#plancomp').val()!=''){
                 var plancompNumber=$('#plancomp').val();
@@ -563,27 +588,6 @@
             }
         });*/
 
-        //add
-        $('#addBtn').click(function () {
-            var params={};
-            $('#addForm input').each(function () {
-                if($(this).val()!='')
-                    params[$(this).attr('id')]=$(this).val();
-            });
-            $('#addForm select').each(function () {
-                if($(this).val()!='')
-                    params[$(this).attr('id')]=$(this).val();
-            });
-            var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
-            /*if($('#actualcomp').val()!=''&&$('#power').val()!=''){
-                params['rate']=(($('#actualcomp').val()/$('#power').val())*100).toFixed(0);
-            }*/
-            params['creater']=userinfo['username'];
-
-            params['changed']=JSON.stringify(changed);
-            params['prodnum']=production;
-            addProduction(params);
-        });
 
 
         //替换设备
@@ -687,6 +691,31 @@
 
         });
 
+        //add
+        $('#addBtn').click(function () {
+            var params={};
+            $('#addForm input').each(function () {
+                if($(this).val()!='')
+                    params[$(this).attr('id')]=$(this).val();
+            });
+            $('#addForm select').each(function () {
+                if($(this).val()!='')
+                    params[$(this).attr('id')]=$(this).val();
+            });
+            var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
+            params['creater']=userinfo['username'];
+
+            params['changed']=JSON.stringify(changed);
+            if($('#required').val()!=''){
+                params['required']=$('#required').val();
+            }
+            params['prodnum']=production;
+            addProduction(params);
+        });
+
+        $('#saveEquipBtn').click(function(){
+            alert($('.origEquip').val());
+        });
 
     });
 

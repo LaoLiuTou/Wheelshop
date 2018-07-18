@@ -39,9 +39,36 @@ function lastProduction(type,production){
                     }
                     if(type==1){
 
+                        //第六条生产线
+                        //重点：1、替代机器：黄色；2、正常：绿色；3、被替代机器：红色；4、未使用机器：灰色 5、已选座位但是机器未使用，座位：隐藏；
+                        if(data[o]['required']!=''){
+                            var requiredJO= jQuery.parseJSON(jQuery.parseJSON(data[o]['required']));
+                            for(var key in requiredJO ){
+                                $('#device'+requiredJO[key]['index']+'_01[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
+                                $('#device'+requiredJO[key]['index']+'_02[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
+                                $('#device'+requiredJO[key]['index']+'_03[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
+                            }
+                        }
 
                         //变化点
+                        //变化点
                         $('.box-body i').addClass('hidden');
+                        var changedJO= jQuery.parseJSON(data[o]['changed']);
+                        var redNum=0;
+                        for(var k in changedJO ){
+                            if(!$('#device'+k.replace('radio','').substr(0,1)+'_01[prod="'+production+'"]').hasClass('bg-gray')){
+                                if(changedJO[k]=='red'){
+                                    redNum++;
+                                }
+                                $('#'+k+'[prod="'+production+'"]').removeClass('hidden').addClass('visible').addClass(changedJO[k]);
+                            }
+
+                        }
+                        $('#changed[prod="'+production+'"]').text(redNum);
+                        if(redNum==0){
+                            $('#changedI').addClass('hidden');
+                        }
+                        /*$('.box-body i').addClass('hidden');
                         var changedJO= jQuery.parseJSON(data[o]['changed']);
                         var redNum=0;
                         for(var k in changedJO ){
@@ -56,7 +83,7 @@ function lastProduction(type,production){
                         else{
                             $('#changedI[prod="'+production+'"]').addClass('hidden');
 
-                        }
+                        }*/
 
                         var stopsJO= jQuery.parseJSON(data[o]['stops']);
 
@@ -88,6 +115,12 @@ function lastProduction(type,production){
                         if(toolstop>0){
                             $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
                         }
+
+
+
+
+
+
                     }
                     else{
                         var changedJO= jQuery.parseJSON(data[o]['changed']);
@@ -139,23 +172,7 @@ function lastProduction2(production){
                         }
                     }
 
-                    //变化点
-                    $('.box-body i').addClass('hidden');
-                    var changedJO= jQuery.parseJSON(data[o]['changed']);
-                    var redNum=0;
-                    for(var k in changedJO ){
-                        if(changedJO[k]=='red'){
-                            redNum++;
-                        }
-                        $('#'+k+'[prod="'+production+'"]').removeClass('hidden').addClass('visible').addClass(changedJO[k]);
-                    }
-                    if(redNum!=0){
-                        $('#changed[prod="'+production+'"]').text(redNum);
-                    }
-                    else{
-                        $('#changedI[prod="'+production+'"]').addClass('hidden');
 
-                    }
 
                     var stopsJO= jQuery.parseJSON(data[o]['stops']);
 
@@ -187,6 +204,37 @@ function lastProduction2(production){
                     if(toolstop>0){
                         $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
                     }
+
+                    //第六条生产线
+                    //重点：1、替代机器：黄色；2、正常：绿色；3、被替代机器：红色；4、未使用机器：灰色 5、已选座位但是机器未使用，座位：隐藏；
+                    if(data[o]['required']!=''){
+                        var requiredJO= jQuery.parseJSON(jQuery.parseJSON(data[o]['required']));
+                        for(var key in requiredJO ){
+                            $('#device'+requiredJO[key]['index']+'_01[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
+                            $('#device'+requiredJO[key]['index']+'_02[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
+                            $('#device'+requiredJO[key]['index']+'_03[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
+                        }
+                    }
+
+                    //变化点
+                    $('.box-body i').addClass('hidden');
+                    var changedJO= jQuery.parseJSON(data[o]['changed']);
+                    var redNum=0;
+                    for(var k in changedJO ){
+                        if(!$('#device'+k.replace('radio','').substr(0,1)+'_01[prod="'+production+'"]').hasClass('bg-gray')){
+                            if(changedJO[k]=='red'){
+                                redNum++;
+                            }
+                            $('#'+k+'[prod="'+production+'"]').removeClass('hidden').addClass('visible').addClass(changedJO[k]);
+                        }
+
+                    }
+                    $('#changed[prod="'+production+'"]').text(redNum);
+                    if(redNum==0){
+                        $('#changedI').addClass('hidden');
+                    }
+
+
 
                 }
             }

@@ -67,6 +67,9 @@
 .bg-red {
     background-color: #fe0000;
 }
+.bg-gray {
+    background-color: #aaa;
+}
 .font12 {
     font-size: 1.4rem;
     position: relative;

@@ -25,6 +25,7 @@
 			<if test="rate != null"> AND a.RATE =#{rate} </if>
 			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="required != null"> AND a.REQUIRED =#{required} </if>
 			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
 			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
@@ -60,6 +61,7 @@
 			<if test="rate != null"> AND a.RATE =#{rate} </if>
 			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="required != null"> AND a.REQUIRED =#{required} </if>
 			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
 			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
@@ -96,6 +98,7 @@
 			<if test="rate != null"> AND RATE =#{rate} </if>
 			<if test="variety != null"> AND VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND RHYTHM =#{rhythm} </if>
+			<if test="required != null"> AND REQUIRED =#{required} </if>
 			<if test="changtime != null"> AND CHANGTIME =#{changtime} </if>
 			<if test="startctime != null"> AND STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND PLANCOMP =#{plancomp} </if>
@@ -131,6 +134,7 @@
 			<if test="rate != null"> AND a.RATE =#{rate} </if>
 			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
 			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="required != null"> AND a.REQUIRED =#{required} </if>
 			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
 			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
 			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
@@ -165,6 +169,7 @@
 			<if test="rate != null">RATE=#{rate}, </if>
 			<if test="variety != null">VARIETY=#{variety}, </if>
 			<if test="rhythm != null">RHYTHM=#{rhythm}, </if>
+			<if test="required != null">REQUIRED=#{required}, </if>
 			<if test="changtime != null">CHANGTIME=#{changtime}, </if>
 			<if test="startctime != null">STARTCTIME=#{startctime}, </if>
 			<if test="plancomp != null">PLANCOMP=#{plancomp}, </if>
@@ -193,6 +198,7 @@
 			<if test="rate != null">RATE, </if>
 			<if test="variety != null">VARIETY, </if>
 			<if test="rhythm != null">RHYTHM, </if>
+			<if test="required != null">REQUIRED, </if>
 			<if test="changtime != null">CHANGTIME, </if>
 			<if test="startctime != null">STARTCTIME, </if>
 			<if test="plancomp != null">PLANCOMP, </if>
@@ -216,6 +222,7 @@
 			<if test="rate != null">#{rate}, </if>
 			<if test="variety != null">#{variety}, </if>
 			<if test="rhythm != null">#{rhythm}, </if>
+			<if test="required != null">#{required}, </if>
 			<if test="changtime != null">#{changtime}, </if>
 			<if test="startctime != null">#{startctime}, </if>
 			<if test="plancomp != null">#{plancomp}, </if>
@@ -246,6 +253,7 @@
 				<if test="item.rate != null">RATE, </if>
 				<if test="item.variety != null">VARIETY, </if>
 				<if test="item.rhythm != null">RHYTHM, </if>
+				<if test="item.required != null">REQUIRED, </if>
 				<if test="item.changtime != null">CHANGTIME, </if>
 				<if test="item.startctime != null">STARTCTIME, </if>
 				<if test="item.plancomp != null">PLANCOMP, </if>
@@ -270,6 +278,7 @@
 				<if test="item.rate != null">#{item.rate}, </if>
 				<if test="item.variety != null">#{item.variety}, </if>
 				<if test="item.rhythm != null">#{item.rhythm}, </if>
+				<if test="item.required != null">#{item.required}, </if>
 				<if test="item.changtime != null">#{item.changtime}, </if>
 				<if test="item.startctime != null">#{item.startctime}, </if>
 				<if test="item.plancomp != null">#{item.plancomp}, </if>

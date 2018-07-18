@@ -87,6 +87,14 @@ public class Production {
 	public void setRhythm(String rhythm) {
 		this.rhythm = rhythm;
 	}
+	/** 所需设备 */
+	private  String required;
+	public String getRequired() {
+		return required;
+	}
+	public void setRequired(String required) {
+		this.required = required;
+	}
 	/** 换模时间*/
 	private  String changtime;
 	 
