@@ -714,7 +714,10 @@
         });
 
         $('#saveEquipBtn').click(function(){
-            alert($('.origEquip').val());
+            $('.origEquip').each(function(){
+                //alert($(this).val());
+            });
+
         });
 
     });
