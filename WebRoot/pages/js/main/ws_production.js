@@ -157,14 +157,15 @@ function lastProduction2(production){
         var status = obj['status'];
         var msg = obj['msg'];
         if(status=='0'){
-            var id,yield=0;
+            var id,yield=0,itemtime=0;
+            var prodstop=0,equipstop=0,toolstop=0;
             var data=msg['data'];
             if(data.length>0){
                 for(var o in data) {
                     //保存id
                     id=data[o]['id'];
                     yield=Number(data[o]['yield']);
-
+                    itemtime=Number(data[o]['itemtime']);
                     for (var item in data[o]) {
                         $('#'+item+'[prod="'+production+'"]').text(data[o][item]);
                         if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
@@ -176,7 +177,7 @@ function lastProduction2(production){
 
                     var stopsJO= jQuery.parseJSON(data[o]['stops']);
 
-                    var prodstop=0,equipstop=0,toolstop=0;
+
                     for(var key in stopsJO ){
                          if(stopsJO[key]=='01'){//设备异常
                             $('#'+key+'_01[prod="'+production+'"]').removeClass('bg-green').addClass('bg-green-red');
@@ -242,19 +243,18 @@ function lastProduction2(production){
 
             }
 
-
             //计划完成
-            if($('#rhythm').text()!=''){
+            if(itemtime!=0){
+                if(prodstop==0&&equipstop==0&&toolstop==0){
+                    yieldvarInterval=setInterval(function (){
+                        yield+=1;
+                        var params={};
+                        params['id']=id;
+                        params['yield']=yield;
+                        updateProduction(params);
 
-                setInterval(function (){
-                    yield+=1;
-                    var params={};
-                    params['id']=id;
-                    params['yield']=yield;
-                    updateProduction(params);
-
-                 },$('#rhythm').text()*1000);
-               // alert(id+"dddd"+$('#rhythm').text());
+                    },itemtime*1000);
+                }
             }
 
         }

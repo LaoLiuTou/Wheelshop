@@ -369,6 +369,9 @@
     function updateTime(){
         var currentTime = new Date().format("yyyy年MM月dd日 hh:mm:ss");
         $('#currentTime').text(currentTime);
+        if(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()=='23:59:59'){
+            window.location.reload();
+        }
     }
 
 

@@ -38,6 +38,14 @@ public class Varieties {
 	public void setRhythm(String rhythm) {
 		this.rhythm = rhythm;
 	}
+	/** 每件时间 */
+	private String itemtime;
+	public String getItemtime() {
+		return itemtime;
+	}
+	public void setItemtime(String itemtime) {
+		this.itemtime = itemtime;
+	}
 	/** 生产线编号 */
 	private  String prodnum;
 	

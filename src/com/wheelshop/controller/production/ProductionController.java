@@ -285,6 +285,7 @@ public class ProductionController {
 				paramMap.put("rate",production.getRate());
 				paramMap.put("variety",production.getVariety());
 				paramMap.put("rhythm",production.getRhythm());
+				paramMap.put("itemtime",production.getItemtime());
 				paramMap.put("plancomp",production.getPlancomp());
 				paramMap.put("equipstop",production.getEquipstop());
 				String starttimeFrom=request.getParameter("starttimeFrom");
@@ -371,6 +372,7 @@ public class ProductionController {
 				paramMap.put("rate",production.getRate());
 				paramMap.put("variety",production.getVariety());
 				paramMap.put("rhythm",production.getRhythm());
+				paramMap.put("itemtime",production.getItemtime());
 				paramMap.put("plancomp",production.getPlancomp());
 				paramMap.put("equipstop",production.getEquipstop());
 				String starttimeFrom=request.getParameter("starttimeFrom");
@@ -434,6 +436,7 @@ public class ProductionController {
 			paramMap.put("rate",production.getRate());
 			paramMap.put("variety",production.getVariety());
 			paramMap.put("rhythm",production.getRhythm());
+			paramMap.put("itemtime",production.getItemtime());
 			paramMap.put("plancomp",production.getPlancomp());
 			paramMap.put("equipstop",production.getEquipstop());
 			String starttimeFrom=request.getParameter("starttimeFrom");
@@ -523,6 +526,7 @@ public class ProductionController {
 			paramMap.put("rate",production.getRate());
 			paramMap.put("variety",production.getVariety());
 			paramMap.put("rhythm",production.getRhythm());
+			paramMap.put("itemtime",production.getItemtime());
 			paramMap.put("plancomp",production.getPlancomp());
 			paramMap.put("equipstop",production.getEquipstop());
 			String starttimeFrom=request.getParameter("starttimeFrom");

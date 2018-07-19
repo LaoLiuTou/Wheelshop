@@ -31,6 +31,9 @@ $(document).ready(function(){
 
     }
 
+    $('#menu4-1').hide();
+    $('#menu4-2').hide();
+    var yieldvarInterval;
 });
 
 /**
@@ -292,9 +295,13 @@ function initwebsocket(type){
         var msg=JSON.parse(event.data);
 
         if(msg['T']=='3'){
+
+            //停止产量计数
+            clearInterval(yieldvarInterval);
+
             if(msg['STATE']=='04'){//正常 取消按钮
 
-                lastProduction(1,msg['PRO']);
+                lastProduction2(msg['PRO']);
 
                 $('#'+msg['NUM']+'_01[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
                 $('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
@@ -485,7 +492,7 @@ function addNumber(_idx){
 
 ///////////
 //初始化变量
-var interval;
+/*var interval;
 var hour,minute,second;//时 分 秒
 hour=minute=second=0;//初始化
 var millisecond=0;//毫秒
@@ -510,15 +517,15 @@ function timer()
         hour=hour+1;
     }
 
-    /*if($('#timeslot').val() == PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2)){
+    /!*if($('#timeslot').val() == PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2)){
         clearInterval(interval);
         playEndSound();
-    }*/
+    }*!/
 
     //$('#repairTime').text("检修时间："+hour+'时'+minute+'分'+second+'秒'+millisecond+'毫秒')
     $('#timeSpan').text(PrefixInteger(hour,2)+'时'+PrefixInteger(minute,2)+'分'+PrefixInteger(second,2)+'秒');
 
-}
+}*/
 function PrefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
 }
@@ -596,10 +603,10 @@ function timer()
         hour=hour+1;
     }
 
-    if($('#timeslot').val() == PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2)){
+    /*if($('#timeslot').val() == PrefixInteger(hour,2)+':'+PrefixInteger(minute,2)+':'+PrefixInteger(second,2)){
         clearInterval(interval);
         playEndSound();
-    }
+    }*/
 
 
     //$('#repairTime').text("检修时间："+hour+'时'+minute+'分'+second+'秒'+millisecond+'毫秒')

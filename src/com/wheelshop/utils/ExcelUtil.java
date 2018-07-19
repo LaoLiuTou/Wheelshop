@@ -15,10 +15,12 @@ import javax.servlet.ServletOutputStream;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -594,7 +596,17 @@ public class ExcelUtil {
                 result = cell.getBooleanCellValue();  
                 break;  
             case FORMULA:  
-                result = cell.getCellFormula();  
+                //result = cell.getCellFormula();  
+
+            	 try {
+            		 //DecimalFormat df = new DecimalFormat("#.####");    
+            		 DecimalFormat df = new DecimalFormat("0");    
+                     //result= String.valueOf(df.format(inputValue));   
+            		 result = String.valueOf(df.format(cell.getNumericCellValue()));
+            	 } catch (IllegalStateException e) {
+            		 result = String.valueOf(cell.getRichStringCellValue());
+            	 }
+
                 break;  
             case ERROR:  
                 result = cell.getErrorCellValue();  

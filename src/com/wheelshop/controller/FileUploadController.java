@@ -2,6 +2,7 @@ package com.wheelshop.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -121,6 +122,7 @@ public class FileUploadController {
 	private String createVarieties(String uploadPath,String excelName){
 		String result="";
 		try {
+			DecimalFormat df = new DecimalFormat("0");    
 			String message="";
 			ExcelUtil eu =new ExcelUtil();
 			eu.setExcelPath(uploadPath+excelName);
@@ -128,7 +130,7 @@ public class FileUploadController {
 			List<Row> outList=new ArrayList<Row>();
 			if(inList.size()>0){
 				Row row=inList.get(0);
-				row.createCell((short) 7).setCellValue("导入结果");  
+				row.createCell((short) 9).setCellValue("导入结果");  
 				outList.add(row);
 			}
 			for(int index=1;index<inList.size();index++){
@@ -144,18 +146,20 @@ public class FileUploadController {
 						Map paramMap= new HashMap();
 						paramMap.put("fromPage",0);
 						paramMap.put("toPage",1); 
-						paramMap.put("production", eu.getCellValue(row.getCell(4)).toString());
+						paramMap.put("production", eu.getCellValue(row.getCell(5)).toString());
 						List<Prodnum> list=iProdnumService.selectProdnumByParam(paramMap);
 						if(list.size()>0){
 							Varieties temp = new Varieties();
 							temp.setVariety(eu.getCellValue(row.getCell(1)).toString());
 							temp.setYield(eu.getCellValue(row.getCell(2)).toString());
 							temp.setRhythm(eu.getCellValue(row.getCell(3)).toString());
+							temp.setItemtime(eu.getCellValue(row.getCell(4)).toString());
 							temp.setProdnum(list.get(0).getId()+"");
-							temp.setProduction(eu.getCellValue(row.getCell(4)).toString());
-							temp.setCapacity(eu.getCellValue(row.getCell(5)).toString());
-							temp.setChangtime(eu.getCellValue(row.getCell(6)).toString());
-							temp.setCreater(eu.getCellValue(row.getCell(7)).toString());
+							temp.setProduction(eu.getCellValue(row.getCell(5)).toString());
+							
+							temp.setCapacity(String.valueOf(df.format(row.getCell(6).getNumericCellValue())));
+							temp.setChangtime(eu.getCellValue(row.getCell(7)).toString());
+							temp.setCreater(eu.getCellValue(row.getCell(8)).toString());
 							int resultSample =iVarietiesService.addVarieties(temp);
 							if(resultSample>0){
 								message = "成功";
@@ -176,7 +180,7 @@ public class FileUploadController {
 					e.printStackTrace();
 				}
 				
-				row.createCell((short) 7).setCellValue(message);  
+				row.createCell((short) 9).setCellValue(message);  
 			  
 				outList.add(row);
 			}
@@ -237,7 +241,7 @@ public class FileUploadController {
 							temp.setProdnum(list.get(0).getId()+"");
 							temp.setType(eu.getCellValue(row.getCell(2)).toString());
 							temp.setStarttime(times[0]);
-							temp.setEndtime(times[0]);
+							temp.setEndtime(times[1]);
 							temp.setCreater(eu.getCellValue(row.getCell(4)).toString());
 							int resultSample =iTimerService.addTimer(temp);
 							if(resultSample>0){

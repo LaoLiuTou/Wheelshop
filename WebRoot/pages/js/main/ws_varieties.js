@@ -16,9 +16,10 @@ $(document).ready(function(){
  */
 function addVarieties(){
     var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
-    var bodyParam={'variety':$('#variety').val(),'yield':$('#yield').val(),'rhythm':$('#rhythm').val(),
+    var bodyParam={'variety':$('#variety').val(),'yield':$('#yield').val(),'rhythm':$('#rhythm').val(),'itemtime':$('#itemtime').val(),
         'prodnum':$('#production').val(),'production':$('#production').find('option:selected').text(),'capacity':$('#capacity').val(),'changtime':$('#changtime').val(),
         'creater':userinfo['username']};
+
     var httpR = new createHttpR(url+'addVarieties','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
@@ -44,7 +45,7 @@ function addVarieties2(){
     }
     //alert(JSON.stringify(requiredvar));
 
-    var bodyParam={'variety':$('#variety').val(),'yield':$('#yield').val(),'rhythm':$('#rhythm').val(),
+    var bodyParam={'variety':$('#variety').val(),'yield':$('#yield').val(),'rhythm':$('#rhythm').val(),'itemtime':$('#itemtime').val(),
         'prodnum':$('#production').val(),'production':$('#production').find('option:selected').text(),'capacity':$('#capacity').val(),'changtime':$('#changtime').val(),
         'required':JSON.stringify(requiredvar),'creater':userinfo['username']};
     var httpR = new createHttpR(url+'addVarieties','post','text',bodyParam,'callBack');
@@ -130,6 +131,7 @@ function  queryVarieties (variety,prodnum,currentPage,pageSize) {
                     '<td>'+data[o].variety+'</td>\n' +
                     '<td>'+data[o].yield+'</td>\n' +
                     '<td>'+data[o].rhythm+'</td>\n' +
+                    '<td>'+data[o].itemtime+'</td>\n' +
                     '<td>'+data[o].production+'</td>\n' +
                     '<td>'+data[o].capacity+'</td>\n' +
                     '<td>'+data[o].changtime+'分</td>\n' +
@@ -271,6 +273,7 @@ function  queryVarieties2 (variety,prodnum,currentPage,pageSize) {
                     '<td>'+data[o].variety+'</td>\n' +
                     '<td>'+data[o].yield+'</td>\n' +
                     '<td>'+data[o].rhythm+'</td>\n' +
+                    '<td>'+data[o].itemtime+'</td>\n' +
                     '<td>'+data[o].production+'</td>\n' +
                     '<td>'+data[o].capacity+'</td>\n' +
                     //'<td>'+temp+'</td>\n' +
@@ -394,7 +397,7 @@ function  selectVarieties (production) {
             var html='';
             html+='<option value="" rhythm="" yield=""></option>\n';
             for(var o in data){
-                html+='<option value="'+data[o].variety+'" rhythm="'+data[o].rhythm+'" changtime="'+data[o].changtime+'" yield="'+data[o].yield+'"  requiredeq=\''+data[o].required+'\'>'+data[o].variety+'</option>\n';
+                html+='<option value="'+data[o].variety+'" rhythm="'+data[o].rhythm+'" changtime="'+data[o].changtime+'" yield="'+data[o].yield+'" itemtime="'+data[o].itemtime+'" requiredeq=\''+data[o].required+'\'>'+data[o].variety+'</option>\n';
             }
             $('#variety').html(html);
 

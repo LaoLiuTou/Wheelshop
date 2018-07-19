@@ -202,6 +202,7 @@
                                             <div class="col-sm-9">
                                                 <input type="text" prod="4"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
                                                 <input type="text" prod="4"  id="changtime" class="form-control hide" >
+                                                <input type="text" prod="4"  id="itemtime" class="form-control hide" >
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -563,16 +564,17 @@
             $('#rhythm').val($(this).find("option:selected").attr("rhythm"));
             $('#plancomp').val($(this).find("option:selected").attr("yield"));
             $('#changtime').val($(this).find("option:selected").attr("changtime"));
+            $('#itemtime').val($(this).find("option:selected").attr("itemtime"));
 
-            if($('#plancomp').val()!=''){
+            /*if($('#plancomp').val()!=''){
                 var plancompNumber=$('#plancomp').val();
                 var plancomp=(Number(plancompNumber)+Number((plancompNumber/8)*($('#overtime').val()/60))).toFixed(0);
                 $('#plancomp').val(plancomp);
-            }
+            }*/
         });
 
         //加班时间变化
-        var previous;
+        /*var previous;
         $('#overtime').on('focus', function () {
             previous = this.value;
         }).change(function() {
@@ -583,7 +585,7 @@
                 $('#plancomp').val(plancomp);
             }
             previous = this.value;
-        });
+        });*/
         //数字判断
         /*$('#yield').blur(function () {
 

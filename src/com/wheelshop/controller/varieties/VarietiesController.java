@@ -158,6 +158,7 @@ public class VarietiesController {
 				paramMap.put("variety",varieties.getVariety());
 				paramMap.put("yield",varieties.getYield());
 				paramMap.put("rhythm",varieties.getRhythm());
+				paramMap.put("itemtime",varieties.getItemtime());
 				paramMap.put("prodnum",varieties.getProdnum());
 				paramMap.put("production",varieties.getProduction());
 				paramMap.put("capacity",varieties.getCapacity());
@@ -205,6 +206,7 @@ public class VarietiesController {
 				paramMap.put("variety",varieties.getVariety());
 				paramMap.put("yield",varieties.getYield());
 				paramMap.put("rhythm",varieties.getRhythm());
+				paramMap.put("itemtime",varieties.getItemtime());
 				paramMap.put("prodnum",varieties.getProdnum());
 				paramMap.put("production",varieties.getProduction());
 				paramMap.put("capacity",varieties.getCapacity());
@@ -249,6 +251,7 @@ public class VarietiesController {
 			paramMap.put("variety",varieties.getVariety());
 			paramMap.put("yield",varieties.getYield());
 			paramMap.put("rhythm",varieties.getRhythm());
+			paramMap.put("itemtime",varieties.getItemtime());
 			paramMap.put("prodnum",varieties.getProdnum());
 			paramMap.put("production",varieties.getProduction());
 			paramMap.put("capacity",varieties.getCapacity());
@@ -274,7 +277,7 @@ public class VarietiesController {
 				Varieties temp = list.get(index);
 				 
 				String[] strings = {(index+1)+"", temp.getVariety(), temp.getYield(), temp.getRhythm(),
-						temp.getProduction(), temp.getCapacity(),temp.getChangtime(),temp.getCreater(),
+						temp.getItemtime(),temp.getProduction(), temp.getCapacity(),temp.getChangtime(),temp.getCreater(),
 						sdf.format(temp.getAdddate())};
 				exportList.add(strings);
 			}
@@ -283,7 +286,7 @@ public class VarietiesController {
 			String fileName = "品种清单"+sdf1.format(new Date());
 			response.setContentType("application/vnd.ms-excel;charset=utf-8");
 			response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xls");
-			String[] titles = { "序号","品种", "计划产量", "节拍", "生产线", "产能", "换模时间", "添加人", "添加时间"}; 
+			String[] titles = { "序号","品种", "计划产量", "节拍","每件时间", "生产线", "产能", "换模时间", "添加人", "添加时间"}; 
 		 
 			ExcelUtil.export(titles, out, exportList);
 			
