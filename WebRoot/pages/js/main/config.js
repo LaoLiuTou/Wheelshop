@@ -24,30 +24,22 @@ $(document).ready(function(){
     var userinfo=sessionStorage.getItem('userinfo');
     if(userinfo!=null){
         $('#loginName').text(JSON.parse(userinfo)['nickname']);
-        if(JSON.parse(userinfo)['id']!='1'){
+        /*if(JSON.parse(userinfo)['id']!='1'){
             $('.custom-nav>li').last().hide();
-        }
+        }*/
 
         ///////////////////////权限
         var state=JSON.parse(userinfo)['state'];
-        $('#menu2 li').hide();
-        $('#menu2-'+state).show();
-
         if(state!='0'){
             $('#menu4').hide();
-            //$('#production').val(state);
+            $('#menu2 li').hide();
+            $('#menu2-'+state).show();
         }
-
-
-
     }
-
-
-    var yieldvarInterval;
-
-
     $('#menu4-1').hide();
     $('#menu4-2').hide();
+
+    var yieldvarInterval;
 
 });
 
