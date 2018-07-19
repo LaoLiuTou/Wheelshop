@@ -206,7 +206,7 @@ public class UserController {
 				paramMap.put("fromPage",0);
 				paramMap.put("toPage",1); 
 				paramMap.put("username",user.getUsername());
-				paramMap.put("state",0);
+				paramMap.put("nostate",-1);
 				List<User> list=iUserService.selectUserByParam(paramMap);
 				if(list.size()>0){
 					if(list.get(0).getPassword().equals(MD5Encryption.getEncryption(user.getPassword()).toLowerCase())){

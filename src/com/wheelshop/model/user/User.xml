@@ -21,6 +21,7 @@
 			<if test="comment != null"> AND COMMENT =#{comment} </if>
 			<if test="c_id != null"> AND C_ID =#{c_id} </if>
 			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="nostate != null"> AND STATE &lt;&gt; #{nostate} </if>
 			<if test="c_dtFrom != null"> AND unix_timestamp(C_DT) &gt;=unix_timestamp(#{c_dtFrom}) </if>
 			<if test="c_dtTo != null"> AND unix_timestamp(C_DT) &lt;=unix_timestamp(#{c_dtTo}) </if>
 			<if test="c_dt != null"> AND C_DT =#{c_dt} </if>
@@ -43,6 +44,7 @@
 			<if test="comment != null"> AND COMMENT =#{comment} </if>
 			<if test="c_id != null"> AND C_ID =#{c_id} </if>
 			<if test="state != null"> AND STATE =#{state} </if>
+			<if test="nostate != null"> AND STATE &lt;&gt; #{nostate} </if>
 			<if test="c_dtFrom != null"> AND unix_timestamp(C_DT) &gt;=unix_timestamp(#{c_dtFrom}) </if>
 			<if test="c_dtTo != null"> AND unix_timestamp(C_DT) &lt;=unix_timestamp(#{c_dtTo}) </if>
 			<if test="c_dt != null"> AND C_DT =#{c_dt} </if>

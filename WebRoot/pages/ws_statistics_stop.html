@@ -326,6 +326,26 @@
         var currentPage=1;
         var pageSize=10;
         var bodyParam={'page':currentPage,'size':pageSize};
+
+
+        var userinfo=sessionStorage.getItem('userinfo');
+        if(userinfo!=null){
+            ///////////////////////权限
+            var state=JSON.parse(userinfo)['state'];
+
+            if(state!='0'){
+                $('#production').val(state);
+                $('#production').prop('disabled','disabled');
+                bodyParam['prodnum']=state;
+            }
+
+
+
+        }
+
+
+
+
         if($('#production').val()!=''){
             bodyParam['production']=$('#production').val();
         }

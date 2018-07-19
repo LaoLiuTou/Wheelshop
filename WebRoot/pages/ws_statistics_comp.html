@@ -296,6 +296,23 @@
             bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
         }*/
 
+        var userinfo=sessionStorage.getItem('userinfo');
+        if(userinfo!=null){
+            ///////////////////////权限
+            var state=JSON.parse(userinfo)['state'];
+
+            if(state!='0'){
+                $('#production').val(state);
+                $('#production').prop('disabled','disabled');
+                bodyParam['prodnum']=state;
+            }
+
+
+
+        }
+
+
+
         if($('#adddate_from').val()==''){
             var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
             bodyParam['adddateFrom']=currentTime+' 00:00:00';
