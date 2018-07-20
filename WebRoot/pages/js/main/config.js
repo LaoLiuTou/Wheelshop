@@ -10,6 +10,8 @@ var websocketurl = 'ws://127.0.0.1:8888';
 //secret key
 var sk = 'TTILY';
 
+var yieldvarInterval;
+
 $(document).ready(function(){
     //logo
     $('.logo').html(' <a href="index.html" style="padding-top: 10px;">生产信息系统</a>');
@@ -39,7 +41,7 @@ $(document).ready(function(){
     $('#menu4-1').hide();
     $('#menu4-2').hide();
 
-    var yieldvarInterval;
+
 
 });
 
