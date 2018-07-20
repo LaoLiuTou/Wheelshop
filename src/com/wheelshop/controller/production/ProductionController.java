@@ -160,7 +160,7 @@ public class ProductionController {
 			
 			resultMap.put("status", "0");
 			resultMap.put("msg", "修改成功！");
-			System.out.println(production.getProdnum()+":"+production.getActualcomp());
+			//System.out.println(production.getProdnum()+":"+production.getActualcomp());
 		} catch (Exception e) {
 			resultMap.put("status", "-1");
 			resultMap.put("msg", "修改失败！");

@@ -131,7 +131,7 @@ public class DstateController {
 				
 				//推送
 				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
-					System.out.println(entry.getKey().toString().substring(0, 2));
+					//System.out.println(entry.getKey().toString().substring(0, 2));
 		            if (entry.getKey().toString().substring(0, 1).equals(dstate.getProduction())){
 		            	
 						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
