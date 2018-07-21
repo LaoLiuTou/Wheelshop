@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
  
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wheelshop.model.device.Device;
 import com.wheelshop.model.prodnum.Prodnum;
 import com.wheelshop.model.timer.Timer;
 import com.wheelshop.model.varieties.Varieties;
+import com.wheelshop.service.device.IDeviceService;
 import com.wheelshop.service.prodnum.IProdnumService;
 import com.wheelshop.service.timer.ITimerService;
 import com.wheelshop.service.varieties.IVarietiesService;
@@ -36,6 +39,8 @@ public class FileUploadController {
 	private IVarietiesService iVarietiesService;
 	@Autowired
 	private IProdnumService iProdnumService;
+	@Autowired
+	private IDeviceService iDeviceService;
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	Logger logger = Logger.getLogger("WheelshopLogger");
 	/*** 
@@ -92,6 +97,13 @@ public class FileUploadController {
 						}
 						else if(tableName!=null&&tableName.equals("varieties")){
 							createVarieties(path, filename);
+							filename=filename.split("\\.")[0]+"_result."+filename.split("\\.")[1];
+							fileList.add(request.getScheme()+"://"+ request.getServerName()+
+									":"+request.getServerPort()+
+									request.getContextPath()+"/upload/"+middleStr+filename);
+						}
+						else if(tableName!=null&&tableName.equals("varieties6")){
+							createVarieties6(path, filename);
 							filename=filename.split("\\.")[0]+"_result."+filename.split("\\.")[1];
 							fileList.add(request.getScheme()+"://"+ request.getServerName()+
 									":"+request.getServerPort()+
@@ -188,6 +200,116 @@ public class FileUploadController {
 			 
 			String src_xlsPath=uploadPath+fileNames[0]+"_result."+fileNames[1];
 		 
+			eu.writeExcel(outList, src_xlsPath);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}  
+		return result;
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private String createVarieties6(String uploadPath,String excelName){
+		String result="";
+		try {
+			DecimalFormat df = new DecimalFormat("0");    
+			String message="";
+			ExcelUtil eu =new ExcelUtil();
+			eu.setExcelPath(uploadPath+excelName);
+			List<Row> inList=eu.readExcel();
+			List<Row> outList=new ArrayList<Row>();
+			if(inList.size()>0){
+				Row row=inList.get(0);
+				row.createCell((short) 10).setCellValue("导入结果");  
+				outList.add(row);
+			}
+			//所需设备
+			Map paramMap= new HashMap();
+			paramMap.put("production","6"); 
+			int number =iDeviceService.selectCountDeviceByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",number); 
+			List<Device> deviceList=iDeviceService.selectDeviceByParam(paramMap);
+			Map deviceMap=new HashMap();
+			for(Device device:deviceList){
+				if(device.getDeviceno()!=null&&device.getNodeno()!=null){
+					deviceMap.put(device.getDeviceno(), device.getNodeno().replace("device", ""));
+				}
+			}
+			for(int index=1;index<inList.size();index++){
+				Row row =inList.get(index);
+				try {
+					if(eu.getCellValue(row.getCell(1)).equals("")){
+						message = "品种名称不能为空";
+					}
+					else if(eu.getCellValue(row.getCell(7)).equals("")){
+						message = "创建人不能为空";
+					}
+					else{
+						paramMap= new HashMap();
+						paramMap.put("fromPage",0);
+						paramMap.put("toPage",1); 
+						paramMap.put("production", eu.getCellValue(row.getCell(5)).toString());
+						List<Prodnum> list=iProdnumService.selectProdnumByParam(paramMap);
+						
+						if(list.size()>0){
+							Varieties temp = new Varieties();
+							temp.setVariety(eu.getCellValue(row.getCell(1)).toString());
+							temp.setYield(eu.getCellValue(row.getCell(2)).toString());
+							temp.setRhythm(eu.getCellValue(row.getCell(3)).toString());
+							temp.setItemtime(eu.getCellValue(row.getCell(4)).toString());
+							temp.setProdnum(list.get(0).getId()+"");
+							temp.setProduction(eu.getCellValue(row.getCell(5)).toString());
+							
+							temp.setCapacity(String.valueOf(df.format(row.getCell(6).getNumericCellValue())));
+							
+							//[{"index":"2","name":"no16","replace":""},{"index":"4","name":"no02","replace":""},{"index":"5","name":"no03","replace":""},{"index":"6","name":"no18","replace":""},{"index":"9","name":"no06","replace":""}]
+							List<Map<String,String>> tempList= new ArrayList<Map<String,String>>();
+							String [] devices=eu.getCellValue(row.getCell(7)).split(",");
+							for(String d:devices){
+								if(deviceMap.containsKey(d)){
+									Map tempDevice= new HashMap();
+									tempDevice.put("index", deviceMap.get(d));
+									tempDevice.put("name", d);
+									tempDevice.put("replace", "");
+									tempList.add(tempDevice);
+								}
+								
+							}
+							ObjectMapper mapper= new ObjectMapper();
+							String jsonStr = mapper.writeValueAsString(tempList);
+							temp.setRequired(jsonStr);
+							temp.setChangtime(eu.getCellValue(row.getCell(8)).toString());
+							temp.setCreater(eu.getCellValue(row.getCell(9)).toString());
+							int resultSample =iVarietiesService.addVarieties(temp);
+							if(resultSample>0){
+								message = "成功";
+							}
+							else{
+								message = "失败";
+							}
+						}
+						else{
+							message = "系统内不存在该生产线";
+						}
+						
+						
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					message = "失败";
+					e.printStackTrace();
+				}
+				
+				row.createCell((short) 10).setCellValue(message);  
+				
+				outList.add(row);
+			}
+			String[] fileNames=excelName.split("\\.");
+			
+			String src_xlsPath=uploadPath+fileNames[0]+"_result."+fileNames[1];
+			
 			eu.writeExcel(outList, src_xlsPath);
 			
 		} catch (IOException e) {

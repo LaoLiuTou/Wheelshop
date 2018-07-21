@@ -385,7 +385,7 @@ function  queryVarieties2 (variety,prodnum,currentPage,pageSize) {
  */
 function  selectVarieties (production) {
 
-    var bodyParam={};
+    var bodyParam={'prodnum':production};
 
     var httpR = new createHttpR(url+'allVarieties','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){

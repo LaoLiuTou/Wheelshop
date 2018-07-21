@@ -83,7 +83,7 @@ public class DstateController {
 				paramMap=new HashMap();
 				paramMap.put("fromPage",0);
 				paramMap.put("toPage",1); 
-				paramMap.put("flag",dstate.getProduction());
+				paramMap.put("prodnum",dstate.getProduction());
 				List<Production> plist=iProductionService.selectProductionByParam(paramMap);
 				if(plist.size()>0){
 					Map stopsmap;

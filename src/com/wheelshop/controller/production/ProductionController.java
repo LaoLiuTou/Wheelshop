@@ -323,7 +323,18 @@ public class ProductionController {
 						p.setOvertime("0");
 						p.setActualcomp(null);
 						p.setId(null);
+						p.setProdstop(null);
+						p.setEquipstop(null);
+						p.setToolstop(null);
 						iProductionService.addProduction(p);
+						list=iProductionService.selectProductionByParam(paramMap);
+					}
+					else{
+						production.setAdddate(new Date());
+						production.setProdstate("生产时间");
+						production.setOvertime("0");
+						production.setCreater(request.getAttribute("userName").toString());
+						iProductionService.addProduction(production);
 						list=iProductionService.selectProductionByParam(paramMap);
 					}
 				}

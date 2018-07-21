@@ -31,6 +31,8 @@ function lastProduction(type,production){
                             if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
                                 $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
                             }
+
+
                         }
                         else{
                             $('#'+item+'[prod="'+production+'"]').val(data[o][item]);
@@ -162,16 +164,24 @@ function lastProduction2(production){
             var data=msg['data'];
             if(data.length>0){
                 for(var o in data) {
+
                     //保存id
                     id=data[o]['id'];
                     yield=Number(data[o]['yield']);
                     itemtime=Number(data[o]['itemtime']);
                     for (var item in data[o]) {
+
                         $('#'+item+'[prod="'+production+'"]').text(data[o][item]);
-                        if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
-                            $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
-                        }
+
+
                     }
+                    if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
+                        $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
+                    }
+                    //停台时间转时分秒
+                    $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                    $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                    $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
 
 
 
@@ -481,4 +491,27 @@ function  selectProdnum (type) {
 
         }
     });
-}
+} /**
+ * 时间秒数格式化
+ * @param s 时间戳（单位：秒）
+ * @returns {*} 格式化后的时分秒
+ */
+var sec_to_time = function(s) {
+        var t;
+        if(s > -1){
+            var hour = Math.floor(s/3600);
+            var min = Math.floor(s/60) % 60;
+            var sec = s % 60;
+            if(hour < 10) {
+                t = '0'+ hour + ":";
+            } else {
+                t = hour + ":";
+            }
+
+            if(min < 10){t += "0";}
+            t += min + ":";
+            if(sec < 10){t += "0";}
+            t += sec.toFixed(0);
+        }
+        return t;
+    }
