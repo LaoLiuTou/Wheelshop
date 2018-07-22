@@ -8,7 +8,7 @@
   <meta name="author" content="ThemeBucket">
   <link rel="shortcut icon" href="#" type="image/png">
 
-  <title>旋压轮辐</title>
+  <title>滚型轮辐</title>
 
   <!--icheck-->
   <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
@@ -53,13 +53,13 @@
             <ul class="nav nav-pills nav-stacked custom-nav">
                 <li id="menu1"><a href="index.html"><i class="fa fa-home"></i> <span>首页</span></a></li>
                 <li id="menu2" class="menu-list active"><a href=""><i class="fa fa-desktop"></i> <span>生产大屏控制</span></a>
-                    <ul class="sub-menu-list">
+                     <ul class="sub-menu-list">
                         <li id="menu2-1"><a href="ws_first1.html">旋压A线</a></li>
                         <li id="menu2-2"><a href="ws_second1.html">旋压B线</a></li>
                         <li id="menu2-3"><a href="ws_third1.html">滚型轮辋</a></li>
                         <li id="menu2-4"><a href="ws_fourth1.html">型钢轮辋</a></li>
-                        <li id="menu2-5" class="active"><a href="ws_fifth1.html">旋压轮辐</a></li>
-                        <li id="menu2-6"><a href="ws_sixth1.html">滚型轮辐</a></li>
+                        <li id="menu2-5"><a href="ws_fifth1.html">旋压轮辐</a></li>
+                        <li id="menu2-6" class="active"><a href="ws_sixth1.html">滚型轮辐</a></li>
                     </ul>
                 </li>
                 <li id="menu3" class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>生产数据统计</span></a>
@@ -157,7 +157,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">生产线</label>
                                             <div class="col-sm-9">
-                                                <input type="text" prod="5" readonly id="production" class="form-control" placeholder="请输入">
+                                                <input type="text" prod="6" readonly id="production" class="form-control" placeholder="请输入">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -170,7 +170,7 @@
                                         <!--<div id="yieldDiv" class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">计划产量</label>
                                             <div class="col-sm-9">
-                                                <input type="text" prod="5"  id="yield" class="form-control" placeholder="请输入">
+                                                <input type="text" prod="6"  id="yield" class="form-control" placeholder="请输入">
                                                 <span class="help-block">提示：输入内容仅为数字</span>
 
                                             </div>
@@ -178,37 +178,40 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">产能</label>
                                             <div class="col-sm-9">
-                                                <input type="text" prod="5"  id="power" class="form-control" placeholder="请输入">
+                                                <input type="text" prod="6"  id="power" class="form-control" placeholder="请输入">
                                             </div>
                                         </div>-->
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">品种</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control m-bot15" prod="5"  id="variety" >
+                                                <select class="form-control m-bot15" prod="6"  id="variety" >
 
                                                 </select>
 
                                             </div>
                                         </div>
 
+
+
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">节拍</label>
                                             <div class="col-sm-9">
-                                                <input type="text" prod="5"  id="rhythm" class="form-control" disabled placeholder="请选择品种">
+                                                <input type="text" prod="6"  id="rhythm" class="form-control" disabled placeholder="请选择品种">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">计划产量</label>
                                             <div class="col-sm-9">
-                                                <input type="text" prod="5"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
-                                                <input type="text" prod="5"  id="changtime" class="form-control hide" >
-                                                <input type="text" prod="5"  id="itemtime" class="form-control hide" >
+                                                <input type="text" prod="6"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
+                                                <input type="text" prod="6"  id="changtime" class="form-control hide" >
+                                                <input type="text" prod="6"  id="itemtime" class="form-control hide" >
+                                                <input type="text" prod="6"  id="required" class="form-control hide" >
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">加班时长</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control m-bot15" prod="5"  id="overtime">
+                                                <select class="form-control m-bot15" prod="6"  id="overtime">
                                                     <option value="0">0分</option>
                                                     <option value="60">60分</option>
                                                     <option value="90">90分</option>
@@ -220,7 +223,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">生产状态</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control m-bot15" prod="5"  id="prodstate">
+                                                <select class="form-control m-bot15" prod="6"  id="prodstate">
                                                     <option value="生产时间">生产时间</option>
                                                     <option value="检修时间">检修时间</option>
                                                     <option value="换模时间">换模时间</option>
@@ -229,6 +232,12 @@
                                             </div>
                                         </div>
 
+                                        <!--<div class="form-group">
+                                            <label class="col-sm-2 col-sm-2 control-label">设备变更</label>
+                                            <div class="col-sm-9">
+                                                <button type="button" class="btn btn-info popovers"  data-toggle="modal" data-target="#newly-box-equip"  >设置</button>
+                                            </div>
+                                        </div>-->
                                         <div class="col-md-12 pdnone mb10">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info popovers" id="addBtn" >保存</button>
@@ -279,105 +288,105 @@
             <div class="modal-body">
                 <form role="form" id="changedForm">
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-1：</label>
+                        <label style="width:20%">工位1：</label>
                         <input type="radio" name="radio11" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio11" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio12" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio12" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-2：</label>
+                        <label style="width:20%">工位2：</label>
                         <input type="radio" name="radio21" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio21" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio22" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio22" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-3：</label>
+                        <label style="width:20%">工位3：</label>
                         <input type="radio" name="radio31" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio31" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio32" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio32" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位1-4：</label>
+                        <label style="width:20%">工位4：</label>
                         <input type="radio" name="radio41" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio41" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio42" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio42" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位2-1：</label>
+                        <label style="width:20%">工位5：</label>
                         <input type="radio" name="radio51" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio51" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio52" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio52" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位2-2：</label>
+                        <label style="width:20%">工位6：</label>
                         <input type="radio" name="radio61" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio61" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio62" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio62" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位3-1：</label>
+                        <label style="width:20%">工位7：</label>
                         <input type="radio" name="radio71" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio71" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio72" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio72" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位3-2：</label>
+                        <label style="width:20%">工位8：</label>
                         <input type="radio" name="radio81" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio81" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio82" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio82" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位4-1：</label>
+                        <label style="width:20%">工位9：</label>
                         <input type="radio" name="radio91" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio91" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio92" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio92" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位4-2：</label>
+                        <label style="width:20%">工位10：</label>
                         <input type="radio" name="radio101" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio101" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio102" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio102" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位5：</label>
+                        <label style="width:20%">工位11：</label>
                         <input type="radio" name="radio111" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio111" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio112" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio112" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-1：</label>
+                        <label style="width:20%">工位12：</label>
                         <input type="radio" name="radio121" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio121" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio122" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio122" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-2：</label>
+                        <label style="width:20%">工位13：</label>
                         <input type="radio" name="radio131" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio131" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio132" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio132" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-3：</label>
+                        <label style="width:20%">工位14：</label>
                         <input type="radio" name="radio141" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio141" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio142" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio142" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-4：</label>
+                        <label style="width:20%">工位15：</label>
                         <input type="radio" name="radio151" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio151" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio152" value="red"/>红色2&nbsp;
@@ -386,19 +395,41 @@
 
 
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-5：</label>
+                        <label style="width:20%">工位16：</label>
                         <input type="radio" name="radio161" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio161" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio162" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio162" value="green"/>绿色2&nbsp;
                     </div>
                     <div class="form-group col-md-6">
-                        <label style="width:20%">工位6-6：</label>
+                        <label style="width:20%">工位17：</label>
                         <input type="radio" name="radio171" value="red"/>红色1&nbsp;
                         <input type="radio" name="radio171" value="green"/>绿色1&nbsp;
                         <input type="radio" name="radio172" value="red"/>红色2&nbsp;
                         <input type="radio" name="radio172" value="green"/>绿色2&nbsp;
                     </div>
+                    <div class="form-group col-md-6">
+                        <label style="width:20%">工位18：</label>
+                        <input type="radio" name="radio181" value="red"/>红色1&nbsp;
+                        <input type="radio" name="radio181" value="green"/>绿色1&nbsp;
+                        <input type="radio" name="radio182" value="red"/>红色2&nbsp;
+                        <input type="radio" name="radio182" value="green"/>绿色2&nbsp;
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label style="width:20%">工位19：</label>
+                        <input type="radio" name="radio191" value="red"/>红色1&nbsp;
+                        <input type="radio" name="radio191" value="green"/>绿色1&nbsp;
+                        <input type="radio" name="radio192" value="red"/>红色2&nbsp;
+                        <input type="radio" name="radio192" value="green"/>绿色2&nbsp;
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label style="width:20%">工位20：</label>
+                        <input type="radio" name="radio201" value="red"/>红色1&nbsp;
+                        <input type="radio" name="radio201" value="green"/>绿色1&nbsp;
+                        <input type="radio" name="radio202" value="red"/>红色2&nbsp;
+                        <input type="radio" name="radio202" value="green"/>绿色2&nbsp;
+                    </div>
+
 
                     <div class="form-group col-md-12">
                         <label>合计：<span id="changedShow">红色工位：<span id="redNum">0</span>个；绿色工位：<span id="greenNum">0</span>个</span></label>
@@ -409,6 +440,48 @@
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-info popovers" type="button" id="saveBtn">保存</button>
                 <button class="btn btn-default" type="button" id="cleanBtn">清空</button>
+                <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="newly-box-equip" class="modal fade">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">设备变更</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="equipForm">
+                    <div index="1">
+                        <div class="form-group col-md-5">
+                            <label class="col-sm-4 mtop5">被替换设备：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control origEquip" id="origEquip" index="1"  >
+                                    <option value="">请选择设备</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label class="col-sm-4 mtop5">替换设备：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control replaceEquip" prod="6" id="replaceEquip" index="1" >
+                                    <option value="">请选择设备</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <i id="addEquip" index="1" class="fa fa-plus-square-o mtop10 font20 addEquip"></i>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="clearfix"></div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-info popovers" type="button" id="saveEquipBtn">保存</button>
                 <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
             </div>
         </div>
@@ -436,12 +509,16 @@
 <script>
 
 
-    var production=5;
+    var production=6;
+    //变化点
+    var changed = {};
+    var devices=['no01','no16','no17','no02','no03','no18','no04','no05','no06','no19'
+                ,'no07','no08','no09','no10','no20','no11','no12','no13','no14','no15'];
+
 
     $(document).ready(function(){
 
-        //变化点
-        var changed = {};
+
         selectVarieties(production);
 
         $('#saveBtn').click(function(){
@@ -480,6 +557,7 @@
             $('#plancomp').val($(this).find("option:selected").attr("yield"));
             $('#changtime').val($(this).find("option:selected").attr("changtime"));
             $('#itemtime').val($(this).find("option:selected").attr("itemtime"));
+            $('#required').val($(this).find("option:selected").attr("requiredeq"));
 
             /*if($('#plancomp').val()!=''){
                 var plancompNumber=$('#plancomp').val();
@@ -501,6 +579,7 @@
             }
             previous = this.value;
         });*/
+
         //数字判断
         /*$('#yield').blur(function () {
 
@@ -512,6 +591,109 @@
                 $('#yieldDiv').removeClass("has-error");
             }
         });*/
+
+
+
+        //替换设备
+
+        $('#equipForm').on('click','.addEquip',function(){
+            var index=Number($(this).attr('index'))+1;
+            var html='<div index="'+index+'">\n' +
+                '    <div class="form-group col-md-5">\n' +
+                '        <label class="col-sm-4 mtop5">被替换设备：</label>\n' +
+                '        <div class="col-sm-8">\n' +
+                '            <select class="form-control origEquip"  id="origEquip" index="'+index+'"  >\n' +
+                '                <option value="">请选择设备</option>\n' +
+                '            </select>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '    <div class="form-group col-md-5">\n' +
+                '        <label class="col-sm-4 mtop5">替换设备：</label>\n' +
+                '        <div class="col-sm-8">\n' +
+                '            <select class="form-control replaceEquip"  id="replaceEquip" index="'+index+'" >\n' +
+                '                <option value="">请选择设备</option>\n' +
+                '            </select>\n' +
+                '        </div>\n' +
+                '    </div>\n' +
+                '    <div class="form-group col-md-1">\n' +
+                '        <i id="addEquip" index="'+index+'" class="fa fa-plus-square-o mtop10 font20 addEquip"></i>\n' +
+                '    </div>\n' +
+                '</div>';
+
+            $('#equipForm').append(html);
+            $('.addEquip[index='+(index-1)+']').hide();
+
+            ////////
+            var selectHtml=' <option value="">请选择设备</option>';
+            for ( var i = 0; i <devices.length; i++){
+                var flag=true;
+                $('.origEquip:lt('+(index-1)+')').each(function () {
+                    if(devices[i]==$(this).val()){
+                        flag=false;
+                    }
+                });
+                $('.replaceEquip:lt('+(index-1)+')').each(function () {
+                    if(devices[i]==$(this).val()){
+                        flag=false;
+                    }
+                });
+                if(flag){
+                    selectHtml+=' <option value="'+devices[i]+'">'+devices[i]+'</option>';
+                }
+            }
+            $('.origEquip[index='+index+']').html(selectHtml);
+            $('.replaceEquip[index='+index+']').html(selectHtml);
+
+        });
+
+        ///
+        var selectHtml=' <option value="">请选择设备</option>';
+        for ( var i = 0; i <devices.length; i++){
+            selectHtml+=' <option value="'+devices[i]+'">'+devices[i]+'</option>';
+        }
+        $('.origEquip[index=1]').html(selectHtml);
+        $('.replaceEquip[index=1]').html(selectHtml);
+
+        $('#equipForm').on('change','select',function(){
+            var currentDom=$(this);
+            //缓存已选择的值
+            var temp=[];
+            temp.push($(this).val());
+            $('#equipForm select').each(function(){
+                if($(this).val()!=''){
+                    temp.push($(this).val());
+                }
+            });
+
+            $('#equipForm select').each(function(){
+                if(!currentDom.is($(this))){
+                    var cvalue=$(this).val();
+                    var selectHtml=' <option value="">请选择设备</option>';
+                    for ( var i = 0; i <devices.length; i++){
+                        var flag=true;
+                        for ( var j = 0; j <temp.length; j++){
+                            if(devices[i]==temp[j]&&cvalue!=temp[j]){
+                                flag=false;
+                            }
+                        }
+                        if(flag){
+
+                            if(cvalue==devices[i]){
+                                selectHtml+=' <option value="'+devices[i]+'" selected>'+devices[i]+'</option>';
+                            }
+                            else{
+                                selectHtml+=' <option value="'+devices[i]+'">'+devices[i]+'</option>';
+                            }
+                        }
+                    }
+                    $(this).html(selectHtml);
+                    $(this).val(cvalue);
+
+                }
+
+            });
+
+        });
 
         //add
         $('#addBtn').click(function () {
@@ -525,17 +707,22 @@
                     params[$(this).attr('id')]=$(this).val();
             });
             var userinfo = JSON.parse(sessionStorage.getItem('userinfo'));
-            /*if($('#actualcomp').val()!=''&&$('#power').val()!=''){
-                params['rate']=(($('#actualcomp').val()/$('#power').val())*100).toFixed(0);
-            }*/
             params['creater']=userinfo['username'];
 
             params['changed']=JSON.stringify(changed);
+            if($('#required').val()!=''){
+                params['required']=$('#required').val();
+            }
             params['prodnum']=production;
             addProduction(params);
         });
 
+        $('#saveEquipBtn').click(function(){
+            $('.origEquip').each(function(){
+                //alert($(this).val());
+            });
 
+        });
 
     });
 

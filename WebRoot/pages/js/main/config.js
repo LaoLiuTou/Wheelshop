@@ -43,6 +43,7 @@ $(document).ready(function(){
 
 
 
+
 });
 
 /**
@@ -368,6 +369,10 @@ function initwebsocket(type){
             else{
                 $('#'+msg['NUM']+'_'+msg['STATE']+'[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
             }
+
+
+
+
         }
         else if(msg['T']=='4'){
             $('#actualcomp[prod="'+msg['PRO']+'"]').text(msg['AC']);

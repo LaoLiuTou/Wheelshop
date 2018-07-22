@@ -5,6 +5,8 @@ $(document).ready(function(){
     var productionList;
     var productionIndex;
     var currentProduction;
+
+
 });
 
 
@@ -42,15 +44,15 @@ function lastProduction(type,production){
                     if(type==1){
 
                         //第六条生产线
-                        //重点：1、替代机器：黄色；2、正常：绿色；3、被替代机器：红色；4、未使用机器：灰色 5、已选座位但是机器未使用，座位：隐藏；
-                        if(data[o]['required']!=''){
-                            var requiredJO= jQuery.parseJSON(jQuery.parseJSON(data[o]['required']));
+                        if(data[o]['required']!=''&&production=='6'){
+                            var requiredJO= jQuery.parseJSON(data[o]['required']);
                             for(var key in requiredJO ){
                                 $('#device'+requiredJO[key]['index']+'_01[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                                 $('#device'+requiredJO[key]['index']+'_02[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                                 $('#device'+requiredJO[key]['index']+'_03[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                             }
                         }
+
 
                         //变化点
                         //变化点
@@ -140,6 +142,18 @@ function lastProduction(type,production){
                         $('#redNum').text(redNum);
                         $('#greenNum').text(greenNum);
                         $('#changedSpan').text($('#changedShow').text());
+
+                        //第六条生产线
+                        if(data[o]['required']!=''&&production=='6'){
+                            var requiredJO= jQuery.parseJSON(data[o]['required']);
+
+                            var requiredValue=new Array();
+                            for(var key in requiredJO ){
+                                requiredValue.push(requiredJO[key]['index']);
+                            }
+                            $('#required').val(requiredValue);
+                            $('#required').multiselect("refresh");
+                        }
                     }
                 }
             }
@@ -217,9 +231,8 @@ function lastProduction2(production){
                     }
 
                     //第六条生产线
-                    //重点：1、替代机器：黄色；2、正常：绿色；3、被替代机器：红色；4、未使用机器：灰色 5、已选座位但是机器未使用，座位：隐藏；
-                    if(data[o]['required']!=''){
-                        var requiredJO= jQuery.parseJSON(jQuery.parseJSON(data[o]['required']));
+                    if(data[o]['required']!=''&&production=='6'){
+                        var requiredJO= jQuery.parseJSON(data[o]['required']);
                         for(var key in requiredJO ){
                             $('#device'+requiredJO[key]['index']+'_01[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                             $('#device'+requiredJO[key]['index']+'_02[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
@@ -284,7 +297,7 @@ function addProduction(bodyParam){
         //var msg = obj['msg'];
         if(status=='0'){
             alert("修改成功！");
-            window.location.reload();
+            //window.location.reload();
             //window.location.href="interface.html?index="+interfaceIndex;
         }
     });

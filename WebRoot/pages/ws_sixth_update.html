@@ -17,7 +17,7 @@
   <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
   <link href="js/iCheck/skins/minimal/green.css" rel="stylesheet">
 
-
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
   <!--common-->
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
@@ -191,6 +191,39 @@
                                             </div>
                                         </div>
 
+                                        <!--修改所需设备-->
+                                        <div class="form-group">
+                                            <label class="col-sm-2 col-sm-2 control-label">使用设备</label>
+                                            <div class="col-sm-9">
+                                                <select id="required"  multiple="multiple"  class="form-control">
+                                                    <option value="1">no01</option>
+                                                    <option value="2">no16</option>
+                                                    <option value="3">no17</option>
+                                                    <option value="4">no02</option>
+                                                    <option value="5">no03</option>
+                                                    <option value="6">no18</option>
+                                                    <option value="7">no04</option>
+                                                    <option value="8">no05</option>
+                                                    <option value="9">no06</option>
+                                                    <option value="10">no19</option>
+                                                    <option value="11">no07</option>
+                                                    <option value="12">no08</option>
+                                                    <option value="13">no09</option>
+                                                    <option value="14">no10</option>
+                                                    <option value="15">no20</option>
+                                                    <option value="16">no11</option>
+                                                    <option value="17">no12</option>
+                                                    <option value="18">no13</option>
+                                                    <option value="19">no14</option>
+                                                    <option value="20">no15</option>
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!--修改所需设备-->
+
+
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">节拍</label>
                                             <div class="col-sm-9">
@@ -203,7 +236,7 @@
                                                 <input type="text" prod="6"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
                                                 <input type="text" prod="6"  id="changtime" class="form-control hide" >
                                                 <input type="text" prod="6"  id="itemtime" class="form-control hide" >
-                                                <input type="text" prod="6"  id="required" class="form-control hide" >
+                                                <!--<input type="text" prod="6"  id="required" class="form-control hide" >-->
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -230,12 +263,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
+                                        <!--<div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">设备变更</label>
                                             <div class="col-sm-9">
                                                 <button type="button" class="btn btn-info popovers"  data-toggle="modal" data-target="#newly-box-equip"  >设置</button>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="col-md-12 pdnone mb10">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info popovers" id="addBtn" >保存</button>
@@ -499,7 +532,7 @@
 <!--common scripts for all pages-->
 <script src="js/scripts.js"></script>
 
-
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 <script src="js/main/config.js"></script>
 <script src="js/main/md5.js"></script>
 <script src="js/main/ws_varieties.js"></script>
@@ -508,13 +541,33 @@
 
 
     var production=6;
-    //变化点
-    var changed = {};
+
     var devices=['no01','no16','no17','no02','no03','no18','no04','no05','no06','no19'
                 ,'no07','no08','no09','no10','no20','no11','no12','no13','no14','no15'];
 
 
     $(document).ready(function(){
+        //变化点
+        var changed = {};
+
+        $('#required').multiselect({
+            //enableClickableOptGroups: true,
+            // enableCollapsibleOptGroups: true,
+            includeSelectAllOption: true,
+            dropRight: true,
+            maxHeight: 200,
+            /*onChange: function(option, checked) {
+                alert($('#required').val());
+                /!*alert($(option).val());
+                 if(条件) {
+                  this.clearSelection();//清除所有选择及显示
+                }*!/
+            },*/
+            nonSelectedText: '请选择',
+            numberDisplayed: 10,
+            //enableFiltering: true,
+            allSelectedText:'全部',
+        });
 
 
         selectVarieties(production);
@@ -555,7 +608,19 @@
             $('#plancomp').val($(this).find("option:selected").attr("yield"));
             $('#changtime').val($(this).find("option:selected").attr("changtime"));
             $('#itemtime').val($(this).find("option:selected").attr("itemtime"));
-            $('#required').val($(this).find("option:selected").attr("requiredeq"));
+
+
+
+            if($(this).find("option:selected").attr("requiredeq")!=''){
+
+                var requiredJO= jQuery.parseJSON($(this).find("option:selected").attr("requiredeq"));
+                var requiredValue=new Array();
+                for(var key in requiredJO ){
+                    requiredValue.push(requiredJO[key]['index']);
+                }
+                $('#required').val(requiredValue);
+                $('#required').multiselect("refresh");
+            }
 
             /*if($('#plancomp').val()!=''){
                 var plancompNumber=$('#plancomp').val();
@@ -709,7 +774,15 @@
 
             params['changed']=JSON.stringify(changed);
             if($('#required').val()!=''){
-                params['required']=$('#required').val();
+                var requiredvar=[];
+                for(var key in $('#required').val()){
+                    var temp={};
+                    temp['index']=$('#required').val()[key];
+                    temp['name']=$("#required option[value=" + $('#required').val()[key] + "]").text();
+                    temp['replace']='';
+                    requiredvar.push(temp)
+                }
+                params['required']=JSON.stringify(requiredvar);
             }
             params['prodnum']=production;
             addProduction(params);

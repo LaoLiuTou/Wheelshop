@@ -47,118 +47,129 @@ public class DstateController {
 	public Map add(Dstate dstate){
 		Map resultMap=new HashMap();
 		try {
+			ObjectMapper mapper = new ObjectMapper();
 			/*工装  -- 02    02 
 			班长  -- 03   01
 			声音暂停 – 05  03
 			恢复正常 –04   04
 			设备 -- 01   05
 			 */			
-			
-			if(dstate.getState()!=null){
-				if(dstate.getState().equals("01")){
-					dstate.setState("03");
-				}
-				else if(dstate.getState().equals("03")){
-					dstate.setState("05");
-				}
-				else if(dstate.getState().equals("05")){
-					dstate.setState("01");
-				}
-			}
-			
-			
-			iDstateService.addDstate(dstate);
-			ObjectMapper mapper = new ObjectMapper();
-			
-			//查询对应的设备编号
+			//所需设备
+			boolean flag=false;
 			Map paramMap=new HashMap();
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",1); 
+			paramMap.put("prodnum",dstate.getProduction());
+			List<Production> plist=iProductionService.selectProductionByParam(paramMap);
+			//查询对应的设备编号
+			paramMap=new HashMap();
 			paramMap.put("fromPage",0);
 			paramMap.put("toPage",1); 
 			paramMap.put("deviceno",dstate.getDeviceno());
 			paramMap.put("production",dstate.getProduction());
 			List<Device> list=iDeviceService.selectDeviceByParam(paramMap);
-        	
-			if(list.size()>0){
-				
-				paramMap=new HashMap();
-				paramMap.put("fromPage",0);
-				paramMap.put("toPage",1); 
-				paramMap.put("prodnum",dstate.getProduction());
-				List<Production> plist=iProductionService.selectProductionByParam(paramMap);
-				if(plist.size()>0){
-					Map stopsmap;
-					if(plist.get(0).getStops()!=null&&!plist.get(0).getStops().equals("")){ 
-						stopsmap=mapper.readValue(plist.get(0).getStops(), Map.class);
+			if(dstate.getProduction().equals("6")){
+				List<Map<String, String>> requiredList = mapper.readValue(plist.get(0).getRequired(), List.class);
+				for(Map<String,String> map:requiredList){
+					if(map.containsValue(dstate.getDeviceno())){
+						flag=true;
 					}
-					else{
-						stopsmap=new HashMap();
+				}
+			}
+			else{
+				flag=true;
+			}
+			
+			//所需设备
+			if(flag){
+				if(dstate.getState()!=null){
+					if(dstate.getState().equals("01")){
+						dstate.setState("03");
 					}
-					//Map equipstopmap=mapper.readValue(plist.get(0).getEquipstop(), Map.class);
-					//Map toolstopmap=mapper.readValue(plist.get(0).getToolstop(), Map.class);
-					stopsmap.put(list.get(0).getNodeno(), dstate.getState());
-					//05关闭声音
-					if(dstate!=null&&dstate.getState()!=null&&!dstate.getState().equals("05")){
-						Production temp=new Production();
-						temp.setId(plist.get(0).getId());
-						temp.setStops(mapper.writeValueAsString(stopsmap));
-						iProductionService.updateProduction(temp);
-						
-						//04判断持续时间
-						if(dstate.getState().equals("04")){
-							SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-							paramMap=new HashMap();
-							 
-							paramMap.put("deviceno",dstate.getDeviceno());
-							paramMap.put("production",dstate.getProduction());
-							paramMap.put("adddate",sdf1.format(new Date()));
-							paramMap.put("statein","123");
-							List<Dstate> dlist=iDstateService.selectAllDstateByParam(paramMap);
-							for(Dstate d:dlist){
-								if(d.getDuration()==null||d.getDuration().equals("")){
-									dstate=iDstateService.selectDstateById(dstate.getId()+"");
-									Long times=dstate.getAdddate().getTime()-d.getAdddate().getTime();
-									//d.setDuration(TimeUtils.formatTime(times));
-									d.setDuration((times/1000)+"");
-									iDstateService.updateDstate(d);
+					else if(dstate.getState().equals("03")){
+						dstate.setState("05");
+					}
+					else if(dstate.getState().equals("05")){
+						dstate.setState("01");
+					}
+				}
+				iDstateService.addDstate(dstate);
+				if(list.size()>0){
+					if(plist.size()>0){
+						Map stopsmap;
+						if(plist.get(0).getStops()!=null&&!plist.get(0).getStops().equals("")){ 
+							stopsmap=mapper.readValue(plist.get(0).getStops(), Map.class);
+						}
+						else{
+							stopsmap=new HashMap();
+						}
+						stopsmap.put(list.get(0).getNodeno(), dstate.getState());
+						//05关闭声音
+						if(dstate!=null&&dstate.getState()!=null&&!dstate.getState().equals("05")){
+							Production temp=new Production();
+							temp.setId(plist.get(0).getId());
+							temp.setStops(mapper.writeValueAsString(stopsmap));
+							iProductionService.updateProduction(temp);
+							//04判断持续时间
+							if(dstate.getState().equals("04")){
+								SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+								paramMap=new HashMap();
+								 
+								paramMap.put("deviceno",dstate.getDeviceno());
+								paramMap.put("production",dstate.getProduction());
+								paramMap.put("adddate",sdf1.format(new Date()));
+								paramMap.put("statein","123");
+								List<Dstate> dlist=iDstateService.selectAllDstateByParam(paramMap);
+								for(Dstate d:dlist){
+									if(d.getDuration()==null||d.getDuration().equals("")){
+										dstate=iDstateService.selectDstateById(dstate.getId()+"");
+										Long times=dstate.getAdddate().getTime()-d.getAdddate().getTime();
+										//d.setDuration(TimeUtils.formatTime(times));
+										d.setDuration((times/1000)+"");
+										iDstateService.updateDstate(d);
+									}
 								}
 							}
 						}
-					}
-					
-					
-				}
-				
-				
-				//推送
-				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
-					//System.out.println(entry.getKey().toString().substring(0, 2));
-		            if (entry.getKey().toString().substring(0, 1).equals(dstate.getProduction())){
-		            	
-						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
-		            	Map<String, String> contentMap = new HashMap<String, String>();
-		            	contentMap.put("T", "3");
-		            	contentMap.put("NAME", "system");
-		            	contentMap.put("FI", entry.getKey().toString());  
-		            	contentMap.put("PRO", dstate.getProduction());
-		            	contentMap.put("NUM", list.get(0).getNodeno());
-		            	contentMap.put("STATE", dstate.getState());
 						
-						String json = "";
-						json = mapper.writeValueAsString(contentMap);
-						
-						if(channelHandlerContext!=null){
-						   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+						//推送
+						for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+							//System.out.println(entry.getKey().toString().substring(0, 2));
+				            if (entry.getKey().toString().substring(0, 1).equals(dstate.getProduction())){
+				            	
+								ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+				            	Map<String, String> contentMap = new HashMap<String, String>();
+				            	contentMap.put("T", "3");
+				            	contentMap.put("NAME", "system");
+				            	contentMap.put("FI", entry.getKey().toString());  
+				            	contentMap.put("PRO", dstate.getProduction());
+				            	contentMap.put("NUM", list.get(0).getNodeno());
+				            	contentMap.put("STATE", dstate.getState());
+								
+								String json = "";
+								json = mapper.writeValueAsString(contentMap);
+								
+								if(channelHandlerContext!=null){
+								   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+						        }
+								
+				            }
 				        }
 						
-		            }
-		        }
+					}
+					 
+				}
+				resultMap.put("status", "0");
+				resultMap.put("msg", dstate.getId());
+				logger.info("新建成功，主键："+dstate.getId());
 			}
-			
-			
+			else{
+				resultMap.put("status", "0");
+				resultMap.put("msg", "norequired");
+				logger.info("新建成功，主键："+dstate.getId());
+			}
 		 
-			resultMap.put("status", "0");
-			resultMap.put("msg", dstate.getId());
-			logger.info("新建成功，主键："+dstate.getId());
+			
 		} catch (Exception e) {
 			resultMap.put("status", "-1");
 			resultMap.put("msg", "新建失败！");
