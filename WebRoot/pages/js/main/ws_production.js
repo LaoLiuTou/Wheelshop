@@ -35,6 +35,7 @@ function lastProduction(type,production){
                             }
 
 
+
                         }
                         else{
                             $('#'+item+'[prod="'+production+'"]').val(data[o][item]);
@@ -122,7 +123,12 @@ function lastProduction(type,production){
 
 
 
+                        //开始时间
+                        if(data[o]['starttime']!=''){
+                            var starttime = new Date(data[o]['starttime']).format("hh:mm:ss");
+                            $('#starttime').text(starttime);
 
+                        }
 
 
                     }
@@ -196,6 +202,14 @@ function lastProduction2(production){
                     $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
                     $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
                     $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+
+
+
+                    //开始时间
+                    if(data[o]['starttime']!='') {
+                        var starttime = new Date(data[o]['starttime']).format("hh:mm:ss");
+                        $('#starttime').text(starttime);
+                    }
 
 
 

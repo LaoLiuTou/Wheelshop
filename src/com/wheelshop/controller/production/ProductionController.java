@@ -326,6 +326,7 @@ public class ProductionController {
 						p.setProdstop(null);
 						p.setEquipstop(null);
 						p.setToolstop(null);
+						p.setStarttime(new Date());
 						iProductionService.addProduction(p);
 						list=iProductionService.selectProductionByParam(paramMap);
 					}
@@ -334,6 +335,7 @@ public class ProductionController {
 						production.setProdstate("生产时间");
 						production.setOvertime("0");
 						production.setCreater(request.getAttribute("userName").toString());
+						production.setStarttime(new Date());
 						iProductionService.addProduction(production);
 						list=iProductionService.selectProductionByParam(paramMap);
 					}

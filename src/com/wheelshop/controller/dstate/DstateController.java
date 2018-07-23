@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.io.IOException;
 import java.net.URLEncoder;
 
@@ -71,9 +72,14 @@ public class DstateController {
 			if(dstate.getProduction().equals("6")){
 				List<Map<String, String>> requiredList = mapper.readValue(plist.get(0).getRequired(), List.class);
 				for(Map<String,String> map:requiredList){
-					if(map.containsValue(dstate.getDeviceno())){
-						flag=true;
+					for(Entry<String, String> entry:map.entrySet()){
+						if(entry.getValue().contains(dstate.getDeviceno())){
+							flag=true;
+						}
 					}
+					/*if(map.containsValue(dstate.getDeviceno())){
+						flag=true;
+					}*/
 				}
 			}
 			else{
