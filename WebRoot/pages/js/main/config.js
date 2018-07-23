@@ -273,6 +273,7 @@ function initwebsocket(type){
     audioSB.src = "audio/shebei.mp3";*/
     audio.loop = true;
 
+    //chrome://flags/#autoplay-policy
 
 
     var websocket = null;
