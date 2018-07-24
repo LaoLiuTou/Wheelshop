@@ -130,6 +130,10 @@ function lastProduction(type,production){
 
                         }
 
+                        //停台时间转时分秒
+                        $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                        $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                        $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
 
                     }
                     else{
