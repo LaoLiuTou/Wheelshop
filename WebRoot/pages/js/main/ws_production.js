@@ -5,6 +5,8 @@ $(document).ready(function(){
     var productionList;
     var productionIndex;
     var currentProduction;
+
+
 });
 
 
@@ -31,6 +33,9 @@ function lastProduction(type,production){
                             if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
                                 $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
                             }
+
+
+
                         }
                         else{
                             $('#'+item+'[prod="'+production+'"]').val(data[o][item]);
@@ -40,15 +45,15 @@ function lastProduction(type,production){
                     if(type==1){
 
                         //第六条生产线
-                        //重点：1、替代机器：黄色；2、正常：绿色；3、被替代机器：红色；4、未使用机器：灰色 5、已选座位但是机器未使用，座位：隐藏；
-                        if(data[o]['required']!=''){
-                            var requiredJO= jQuery.parseJSON(jQuery.parseJSON(data[o]['required']));
+                        if(data[o]['required']!=''&&production=='6'){
+                            var requiredJO= jQuery.parseJSON(data[o]['required']);
                             for(var key in requiredJO ){
                                 $('#device'+requiredJO[key]['index']+'_01[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                                 $('#device'+requiredJO[key]['index']+'_02[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                                 $('#device'+requiredJO[key]['index']+'_03[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                             }
                         }
+
 
                         //变化点
                         //变化点
@@ -118,7 +123,12 @@ function lastProduction(type,production){
 
 
 
+                        //开始时间
+                        if(data[o]['starttime']!=''){
+                            var starttime = new Date(data[o]['starttime']).format("hh:mm:ss");
+                            $('#starttime').text(starttime);
 
+                        }
 
 
                     }
@@ -138,6 +148,18 @@ function lastProduction(type,production){
                         $('#redNum').text(redNum);
                         $('#greenNum').text(greenNum);
                         $('#changedSpan').text($('#changedShow').text());
+
+                        //第六条生产线
+                        if(data[o]['required']!=''&&production=='6'){
+                            var requiredJO= jQuery.parseJSON(data[o]['required']);
+
+                            var requiredValue=new Array();
+                            for(var key in requiredJO ){
+                                requiredValue.push(requiredJO[key]['index']);
+                            }
+                            $('#required').val(requiredValue);
+                            $('#required').multiselect("refresh");
+                        }
                     }
                 }
             }
@@ -162,15 +184,31 @@ function lastProduction2(production){
             var data=msg['data'];
             if(data.length>0){
                 for(var o in data) {
+
                     //保存id
                     id=data[o]['id'];
                     yield=Number(data[o]['yield']);
                     itemtime=Number(data[o]['itemtime']);
                     for (var item in data[o]) {
+
                         $('#'+item+'[prod="'+production+'"]').text(data[o][item]);
-                        if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
-                            $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
-                        }
+
+
+                    }
+                    if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
+                        $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
+                    }
+                    //停台时间转时分秒
+                    $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                    $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                    $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+
+
+
+                    //开始时间
+                    if(data[o]['starttime']!='') {
+                        var starttime = new Date(data[o]['starttime']).format("hh:mm:ss");
+                        $('#starttime').text(starttime);
                     }
 
 
@@ -207,9 +245,8 @@ function lastProduction2(production){
                     }
 
                     //第六条生产线
-                    //重点：1、替代机器：黄色；2、正常：绿色；3、被替代机器：红色；4、未使用机器：灰色 5、已选座位但是机器未使用，座位：隐藏；
-                    if(data[o]['required']!=''){
-                        var requiredJO= jQuery.parseJSON(jQuery.parseJSON(data[o]['required']));
+                    if(data[o]['required']!=''&&production=='6'){
+                        var requiredJO= jQuery.parseJSON(data[o]['required']);
                         for(var key in requiredJO ){
                             $('#device'+requiredJO[key]['index']+'_01[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
                             $('#device'+requiredJO[key]['index']+'_02[prod="'+production+'"]').removeClass('bg-gray').addClass('bg-green');
@@ -274,7 +311,7 @@ function addProduction(bodyParam){
         //var msg = obj['msg'];
         if(status=='0'){
             alert("修改成功！");
-            window.location.reload();
+            //window.location.reload();
             //window.location.href="interface.html?index="+interfaceIndex;
         }
     });
@@ -481,4 +518,27 @@ function  selectProdnum (type) {
 
         }
     });
-}
+} /**
+ * 时间秒数格式化
+ * @param s 时间戳（单位：秒）
+ * @returns {*} 格式化后的时分秒
+ */
+var sec_to_time = function(s) {
+        var t;
+        if(s > -1){
+            var hour = Math.floor(s/3600);
+            var min = Math.floor(s/60) % 60;
+            var sec = s % 60;
+            if(hour < 10) {
+                t = '0'+ hour + ":";
+            } else {
+                t = hour + ":";
+            }
+
+            if(min < 10){t += "0";}
+            t += min + ":";
+            if(sec < 10){t += "0";}
+            t += sec.toFixed(0);
+        }
+        return t;
+    }

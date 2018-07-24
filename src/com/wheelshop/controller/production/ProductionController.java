@@ -160,7 +160,7 @@ public class ProductionController {
 			
 			resultMap.put("status", "0");
 			resultMap.put("msg", "修改成功！");
-			System.out.println(production.getProdnum()+":"+production.getActualcomp());
+			//System.out.println(production.getProdnum()+":"+production.getActualcomp());
 		} catch (Exception e) {
 			resultMap.put("status", "-1");
 			resultMap.put("msg", "修改失败！");
@@ -323,7 +323,20 @@ public class ProductionController {
 						p.setOvertime("0");
 						p.setActualcomp(null);
 						p.setId(null);
+						p.setProdstop(null);
+						p.setEquipstop(null);
+						p.setToolstop(null);
+						p.setStarttime(new Date());
 						iProductionService.addProduction(p);
+						list=iProductionService.selectProductionByParam(paramMap);
+					}
+					else{
+						production.setAdddate(new Date());
+						production.setProdstate("生产时间");
+						production.setOvertime("0");
+						production.setCreater(request.getAttribute("userName").toString());
+						production.setStarttime(new Date());
+						iProductionService.addProduction(production);
 						list=iProductionService.selectProductionByParam(paramMap);
 					}
 				}
