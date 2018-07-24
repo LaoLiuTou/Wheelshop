@@ -236,6 +236,7 @@
                                                 <input type="text" prod="6"  id="plancomp" class="form-control" disabled placeholder="请选择品种">
                                                 <input type="text" prod="6"  id="changtime" class="form-control hide" >
                                                 <input type="text" prod="6"  id="itemtime" class="form-control hide" >
+                                                <input type="text" prod="6"  id="power" class="form-control hide" >
                                                 <!--<input type="text" prod="6"  id="required" class="form-control hide" >-->
                                             </div>
                                         </div>
@@ -608,6 +609,7 @@
             $('#plancomp').val($(this).find("option:selected").attr("yield"));
             $('#changtime').val($(this).find("option:selected").attr("changtime"));
             $('#itemtime').val($(this).find("option:selected").attr("itemtime"));
+            $('#power').val($(this).find("option:selected").attr("capacity"));
 
 
 

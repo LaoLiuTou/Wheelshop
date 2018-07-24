@@ -67,6 +67,13 @@ public class ProductionController {
 				else if(production.getProdstate().equals("换模时间")){
 					production.setStartctime(new Date());
 				}
+				//切换品种 计划产量清空
+				if(plist.get(0).getVariety()!=null&&production.getVariety()!=null&&
+						!plist.get(0).getVariety().equals(production.getVariety())){
+					production.setYield("0");
+					production.setActualcomp("0");
+				}
+				
 				iProductionService.updateProduction(production);
 			}
 			else{
@@ -310,11 +317,17 @@ public class ProductionController {
 				//当天数据
 				paramMap.put("adddate","1");
 				
-				
 				//int totalnumber=iProductionService.selectCountProductionByParam(paramMap);
 				List<Production> list=iProductionService.selectProductionByParam(paramMap);
 				if(list.size()==0){
-					paramMap.remove("adddate");
+					production.setAdddate(new Date());
+					production.setProdstate("生产时间");
+					production.setOvertime("0");
+					production.setCreater(request.getAttribute("userName").toString());
+					production.setStarttime(new Date());
+					iProductionService.addProduction(production);
+					list=iProductionService.selectProductionByParam(paramMap);
+					/*paramMap.remove("adddate");
 					list=iProductionService.selectProductionByParam(paramMap);
 					if(list.size()>0){
 						Production p=list.get(0);
@@ -338,7 +351,7 @@ public class ProductionController {
 						production.setStarttime(new Date());
 						iProductionService.addProduction(production);
 						list=iProductionService.selectProductionByParam(paramMap);
-					}
+					}*/
 				}
 				 
 				
