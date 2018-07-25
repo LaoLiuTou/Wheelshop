@@ -377,8 +377,8 @@ function initwebsocket(type){
         }
         else if(msg['T']=='4'){
             $('#actualcomp[prod="'+msg['PRO']+'"]').text(msg['AC']);
-            if(msg['POWER']!=''){
-                $('#rate[prod="'+msg['PRO']+'"]').text(((msg['AC']/msg['POWER'])*100).toFixed(0));
+            if(msg['POWER']!=''&&msg['POWER']!=null){
+                $('#rate[prod="'+msg['PRO']+'"]').text(((msg['AC']/msg['POWER'])*100).toFixed(1));
             }
         }
         else if(msg['T']=='5'){

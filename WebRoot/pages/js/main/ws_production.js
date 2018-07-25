@@ -31,7 +31,7 @@ function lastProduction(type,production){
                         if(type==1){
                             $('#'+item+'[prod="'+production+'"]').text(data[o][item]);
                             if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
-                                $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
+                                $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1));
                             }
 
 
@@ -200,7 +200,7 @@ function lastProduction2(production){
 
                     }
                     if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
-                        $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(0));
+                        $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1));
                     }
                     //停台时间转时分秒
                     $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
