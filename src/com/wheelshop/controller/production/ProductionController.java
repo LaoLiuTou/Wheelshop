@@ -176,6 +176,36 @@ public class ProductionController {
 		}
 		return resultMap;
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/resetProduction")
+	@ResponseBody
+	public Map reset(Production production){
+		Map resultMap=new HashMap();
+		try {
+			if(production.getProdnum()==null){
+				resultMap.put("status", "-1");
+				resultMap.put("msg", "参数不能为空！");
+			}
+			else{
+				production.setAdddate(new Date());
+				production.setProdstate("生产时间");
+				production.setOvertime("0");
+				production.setCreater("prod"+production.getProdnum());
+				production.setStarttime(new Date());
+				iProductionService.addProduction(production);
+				resultMap.put("status", "0");
+				resultMap.put("msg", production.getId());
+				logger.info("新建成功，主键："+production.getId());
+			}
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "新建失败！");
+			logger.info("新建失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/muladdProduction")
 	@ResponseBody
