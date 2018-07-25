@@ -87,7 +87,7 @@ function login() {
 /**
  * 大屏用户登录
  */
-function guestLogin(prodction) {
+function guestLogin(production) {
     $.ajax({
         url : url+'login',
         type : 'POST',
@@ -107,9 +107,43 @@ function guestLogin(prodction) {
                 sessionStorage.setItem('userinfo',userinfo);
                 sessionStorage.setItem('token',token);
 
-                lastProduction2(prodction);
+                lastProduction2(production);
 
-                initwebsocket(prodction);
+                initwebsocket(production);
+            }
+            else{
+                alert('链接服务失败！');
+            }
+
+        },
+        error : function(response) {
+            alert('链接服务失败！');
+        }
+    });
+
+}
+
+function prodLogin(production,username,password) {
+    $.ajax({
+        url : url+'login',
+        type : 'POST',
+        data : {
+            'username' : username,
+            'password' : password
+        },
+        success : function(response) {
+            console.log(JSON.stringify(response));
+            if(response['status']=='0'){
+                var token = response['token'];
+                var userinfo = JSON.stringify(response['msg']);
+                //var timestamp = Date.parse(new Date());
+                //var hash = md5(token + timestamp + sk);
+                sessionStorage.setItem('username',$('#username').val());
+                sessionStorage.setItem('userpwd',$('#password').val());
+                sessionStorage.setItem('userinfo',userinfo);
+                sessionStorage.setItem('token',token);
+
+                selectVarieties(production);
             }
             else{
                 alert('链接服务失败！');

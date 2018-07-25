@@ -503,7 +503,7 @@ public class ProductionController {
 					comRateStr=String.format("%.0f", comRate);
 				}
 				if(rate!=null){
-					rateStr=String.format("%.0f", rate);
+					rateStr=String.format("%.1f", rate)+"%";
 				}
 				
 				String[] strings = {(index+1)+"", temp.getProduction(), temp.getPlancomp(),temp.getActualcomp(),  

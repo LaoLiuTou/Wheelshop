@@ -31,7 +31,7 @@ function lastProduction(type,production){
                         if(type==1){
                             $('#'+item+'[prod="'+production+'"]').text(data[o][item]);
                             if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
-                                $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1));
+                                $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1)+'%');
                             }
 
 
@@ -200,7 +200,7 @@ function lastProduction2(production){
 
                     }
                     if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
-                        $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1));
+                        $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1)+'%');
                     }
                     //停台时间转时分秒
                     $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
@@ -381,12 +381,17 @@ function  queryProduction (bodyParam,currentPage,pageSize) {
                 html+='<tr index='+o+' class="gradeX">\n'+
                     '<td>'+data[o].production+'</td>\n' +
                     '<td>'+data[o].plancomp+'</td>\n' +
-                    '<td>'+data[o].actualcomp+'</td>\n' +
-                    '<td>'+((data[o].actualcomp/data[o].plancomp)*100).toFixed(0)+'</td>\n' +
-                    '<td>'+data[o].prodtime+'</td>\n';
+                    '<td>'+data[o].actualcomp+'</td>\n' ;
+                if(data[o].actualcomp!=''&&data[o].plancomp!=''){
+                    html+='<td>'+((data[o].actualcomp/data[o].plancomp)*100).toFixed(0)+'</td>\n';
+                }
+                else{
+                    html+='<td></td>\n';
+                }
+                html+='<td>'+data[o].prodtime+'</td>\n';
 
                 if(data[o].actualcomp!=''&&data[o].power!=''){
-                    html+='<td>'+((data[o].actualcomp/data[o].power)*100).toFixed(0)+'</td>\n';
+                    html+='<td>'+((data[o].actualcomp/data[o].power)*100).toFixed(1)+'%</td>\n';
                 }
                 else{
                     html+='<td></td>\n';
