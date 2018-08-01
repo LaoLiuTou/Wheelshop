@@ -30,7 +30,7 @@ function lastProduction(type,production){
                     for (var item in data[o]) {
                         if(type==1){
                             $('#'+item+'[prod="'+production+'"]').text(data[o][item]);
-                            if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
+                            if(data[o]['actualcomp']!=''&&data[o]['power']!=''&&data[o].power!=null){
                                 $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1)+'%');
                             }
 
@@ -199,7 +199,7 @@ function lastProduction2(production){
 
 
                     }
-                    if(data[o]['actualcomp']!=''&&data[o]['power']!=''){
+                    if(data[o]['actualcomp']!=''&&data[o]['power']!=''&&data[o].power!=null){
                         $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1)+'%');
                     }
                     //停台时间转时分秒
@@ -390,7 +390,7 @@ function  queryProduction (bodyParam,currentPage,pageSize) {
                 }
                 html+='<td>'+data[o].prodtime+'</td>\n';
 
-                if(data[o].actualcomp!=''&&data[o].power!=''){
+                if(data[o].actualcomp!=''&&data[o].power!=''&&data[o].power!=null){
                     html+='<td>'+((data[o].actualcomp/data[o].power)*100).toFixed(1)+'%</td>\n';
                 }
                 else{

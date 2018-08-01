@@ -4,9 +4,9 @@ var url = 'http://127.0.0.1/Wheelshop/';
 var websocketurl = 'ws://127.0.0.1:8888';
 
 //后台服务地址
-//var url = 'http://10.63.7.40/Wheelshop/';
+//var url = 'http://10.63.6.242/Wheelshop/';
 //websocket地址
-//var websocketurl = 'ws://10.63.7.40:8888';
+//var websocketurl = 'ws://10.63.6.242:8888';
 //secret key
 var sk = 'TTILY';
 
@@ -412,7 +412,7 @@ function initwebsocket(type){
         else if(msg['T']=='4'){
             $('#actualcomp[prod="'+msg['PRO']+'"]').text(msg['AC']);
             if(msg['POWER']!=''&&msg['POWER']!=null){
-                $('#rate[prod="'+msg['PRO']+'"]').text(((msg['AC']/msg['POWER'])*100).toFixed(1));
+                $('#rate[prod="'+msg['PRO']+'"]').text(((msg['AC']/msg['POWER'])*100).toFixed(1)+'%');
             }
         }
         else if(msg['T']=='5'){
