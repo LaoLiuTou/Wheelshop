@@ -33,7 +33,7 @@ public class CORSFilter implements Filter {
 	    if( !uri.startsWith("/login")&&!uri.startsWith("/pages")&&!uri.startsWith("/export")
 	    		&&!uri.startsWith("/addDstate")&&!uri.startsWith("/addActualcomp")
 	    		&&!uri.startsWith("/filesUpload")&&!uri.startsWith("/upload")
-	    		&&!uri.startsWith("/resetProduction")){
+	    		&&!uri.startsWith("/resetProduction")&&!uri.startsWith("/getVariety")){
 	    	String token = request.getHeader("token");
 	        String timesamp = request.getHeader("timesamp");
 	        String sign = request.getHeader("sign");

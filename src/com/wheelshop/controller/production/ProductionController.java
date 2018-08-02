@@ -132,6 +132,36 @@ public class ProductionController {
 		return resultMap;
 	}
 	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/getVariety")
+	@ResponseBody
+	public Map getVariety(Production production){
+		Map resultMap=new HashMap();
+		try {
+			Map paramMap=new HashMap();
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",1); 
+			paramMap.put("prodnum",production.getProdnum());
+			//当天数据
+			paramMap.put("adddate","1");
+			List<Production> list=iProductionService.selectProductionByParam(paramMap);
+			
+			if(list.size()>0){
+				resultMap.put("variety", list.get(0).getVariety()+"|"+list.get(0).getId());
+			}
+			else{
+				resultMap.put("variety", "");
+			}
+			 
+			 
+		} catch (Exception e) {
+			resultMap.put("variety", "");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/addActualcomp")
 	@ResponseBody
