@@ -11,6 +11,9 @@ var websocketurl = 'ws://127.0.0.1:8888';
 var sk = 'TTILY';
 
 var yieldvarInterval;
+var equipstopInterval;
+var prodstopInterval;
+var toolstopInterval;
 
 $(document).ready(function(){
     //logo
@@ -375,6 +378,19 @@ function initwebsocket(type){
                 //alert(msg['PRO']+"/1/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3");
                 audio.src = "audio/"+msg['PRO']+"/1/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
+
+                equipstopInterval=setInterval(function (){
+                    var equipstopTime=sessionStorage.getItem('equipstopTime');
+                    if(equipstopTime==null){
+                        equipstopTime=0;
+                    }
+                    else{
+                        equipstopTime=Number(equipstopTime)+1;
+                    }
+                    sessionStorage.setItem('equipstopTime',equipstopTime);
+                    $('#equipstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(equipstopTime));
+                },1000);
+
             }
             else if(msg['STATE']=='02'){//工装异常
                 $('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
@@ -382,6 +398,19 @@ function initwebsocket(type){
                 $('#gongzhuang[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
                 audio.src = "audio/"+msg['PRO']+"/2/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
+
+                toolstopInterval=setInterval(function (){
+                    var toolstopTime=sessionStorage.getItem('toolstopTime');
+                    if(toolstopTime==null){
+                        toolstopTime=0;
+                    }
+                    else{
+                        toolstopTime=Number(toolstopTime)+1;
+                    }
+                    sessionStorage.setItem('toolstopTime',toolstopTime);
+                    $('#toolstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(toolstopTime));
+                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                },1000);
             }
             else if(msg['STATE']=='03'){//生产异常
                 $('#'+msg['NUM']+'_03[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
@@ -389,6 +418,19 @@ function initwebsocket(type){
                 $('#shengchan[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
                 audio.src = "audio/"+msg['PRO']+"/3/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
+
+                prodstopInterval=setInterval(function (){
+                    var prodstopTime=sessionStorage.getItem('prodstopTime');
+                    if(prodstopTime==null){
+                        prodstopTime=0;
+                    }
+                    else{
+                        prodstopTime=Number(prodstopTime)+1;
+                    }
+                    sessionStorage.setItem('prodstopTime',prodstopTime);
+                    $('#prodstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(prodstopTime));
+                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                },1000);
             }
             else if(msg['STATE']=='05'){//关闭声音
 

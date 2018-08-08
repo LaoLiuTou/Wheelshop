@@ -4792,3 +4792,8 @@ ol.comment-list {
     left: -10px;
     top: 8px;
 }
+
+.btnbg{
+
+    background-color: #ccc;
+}

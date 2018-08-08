@@ -34,6 +34,10 @@
 			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
 			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
 			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="endtimeFrom != null"> AND unix_timestamp(a.ENDTIME) &gt;=unix_timestamp(#{endtimeFrom}) </if>
+			<if test="endtimeTo != null"> AND unix_timestamp(a.ENDTIME) &lt;=unix_timestamp(#{endtimeTo}) </if>
+			<if test="endtimetime != null"> AND a.ENDTIME =#{endtime} </if>
+			<if test="startstatus != null"> AND a.STARTSTATUS =#{startstatus} </if>
 			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
 			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
 			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
@@ -71,6 +75,10 @@
 			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
 			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
 			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="endtimeFrom != null"> AND unix_timestamp(a.ENDTIME) &gt;=unix_timestamp(#{endtimeFrom}) </if>
+			<if test="endtimeTo != null"> AND unix_timestamp(a.ENDTIME) &lt;=unix_timestamp(#{endtimeTo}) </if>
+			<if test="endtimetime != null"> AND a.ENDTIME =#{endtime} </if>
+			<if test="startstatus != null"> AND a.STARTSTATUS =#{startstatus} </if>
 			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
 			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
 			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
@@ -109,6 +117,10 @@
 			<if test="starttimeFrom != null"> AND unix_timestamp(STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
 			<if test="starttimeTo != null"> AND unix_timestamp(STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
 			<if test="starttime != null"> AND STARTTIME =#{starttime} </if>
+			<if test="endtimeFrom != null"> AND unix_timestamp(ENDTIME) &gt;=unix_timestamp(#{endtimeFrom}) </if>
+			<if test="endtimeTo != null"> AND unix_timestamp(ENDTIME) &lt;=unix_timestamp(#{endtimeTo}) </if>
+			<if test="endtimetime != null"> AND ENDTIME =#{endtime} </if>
+			<if test="startstatus != null"> AND STARTSTATUS =#{startstatus} </if>
 			<if test="actualcomp != null"> AND ACTUALCOMP =#{actualcomp} </if>
 			<if test="toolstop != null"> AND TOOLSTOP =#{toolstop} </if>
 			<if test="overtime != null"> AND OVERTIME =#{overtime} </if>
@@ -146,6 +158,10 @@
 			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
 			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
 			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="endtimeFrom != null"> AND unix_timestamp(a.ENDTIME) &gt;=unix_timestamp(#{endtimeFrom}) </if>
+			<if test="endtimeTo != null"> AND unix_timestamp(a.ENDTIME) &lt;=unix_timestamp(#{endtimeTo}) </if>
+			<if test="endtimetime != null"> AND a.ENDTIME =#{endtime} </if>
+			<if test="startstatus != null"> AND a.STARTSTATUS =#{startstatus} </if>
 			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
 			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
 			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
@@ -180,6 +196,8 @@
 			<if test="plancomp != null">PLANCOMP=#{plancomp}, </if>
 			<if test="equipstop != null">EQUIPSTOP=#{equipstop}, </if>
 			<if test="starttime != null">STARTTIME=#{starttime}, </if>
+			<if test="endtime != null">ENDTIME=#{endtime}, </if>
+			<if test="startstatus != null">STARTSTATUS=#{startstatus}, </if>
 			<if test="actualcomp != null">ACTUALCOMP=#{actualcomp}, </if>
 			<if test="toolstop != null">TOOLSTOP=#{toolstop}, </if>
 			<if test="overtime != null">OVERTIME=#{overtime}, </if>
@@ -210,6 +228,8 @@
 			<if test="plancomp != null">PLANCOMP, </if>
 			<if test="equipstop != null">EQUIPSTOP, </if>
 			<if test="starttime != null">STARTTIME, </if>
+			<if test="endtime != null">ENDTIME, </if>
+			<if test="startstatus != null">STARTSTATUS, </if>
 			<if test="actualcomp != null">ACTUALCOMP, </if>
 			<if test="toolstop != null">TOOLSTOP, </if>
 			<if test="overtime != null">OVERTIME, </if>
@@ -235,6 +255,8 @@
 			<if test="plancomp != null">#{plancomp}, </if>
 			<if test="equipstop != null">#{equipstop}, </if>
 			<if test="starttime != null">#{starttime}, </if>
+			<if test="endtime != null">#{endtime}, </if>
+			<if test="startstatus != null">#{startstatus}, </if>
 			<if test="actualcomp != null">#{actualcomp}, </if>
 			<if test="toolstop != null">#{toolstop}, </if>
 			<if test="overtime != null">#{overtime}, </if>
@@ -267,6 +289,8 @@
 				<if test="item.plancomp != null">PLANCOMP, </if>
 				<if test="item.equipstop != null">EQUIPSTOP, </if>
 				<if test="item.starttime != null">STARTTIME, </if>
+				<if test="item.endtime != null">ENDTIME, </if>
+				<if test="item.startstatus != null">STARTSTATUS, </if>
 				<if test="item.actualcomp != null">ACTUALCOMP, </if>
 				<if test="item.toolstop != null">TOOLSTOP, </if>
 				<if test="item.overtime != null">OVERTIME, </if>
@@ -293,6 +317,8 @@
 				<if test="item.plancomp != null">#{item.plancomp}, </if>
 				<if test="item.equipstop != null">#{item.equipstop}, </if>
 				<if test="item.starttime != null">#{item.starttime}, </if>
+				<if test="item.endtime != null">#{item.endtime}, </if>
+				<if test="item.startstatus != null">#{item.startstatus}, </if>
 				<if test="item.actualcomp != null">#{item.actualcomp}, </if>
 				<if test="item.toolstop != null">#{item.toolstop}, </if>
 				<if test="item.overtime != null">#{item.overtime}, </if>

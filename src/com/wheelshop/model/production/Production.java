@@ -137,7 +137,7 @@ public class Production {
 	public void setEquipstop(String equipstop) {
 		this.equipstop = equipstop;
 	}
-	/** 开机时间 */
+	/** 开始时间 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private  Date starttime;
 	public Date getStarttime() {
@@ -145,6 +145,23 @@ public class Production {
 	}
 	public void setStarttime(Date starttime) {
 		this.starttime = starttime;
+	}
+	/** 结束时间 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+	private Date endtime;
+	public Date getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(Date endtime) {
+		this.endtime = endtime;
+	}
+	/** 开始状态 */
+	private String startstatus;
+	public String getStartstatus() {
+		return startstatus;
+	}
+	public void setStartstatus(String startstatus) {
+		this.startstatus = startstatus;
 	}
 	/** 实际完成 */
 	private  String actualcomp;
@@ -222,5 +239,14 @@ public class Production {
 	}
 	 
 	 
+	/**  开机时间*//*
+	private Date stime;
+	public Date getStime() {
+		return stime;
+	}
+	public void setStime(Date stime) {
+		this.stime = stime;
+	}
+	*/
 
 }

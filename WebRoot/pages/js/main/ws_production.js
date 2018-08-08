@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 
 });
-
+var statusParam={};
 
 ////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////品种管理////////////////////////////////////////
@@ -18,6 +18,9 @@ $(document).ready(function(){
  */
 function lastProduction(type,production){
     var bodyParam={'page':1,'size':1,'prodnum':production};
+    if(type=='1'){
+        bodyParam.startstatus='1';
+    }
     var httpR = new createHttpR(url+'lastProduction','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
@@ -33,8 +36,6 @@ function lastProduction(type,production){
                             if(data[o]['actualcomp']!=''&&data[o]['power']!=''&&data[o].power!=null){
                                 $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1)+'%');
                             }
-
-
 
                         }
                         else{
@@ -111,14 +112,61 @@ function lastProduction(type,production){
                         /*$('#prodstop[prod="'+production+'"]').text(prodstop);
                         $('#equipstop[prod="'+production+'"]').text(equipstop);
                         $('#toolstop[prod="'+production+'"]').text(toolstop);*/
+
+                        clearInterval(prodstopInterval);
+                        clearInterval(equipstopInterval);
+                        clearInterval(toolstopInterval);
+                        $('#prodstop[prod="'+production+'"]').text(sec_to_time(sessionStorage.getItem('prodstopTime')==null?0:sessionStorage.getItem('prodstopTime')));
+                        $('#equipstop[prod="'+production+'"]').text(sec_to_time(sessionStorage.getItem('equipstopTime')==null?0:sessionStorage.getItem('equipstopTime')));
+                        $('#toolstop[prod="'+production+'"]').text(sec_to_time(sessionStorage.getItem('toolstopTime')==null?0:sessionStorage.getItem('toolstopTime')));
+
+
                         if(equipstop>0){
                             $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
+                            equipstopInterval=setInterval(function (){
+                                var equipstopTime=sessionStorage.getItem('equipstopTime');
+                                if(equipstopTime==null){
+                                    equipstopTime=0;
+                                }
+                                else{
+                                    equipstopTime=Number(equipstopTime)+1;
+                                }
+                                sessionStorage.setItem('equipstopTime',equipstopTime);
+                                $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(equipstopTime));
+                                //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                                //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                            },1000);
                         }
                         if(prodstop>0){
                             $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
+                            prodstopInterval=setInterval(function (){
+                                var prodstopTime=sessionStorage.getItem('prodstopTime');
+                                if(prodstopTime==null){
+                                    prodstopTime=0;
+                                }
+                                else{
+                                    prodstopTime=Number(prodstopTime)+1;
+                                }
+                                sessionStorage.setItem('prodstopTime',prodstopTime);
+                                $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(prodstopTime));
+                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                            },1000);
                         }
                         if(toolstop>0){
                             $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
+                            toolstopInterval=setInterval(function (){
+                                var toolstopTime=sessionStorage.getItem('toolstopTime');
+                                if(toolstopTime==null){
+                                    toolstopTime=0;
+                                }
+                                else{
+                                    toolstopTime=Number(toolstopTime)+1;
+                                }
+                                sessionStorage.setItem('toolstopTime',toolstopTime);
+                                $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(toolstopTime));
+                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                            },1000);
                         }
 
 
@@ -131,9 +179,9 @@ function lastProduction(type,production){
                         }
 
                         //停台时间转时分秒
-                        $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
-                        $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
-                        $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                        //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                        //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                        //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
 
                     }
                     else{
@@ -164,6 +212,32 @@ function lastProduction(type,production){
                             $('#required').val(requiredValue);
                             $('#required').multiselect("refresh");
                         }
+
+                        //开始结束按钮
+                        if(data[o]['variety']!=''&&data[o]['variety']!=null&&data[o]['prodstate']=='生产时间'){
+
+                            if(data[o]['flag']=='1'){
+                                $('#startBtn').addClass('hide');
+
+                                //开始状态 品种、状态不能修改
+                                $('#variety').prop("disabled",true);
+                                $('#prodstate').prop("disabled",true);
+                            }
+                            else{
+                                $('#endBtn').addClass('hide');
+
+                            }
+
+                        }
+                        else{
+                            $('#endBtn').addClass('hide');
+                            $('#startBtn').prop("disabled",true);
+                            $('#startBtn').removeClass('btn-info').addClass('btnbg');
+
+                        }
+                        statusParam.id=data[o]['id'];
+                        statusParam.prodnum=data[o]['prodnum'];
+
                     }
                 }
             }
@@ -176,7 +250,7 @@ function lastProduction(type,production){
     });
 }
 function lastProduction2(production){
-    var bodyParam={'page':1,'size':1,'prodnum':production};
+    var bodyParam={'page':1,'size':1,'prodnum':production,'startstatus':'1'};
     var httpR = new createHttpR(url+'lastProduction','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
@@ -184,10 +258,13 @@ function lastProduction2(production){
         var msg = obj['msg'];
         if(status=='0'){
             var id,yield=0,itemtime=0;
-            var prodstop=0,equipstop=0,toolstop=0;
+            var prodstop=0,equipstop=0,toolstop=0,startflag='0';
             var data=msg['data'];
             if(data.length>0){
                 for(var o in data) {
+
+                    //开始状态
+                    startflag=data[o]['flag'];
 
                     //保存id
                     id=data[o]['id'];
@@ -203,9 +280,9 @@ function lastProduction2(production){
                         $('#rate[prod="'+production+'"]').text(((data[o]['actualcomp']/data[o]['power'])*100).toFixed(1)+'%');
                     }
                     //停台时间转时分秒
-                    $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
-                    $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
-                    $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                    //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                    //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
 
 
 
@@ -235,17 +312,60 @@ function lastProduction2(production){
                         }
 
                     }
-                    /*$('#prodstop[prod="'+production+'"]').text(prodstop);
-                    $('#equipstop[prod="'+production+'"]').text(equipstop);
-                    $('#toolstop[prod="'+production+'"]').text(toolstop);*/
+                    clearInterval(prodstopInterval);
+                    clearInterval(equipstopInterval);
+                    clearInterval(toolstopInterval);
+                    $('#prodstop[prod="'+production+'"]').text(sec_to_time(sessionStorage.getItem('prodstopTime')==null?0:sessionStorage.getItem('prodstopTime')));
+                    $('#equipstop[prod="'+production+'"]').text(sec_to_time(sessionStorage.getItem('equipstopTime')==null?0:sessionStorage.getItem('equipstopTime')));
+                    $('#toolstop[prod="'+production+'"]').text(sec_to_time(sessionStorage.getItem('toolstopTime')==null?0:sessionStorage.getItem('toolstopTime')));
+
                     if(equipstop>0){
                         $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
+
+                        equipstopInterval=setInterval(function (){
+                            var equipstopTime=sessionStorage.getItem('equipstopTime');
+                            if(equipstopTime==null){
+                                equipstopTime=0;
+                            }
+                            else{
+                                equipstopTime=Number(equipstopTime)+1;
+                            }
+                            sessionStorage.setItem('equipstopTime',equipstopTime);
+                            $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(equipstopTime));
+                            //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                            //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                            //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                        },1000);
                     }
                     if(prodstop>0){
                         $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
+                        prodstopInterval=setInterval(function (){
+                            var prodstopTime=sessionStorage.getItem('prodstopTime');
+                            if(prodstopTime==null){
+                                prodstopTime=0;
+                            }
+                            else{
+                                prodstopTime=Number(prodstopTime)+1;
+                            }
+                            sessionStorage.setItem('prodstopTime',prodstopTime);
+                            $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(prodstopTime));
+                            //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                        },1000);
                     }
                     if(toolstop>0){
                         $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
+                        toolstopInterval=setInterval(function (){
+                            var toolstopTime=sessionStorage.getItem('toolstopTime');
+                            if(toolstopTime==null){
+                                toolstopTime=0;
+                            }
+                            else{
+                                toolstopTime=Number(toolstopTime)+1;
+                            }
+                            sessionStorage.setItem('toolstopTime',toolstopTime);
+                            $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(toolstopTime));
+                            //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                        },1000);
                     }
 
                     //第六条生产线
@@ -286,7 +406,7 @@ function lastProduction2(production){
 
             //计划完成
             if(itemtime!=0){
-                if(prodstop==0&&equipstop==0&&toolstop==0){
+                if(prodstop==0&&equipstop==0&&toolstop==0&&startflag=='1'){
                     yieldvarInterval=setInterval(function (){
                         yield+=1;
                         var params={};
@@ -315,7 +435,7 @@ function addProduction(bodyParam){
         //var msg = obj['msg'];
         if(status=='0'){
             alert("修改成功！");
-            //window.location.reload();
+            window.location.reload();
             //window.location.href="interface.html?index="+interfaceIndex;
         }
     });
@@ -340,6 +460,35 @@ function updateProduction(bodyParam){
         }
     });
 }
+/**
+ * 修改开始状态
+ * @param id
+ */
+function startEndProduction(bodyParam){
+
+    var httpR = new createHttpR(url+'startEndProduction','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            //$('#yield').text(bodyParam['yield']);
+            //alert("修改成功！");
+            window.location.reload();
+            //window.location.href="interface.html?index="+interfaceIndex;
+        }
+    });
+}
+$('#startBtn').click(function () {
+    statusParam.flag='1';
+    statusParam.startstatus='1';
+    startEndProduction(statusParam);
+});
+$('#endBtn').click(function () {
+    statusParam.flag='0';
+    statusParam.startstatus='1';
+    startEndProduction(statusParam);
+});
 
 /**
  * 删除生产

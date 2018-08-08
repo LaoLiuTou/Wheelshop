@@ -237,7 +237,10 @@
                                             <div class="btn-group">
                                                 <button id="muldelBtn" type="button" class="btn btn-default" onclick="window.history.go(-1)" >返回</button>
                                             </div>
-
+                                            <div class="btn-group ml10">
+                                                <button type="button" class="startbtn btn-info popovers" id="startBtn" >开始</button>
+                                                <button type="button" class="startbtn btn-info popovers" id="endBtn" >结束</button>
+                                            </div>
                                         </div>
 
                                     </form>
@@ -562,7 +565,9 @@
             }*/
             params['creater']=userinfo['username'];
 
-            params['changed']=JSON.stringify(changed);
+            if(JSON.stringify(changed)!='{}'){
+                params['changed']=JSON.stringify(changed);
+            }
             params['prodnum']=production;
             addProduction(params);
         });

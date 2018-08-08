@@ -46,7 +46,7 @@ public class ProductionController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/addProduction")
 	@ResponseBody
-	public Map add(Production production){
+	public Map add(HttpServletRequest request,Production production){
 		Map resultMap=new HashMap();
 		try {
 			
@@ -55,40 +55,52 @@ public class ProductionController {
 			paramMap.put("fromPage",0);
 			paramMap.put("toPage",1); 
 			paramMap.put("prodnum",production.getProdnum());
-			paramMap.put("adddate","1");
+			//使用过的
+			paramMap.put("startstatus","1");
+			//今天的
+			//paramMap.put("adddate","1");
 			List<Production> plist=iProductionService.selectProductionByParam(paramMap);
 			
-			
-			
-			
 			if(plist.size()>0){
-				production.setId(plist.get(0).getId());
-				if(plist.get(0).getProdstate().equals("换模时间")&&
-						production.getProdstate().equals("生产时间")){
-					long times=new Date().getTime()-plist.get(0).getStartctime().getTime();
-					production.setChangtime(times/60000+"");
-				}
-				else if(production.getProdstate().equals("换模时间")){
-					production.setStartctime(new Date());
-				}
 				//切换品种 计划产量清空
 				if(plist.get(0).getVariety()!=null&&production.getVariety()!=null&&
 						!plist.get(0).getVariety().equals(production.getVariety())){
-					production.setYield("0");
-					production.setActualcomp("0");
+					if(plist.get(0).getChanged()!=null){
+						production.setChanged(plist.get(0).getChanged());
+					}
+					iProductionService.addProduction(production);
+				}
+				else{
+					production.setId(plist.get(0).getId());
+					if(plist.get(0).getProdstate().equals("换模时间")&&
+							production.getProdstate().equals("生产时间")){
+						long times=new Date().getTime()-plist.get(0).getStartctime().getTime();
+						production.setChangtime(times/60000+"");
+					}
+					else if(production.getProdstate().equals("换模时间")){
+						production.setStartctime(new Date());
+					}
+					iProductionService.updateProduction(production);
 				}
 				
-				iProductionService.updateProduction(production);
+				
 			}
 			else{
-				//保存变化点
-				paramMap.remove("adddate");
-				List<Production> list=iProductionService.selectProductionByParam(paramMap);
-				if(list.size()>0){
-					if(list.get(0).getChanged()!=null)
-					production.setChanged(list.get(0).getChanged());
+				
+				paramMap.remove("startstatus");
+				plist=iProductionService.selectProductionByParam(paramMap);
+				if(plist.size()==0){
+					production.setAdddate(new Date());
+					production.setProdstate("生产时间");
+					production.setOvertime("0");
+					production.setCreater(request.getAttribute("userName").toString());
+					iProductionService.addProduction(production);
+				} 
+				else{
+					production.setId(plist.get(0).getId());
+					iProductionService.updateProduction(production);
 				}
-				iProductionService.addProduction(production);
+				
 			}
 			
 			
@@ -173,6 +185,9 @@ public class ProductionController {
 			paramMap.put("fromPage",0);
 			paramMap.put("toPage",1); 
 			paramMap.put("prodnum",production.getProdnum());
+			//使用过的
+			paramMap.put("startstatus","1");
+			
 			List<Production> list=iProductionService.selectProductionByParam(paramMap);
         	
 			if(list.size()>0){
@@ -248,32 +263,6 @@ public class ProductionController {
 				production.setCreater("prod"+production.getProdnum());
 				production.setStarttime(new Date());
 				iProductionService.addProduction(production);
-				
-				
-				
-				//推送
-				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
-		            if (entry.getKey().toString().substring(0, 1).equals(production.getProdnum())){
-		            	
-						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
-		            	Map<String, String> contentMap = new HashMap<String, String>();
-		            	contentMap.put("T", "4");
-		            	contentMap.put("NAME", "system");
-		            	contentMap.put("FI", entry.getKey().toString());  
-		            	contentMap.put("AC", "");
-		            	contentMap.put("POWER", "");
-		            	contentMap.put("PRO", production.getProdnum());
-						ObjectMapper mapper = new ObjectMapper();
-						String json = "";
-						json = mapper.writeValueAsString(contentMap);
-						
-						if(channelHandlerContext!=null){
-							
-						   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
-				        }
-						 
-		            }
-		        }
 				
 				
 				
@@ -382,6 +371,105 @@ public class ProductionController {
 		}
 		return resultMap;
 	}
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/startEndProduction")
+	@ResponseBody
+	public Map startEnd(HttpServletRequest request,Production production){
+		Map resultMap=new HashMap();
+		try {
+			if(production.getId()==null){
+				resultMap.put("status", "-1");
+				resultMap.put("msg", "参数不能为空！");
+			}
+			else{
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				Map paramMap=new HashMap();
+				paramMap.put("fromPage",0);
+				paramMap.put("toPage",1); 
+				paramMap.put("prodnum",production.getProdnum());
+				//使用过的
+				//paramMap.put("startstatus","1");
+				//今天的
+				paramMap.put("adddateFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
+				List<Production> plist=iProductionService.selectProductionByParam(paramMap);
+				if(plist.size()>0){
+					if(production.getFlag()!=null&&production.getFlag().equals("1")){
+						if(plist.get(0).getStarttime()==null)
+						production.setStarttime(new Date());
+					}
+					else if(production.getFlag()!=null&&production.getFlag().equals("0")){
+						production.setEndtime(new Date());
+					}
+					int resultUpdate=iProductionService.updateProduction(production);
+				}
+				else{
+					paramMap.remove("adddateFrom");
+					plist=iProductionService.selectProductionByParam(paramMap);
+					if(plist.size()>0){
+						production.setAdddate(new Date());
+						production.setProdstate("生产时间");
+						production.setOvertime("0");
+						production.setCreater(request.getAttribute("userName").toString());
+						production.setChanged(plist.get(0).getChanged());
+						production.setPower(plist.get(0).getPower());
+						production.setVariety(plist.get(0).getVariety());
+						production.setRhythm(plist.get(0).getRhythm());
+						production.setItemtime(plist.get(0).getItemtime());
+						production.setRequired(plist.get(0).getRequired());
+						production.setChangtime(plist.get(0).getChangtime());
+						production.setPlancomp(plist.get(0).getPlancomp());
+						 
+
+						if(production.getFlag()!=null&&production.getFlag().equals("1")){
+							production.setStarttime(new Date());
+						}
+						else if(production.getFlag()!=null&&production.getFlag().equals("0")){
+							production.setEndtime(new Date());
+						}
+						iProductionService.addProduction(production);
+					}
+					
+					
+				}
+				
+				//推送
+				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+		            if (entry.getKey().toString().substring(0, 1).equals(production.getProdnum())){
+		            	 
+						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+		            	Map<String, String> contentMap = new HashMap<String, String>();
+		            	contentMap.put("T", "5");
+		            	contentMap.put("NAME", "system");
+		            	contentMap.put("FI", entry.getKey().toString());  
+		            	contentMap.put("PRO", production.getProdnum());
+		            	contentMap.put("TYPE", production.getProdstate());
+		            	contentMap.put("TIMES", "");
+						ObjectMapper mapper = new ObjectMapper();
+						String json = "";
+						json = mapper.writeValueAsString(contentMap);
+						
+						if(channelHandlerContext!=null){
+							
+						   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+				        }
+		            }
+		        }
+				resultMap.put("status", "0");
+				resultMap.put("msg", "更新成功！");
+				logger.info("更新成功，主键："+production.getId());
+			}
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "更新失败！");
+			logger.info("更新失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/lastProduction")
 	@ResponseBody
@@ -414,6 +502,13 @@ public class ProductionController {
 				paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
 				if(starttimeTo!=null&&!starttimeTo.equals(""))
 				paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+				String endtimeFrom=request.getParameter("endtimeFrom");
+				String endtimeTo=request.getParameter("endtimeTo");
+				if(endtimeFrom!=null&&!endtimeFrom.equals(""))
+					paramMap.put("endtimeFrom", sdf.parse(endtimeFrom));
+				if(endtimeTo!=null&&!endtimeTo.equals(""))
+					paramMap.put("endtimeTo", sdf.parse(endtimeTo));
+				
 				paramMap.put("actualcomp",production.getActualcomp());
 				paramMap.put("toolstop",production.getToolstop());
 				paramMap.put("overtime",production.getOvertime());
@@ -427,20 +522,27 @@ public class ProductionController {
 				paramMap.put("adddateTo", sdf.parse(adddateTo));
 				paramMap.put("flag",production.getFlag());
 				
+				paramMap.put("startstatus",production.getStartstatus());
 				//当天数据
-				paramMap.put("adddate","1");
+				//paramMap.put("adddate","1");
 				
 				//int totalnumber=iProductionService.selectCountProductionByParam(paramMap);
 				List<Production> list=iProductionService.selectProductionByParam(paramMap);
+				
+				
 				if(list.size()==0){
-					/*production.setAdddate(new Date());
-					production.setProdstate("生产时间");
-					production.setOvertime("0");
-					production.setCreater(request.getAttribute("userName").toString());
-					production.setStarttime(new Date());
-					iProductionService.addProduction(production);
-					list=iProductionService.selectProductionByParam(paramMap);*/
-					paramMap.remove("adddate");
+					paramMap.remove("startstatus");
+					list=iProductionService.selectProductionByParam(paramMap);
+					if(list.size()==0){
+						production.setAdddate(new Date());
+						production.setProdstate("生产时间");
+						production.setOvertime("0");
+						production.setCreater(request.getAttribute("userName").toString());
+						iProductionService.addProduction(production);
+						list.add(production);
+					}
+					
+					/*paramMap.remove("adddate");
 					list=iProductionService.selectProductionByParam(paramMap);
 					if(list.size()>0){
 						Production p=list.get(0);
@@ -464,9 +566,22 @@ public class ProductionController {
 						production.setStarttime(new Date());
 						iProductionService.addProduction(production);
 						list=iProductionService.selectProductionByParam(paramMap);
-					}
+					}*/
 				}
 				 
+				
+				//
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				paramMap=new HashMap();
+				paramMap.put("starttimeFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
+				List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
+				
+				for(int index=0;index<list.size();index++){
+					if(temp.size()>0){
+						list.get(index).setStarttime(temp.get(temp.size()-1).getStarttime());
+					}
+				}
+				
 				
 				Map tempMap=new HashMap();
 				resultMap.put("status", "0");
@@ -520,6 +635,13 @@ public class ProductionController {
 				paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
 				if(starttimeTo!=null&&!starttimeTo.equals(""))
 				paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+				String endtimeFrom=request.getParameter("endtimeFrom");
+				String endtimeTo=request.getParameter("endtimeTo");
+				if(endtimeFrom!=null&&!endtimeFrom.equals(""))
+					paramMap.put("endtimeFrom", sdf.parse(endtimeFrom));
+				if(endtimeTo!=null&&!endtimeTo.equals(""))
+					paramMap.put("endtimeTo", sdf.parse(endtimeTo));
+				paramMap.put("startstatus",production.getStartstatus());
 				paramMap.put("actualcomp",production.getActualcomp());
 				paramMap.put("toolstop",production.getToolstop());
 				paramMap.put("overtime",production.getOvertime());
@@ -584,6 +706,13 @@ public class ProductionController {
 			paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
 			if(starttimeTo!=null&&!starttimeTo.equals(""))
 			paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+			String endtimeFrom=request.getParameter("endtimeFrom");
+			String endtimeTo=request.getParameter("endtimeTo");
+			if(endtimeFrom!=null&&!endtimeFrom.equals(""))
+				paramMap.put("endtimeFrom", sdf.parse(endtimeFrom));
+			if(endtimeTo!=null&&!endtimeTo.equals(""))
+				paramMap.put("endtimeTo", sdf.parse(endtimeTo));
+			paramMap.put("startstatus",production.getStartstatus());
 			paramMap.put("actualcomp",production.getActualcomp());
 			paramMap.put("toolstop",production.getToolstop());
 			paramMap.put("overtime",production.getOvertime());
@@ -674,6 +803,13 @@ public class ProductionController {
 			paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
 			if(starttimeTo!=null&&!starttimeTo.equals(""))
 			paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+			String endtimeFrom=request.getParameter("endtimeFrom");
+			String endtimeTo=request.getParameter("endtimeTo");
+			if(endtimeFrom!=null&&!endtimeFrom.equals(""))
+				paramMap.put("endtimeFrom", sdf.parse(endtimeFrom));
+			if(endtimeTo!=null&&!endtimeTo.equals(""))
+				paramMap.put("endtimeTo", sdf.parse(endtimeTo));
+			paramMap.put("startstatus",production.getStartstatus());
 			paramMap.put("actualcomp",production.getActualcomp());
 			paramMap.put("toolstop",production.getToolstop());
 			paramMap.put("overtime",production.getOvertime());
