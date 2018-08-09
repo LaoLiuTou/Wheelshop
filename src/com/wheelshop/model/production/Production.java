@@ -238,6 +238,37 @@ public class Production {
 		this.stops = stops;
 	}
 	 
+	private String allactualcomp;
+	private String allplancomp;
+	public String getAllactualcomp() {
+		return allactualcomp;
+	}
+	public void setAllactualcomp(String allactualcomp) {
+		this.allactualcomp = allactualcomp;
+	}
+	public String getAllplancomp() {
+		return allplancomp;
+	}
+	public void setAllplancomp(String allplancomp) {
+		this.allplancomp = allplancomp;
+	}
+	
+	private String ids;
+	public String getIds() {
+		return ids;
+	}
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	/**  班次*/
+	private String bc;
+	public String getBc() {
+		return bc;
+	}
+	public void setBc(String bc) {
+		this.bc = bc;
+	}
+	
 	 
 	/**  开机时间*//*
 	private Date stime;

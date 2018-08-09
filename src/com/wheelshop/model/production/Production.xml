@@ -5,7 +5,9 @@
 	<select id="selectproductionById" parameterType="String" resultType="Production">
 		SELECT * FROM production WHERE ID=#{id}
 	</select>
-
+	<select id="selectproductionInIds" parameterType="String" resultType="Production">
+		SELECT * FROM production WHERE ID IN (${_parameter}) 
+	</select>
 	<delete id="deleteproduction" parameterType="String"> 
 		DELETE FROM production WHERE ID=#{id}
 	</delete>
@@ -131,6 +133,106 @@
 			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
 			<if test="flag != null"> AND FLAG =#{flag} </if>
 		</trim>  
+	</select>
+	
+	<select id="selectproductionByParam2" parameterType="java.util.Map" resultType="Production">
+		SELECT a.*,b.production as production ,
+		SUM(a.actualcomp)  as allactualcomp, 
+		SUM(a.plancomp)  as allplancomp ,
+		group_concat(a.id) as ids ,
+		CASE WHEN DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&gt;='07:00:00' 
+		      AND DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&lt;='18:30:00' THEN '白班' ELSE '夜班' END as bc 
+		FROM production a 
+		LEFT JOIN prodnum b on a.prodnum=b.id 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
+			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
+			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="stops != null"> AND a.STOPS =#{stops} </if>
+			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND a.POWER =#{power} </if>
+			<if test="rate != null"> AND a.RATE =#{rate} </if>
+			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="itemtime != null"> AND a.ITEMTIME =#{itemtime} </if>
+			<if test="required != null"> AND a.REQUIRED =#{required} </if>
+			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
+			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
+			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="endtimeFrom != null"> AND unix_timestamp(a.ENDTIME) &gt;=unix_timestamp(#{endtimeFrom}) </if>
+			<if test="endtimeTo != null"> AND unix_timestamp(a.ENDTIME) &lt;=unix_timestamp(#{endtimeTo}) </if>
+			<if test="endtimetime != null"> AND a.ENDTIME =#{endtime} </if>
+			<if test="startstatus != null"> AND a.STARTSTATUS =#{startstatus} </if>
+			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND a.PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND a.CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+			<if test="production != null"> AND b.PRODUCTION LIKE #{production} </if>
+		</trim>  
+		GROUP BY  a.VARIETY ,bc 
+		ORDER BY a.ID DESC 
+		LIMIT #{fromPage},#{toPage} 
+	</select>
+
+	<select id="selectCountproductionByParam2" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*) FROM 
+		(
+		SELECT a.*,b.production as production ,
+		SUM(a.actualcomp)  as allactualcomp, 
+		SUM(a.plancomp)  as allplancomp ,
+		group_concat(a.id) as ids ,
+		CASE WHEN DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&gt;='07:00:00' 
+		      AND DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&lt;='18:30:00' THEN 1 ELSE 0 END as bc 
+		FROM production a 
+		LEFT JOIN prodnum b on a.prodnum=b.id 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="prodnum != null"> AND a.PRODNUM =#{prodnum} </if>
+			<if test="changed != null"> AND a.CHANGED =#{changed} </if>
+			<if test="yield != null"> AND a.YIELD =#{yield} </if>
+			<if test="stops != null"> AND a.STOPS =#{stops} </if>
+			<if test="prodstop != null"> AND a.PRODSTOP =#{prodstop} </if>
+			<if test="power != null"> AND a.POWER =#{power} </if>
+			<if test="rate != null"> AND a.RATE =#{rate} </if>
+			<if test="variety != null"> AND a.VARIETY =#{variety} </if>
+			<if test="rhythm != null"> AND a.RHYTHM =#{rhythm} </if>
+			<if test="itemtime != null"> AND a.ITEMTIME =#{itemtime} </if>
+			<if test="required != null"> AND a.REQUIRED =#{required} </if>
+			<if test="changtime != null"> AND a.CHANGTIME =#{changtime} </if>
+			<if test="startctime != null"> AND a.STARTCTIME =#{startctime} </if>
+			<if test="plancomp != null"> AND a.PLANCOMP =#{plancomp} </if>
+			<if test="equipstop != null"> AND a.EQUIPSTOP =#{equipstop} </if>
+			<if test="starttimeFrom != null"> AND unix_timestamp(a.STARTTIME) &gt;=unix_timestamp(#{starttimeFrom}) </if>
+			<if test="starttimeTo != null"> AND unix_timestamp(a.STARTTIME) &lt;=unix_timestamp(#{starttimeTo}) </if>
+			<if test="starttime != null"> AND a.STARTTIME =#{starttime} </if>
+			<if test="endtimeFrom != null"> AND unix_timestamp(a.ENDTIME) &gt;=unix_timestamp(#{endtimeFrom}) </if>
+			<if test="endtimeTo != null"> AND unix_timestamp(a.ENDTIME) &lt;=unix_timestamp(#{endtimeTo}) </if>
+			<if test="endtimetime != null"> AND a.ENDTIME =#{endtime} </if>
+			<if test="startstatus != null"> AND a.STARTSTATUS =#{startstatus} </if>
+			<if test="actualcomp != null"> AND a.ACTUALCOMP =#{actualcomp} </if>
+			<if test="toolstop != null"> AND a.TOOLSTOP =#{toolstop} </if>
+			<if test="overtime != null"> AND a.OVERTIME =#{overtime} </if>
+			<if test="prodstate != null"> AND a.PRODSTATE =#{prodstate} </if>
+			<if test="creater != null"> AND a.CREATER =#{creater} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+			<if test="production != null"> AND b.PRODUCTION LIKE #{production} </if>
+		</trim>  
+		GROUP BY  a.VARIETY ,bc 
+		ORDER BY a.ID DESC 
+		) pro
 	</select>
 	
 	<select id="selectStatisticproductionByParam" parameterType="java.util.Map" resultType="Production">

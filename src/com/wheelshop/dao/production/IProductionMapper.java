@@ -15,6 +15,9 @@ import com.wheelshop.model.production.Production;
  @SuppressWarnings("rawtypes")
 	public List<Production> selectproductionByParam(Map paramMap); 
  @SuppressWarnings("rawtypes")
+ public List<Production> selectproductionByParam2(Map paramMap); 
+ public List<Production> selectproductionInIds(String ids); 
+ @SuppressWarnings("rawtypes")
  	public List<Production> selectallproductionByParam(Map paramMap); 
  @SuppressWarnings("rawtypes")
  	public List<Production> selectStatisticproductionByParam(Map paramMap); 
@@ -24,6 +27,8 @@ import com.wheelshop.model.production.Production;
 	*/ 
 	@SuppressWarnings("rawtypes")
 	public int selectCountproductionByParam(Map paramMap); 
+	@SuppressWarnings("rawtypes")
+	public int selectCountproductionByParam2(Map paramMap); 
 	/**
  	* 更新 
  	* @return 

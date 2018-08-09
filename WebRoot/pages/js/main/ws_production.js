@@ -636,7 +636,7 @@ function  queryProduction2 (bodyParam,currentPage,pageSize) {
     //分页显示的页码数  必须为奇数
     var showPage=7;
 
-    var httpR = new createHttpR(url+'listProduction','post','text',bodyParam,'callBack');
+    var httpR = new createHttpR(url+'listProduction2','post','text',bodyParam,'callBack');
     httpR.HttpRequest(function(response){
         var obj = JSON.parse(response);
         var status = obj['status'];
@@ -649,25 +649,20 @@ function  queryProduction2 (bodyParam,currentPage,pageSize) {
             for(var o in data){
                 html+='<tr index='+o+' class="gradeX">\n'+
                     '<td>'+data[o].production+'</td>\n' +
-                    '<td>'+data[o].plancomp+'</td>\n' +
-                    '<td>'+data[o].actualcomp+'</td>\n' ;
-                if(data[o].actualcomp!=''&&data[o].plancomp!=''){
-                    html+='<td>'+((data[o].actualcomp/data[o].plancomp)*100).toFixed(0)+'</td>\n';
+                    '<td>'+data[o].allplancomp+'</td>\n' +
+                    '<td>'+data[o].allactualcomp+'</td>\n' ;
+                if(data[o].allactualcomp!=''&&data[o].allplancomp!=''){
+                    html+='<td>'+((data[o].allactualcomp/data[o].allplancomp)*100).toFixed(1)+'%</td>\n';
                 }
                 else{
                     html+='<td></td>\n';
                 }
+                html+='<td>'+data[o].starttime+'-'+data[o].endtime+'</td>\n';
+                html+='<td>'+data[o].bc+'</td>\n';
                 html+='<td>'+data[o].prodtime+'</td>\n';
 
-                if(data[o].actualcomp!=''&&data[o].power!=''&&data[o].power!=null){
-                    html+='<td>'+((data[o].actualcomp/data[o].power)*100).toFixed(1)+'%</td>\n';
-                }
-                else{
-                    html+='<td></td>\n';
-                }
-                html+='<td>'+data[o].adddate+'</td>\n' ;
-
                 html+='</tr>';
+
             }
             $('#productionTbody').html(html);
             var num=msg['num'];

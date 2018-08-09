@@ -70,7 +70,7 @@
                     <ul class="sub-menu-list">
                         <li id="menu3-1"><a href="ws_statistics_stop.html">停台数据统计</a></li>
                         <li id="menu3-2" class="active"><a href="ws_statistics_comp.html">生产完成统计-合计</a></li>
-                        <li id="menu3-3" class="active"><a href="ws_statistics_comp_variety.html">生产完成统计-品种</a></li>
+                        <li id="menu3-3" ><a href="ws_statistics_comp_variety.html">生产完成统计-品种</a></li>
                     </ul>
                 </li>
                 <li id="menu4" class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>系统设置</span></a>
@@ -273,6 +273,7 @@
 <script src="js/main/config.js"></script>
 <script src="js/main/md5.js"></script>
 <script src="js/main/ws_production.js"></script>
+<script src="js/main/ws_varieties.js"></script>
 
 <!--echarts-->
 <script src="js/build/dist/echarts.js"></script>
@@ -322,7 +323,7 @@
             bodyParam['adddateTo']=currentTime+' 23:59:59';
         }
 
-        queryProduction(bodyParam,currentPage,pageSize);
+        queryProduction2(bodyParam,currentPage,pageSize);
 
 
         //搜索
@@ -366,7 +367,7 @@
                 var currentTime = new Date().format("yyyy-MM-dd");
                 bodyParam['adddateTo']=currentTime+' 23:59:59';
             }
-            queryProduction(bodyParam,currentPage,pageSize);
+            queryProduction2(bodyParam,currentPage,pageSize);
         });
 
 
@@ -410,7 +411,7 @@
                 bodyParam['adddateTo']=currentTime+' 23:59:59';
             }
 
-            queryProduction(bodyParam,currentPage,pageSize);
+            queryProduction2(bodyParam,currentPage,pageSize);
         });
         $('.pagination').on('click','.prevBtn',function(){
             if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
@@ -450,7 +451,7 @@
                 var currentTime = new Date().format("yyyy-MM-dd");
                 bodyParam['adddateTo']=currentTime+' 23:59:59';
             }
-            queryProduction(bodyParam,currentPage,pageSize);
+            queryProduction2(bodyParam,currentPage,pageSize);
 
         });
         $('.pagination').on('click','.nextBtn',function(){
@@ -492,7 +493,7 @@
                 var currentTime = new Date().format("yyyy-MM-dd");
                 bodyParam['adddateTo']=currentTime+' 23:59:59';
             }
-            queryProduction(bodyParam,currentPage,pageSize);
+            queryProduction2(bodyParam,currentPage,pageSize);
         });
 
 

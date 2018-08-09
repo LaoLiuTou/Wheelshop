@@ -16,6 +16,10 @@ public interface IProductionService {
 	@SuppressWarnings("rawtypes")
 	public List<Production> selectProductionByParam(Map paramMap); 
 	@SuppressWarnings("rawtypes")
+	public List<Production> selectProductionByParam2(Map paramMap); 
+	@SuppressWarnings("rawtypes")
+	public List<Production> selectproductionInIds(String ids); 
+	@SuppressWarnings("rawtypes")
 	public List<Production> selectAllProductionByParam(Map paramMap); 
 	@SuppressWarnings("rawtypes")
 	public List<Production> selectStatisticproductionByParam(Map paramMap); 
@@ -26,6 +30,8 @@ public interface IProductionService {
 	*/ 
 	@SuppressWarnings("rawtypes")
 	public int selectCountProductionByParam(Map paramMap); 
+	@SuppressWarnings("rawtypes")
+	public int selectCountProductionByParam2(Map paramMap); 
 
 	/**
 	* 更新 

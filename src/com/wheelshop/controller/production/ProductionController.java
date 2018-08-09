@@ -679,6 +679,81 @@ public class ProductionController {
 		}
 		return resultMap;
 	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/listProduction2")
+	@ResponseBody
+	public Map list2(HttpServletRequest request, HttpServletResponse response,Production production)
+			throws ServletException, IOException {
+		Map resultMap=new HashMap();
+		try {
+			String page=request.getParameter("page");
+			String size=request.getParameter("size");
+			if(page!=null&&size!=null){
+				Map paramMap=new HashMap();
+				paramMap.put("fromPage",(Integer.parseInt(page)-1)*Integer.parseInt(size));
+				paramMap.put("toPage",Integer.parseInt(size)); 
+				paramMap.put("id",production.getId());
+				paramMap.put("prodnum",production.getProdnum());
+				paramMap.put("production",production.getProduction());
+				paramMap.put("changed",production.getChanged());
+				paramMap.put("yield",production.getYield());
+				paramMap.put("prodstop",production.getProdstop());
+				paramMap.put("power",production.getPower());
+				paramMap.put("rate",production.getRate());
+				paramMap.put("variety",production.getVariety());
+				paramMap.put("rhythm",production.getRhythm());
+				paramMap.put("itemtime",production.getItemtime());
+				paramMap.put("plancomp",production.getPlancomp());
+				paramMap.put("equipstop",production.getEquipstop());
+				String starttimeFrom=request.getParameter("starttimeFrom");
+				String starttimeTo=request.getParameter("starttimeTo");
+				if(starttimeFrom!=null&&!starttimeFrom.equals(""))
+					paramMap.put("starttimeFrom", sdf.parse(starttimeFrom));
+				if(starttimeTo!=null&&!starttimeTo.equals(""))
+					paramMap.put("starttimeTo", sdf.parse(starttimeTo));
+				String endtimeFrom=request.getParameter("endtimeFrom");
+				String endtimeTo=request.getParameter("endtimeTo");
+				if(endtimeFrom!=null&&!endtimeFrom.equals(""))
+					paramMap.put("endtimeFrom", sdf.parse(endtimeFrom));
+				if(endtimeTo!=null&&!endtimeTo.equals(""))
+					paramMap.put("endtimeTo", sdf.parse(endtimeTo));
+				paramMap.put("startstatus",production.getStartstatus());
+				paramMap.put("actualcomp",production.getActualcomp());
+				paramMap.put("toolstop",production.getToolstop());
+				paramMap.put("overtime",production.getOvertime());
+				paramMap.put("prodstate",production.getProdstate());
+				paramMap.put("creater",production.getCreater());
+				String adddateFrom=request.getParameter("adddateFrom");
+				String adddateTo=request.getParameter("adddateTo");
+				if(adddateFrom!=null&&!adddateFrom.equals(""))
+					paramMap.put("adddateFrom", sdf.parse(adddateFrom));
+				if(adddateTo!=null&&!adddateTo.equals(""))
+					paramMap.put("adddateTo", sdf.parse(adddateTo));
+				paramMap.put("flag",production.getFlag());
+				List<Production> list=iProductionService.selectProductionByParam2(paramMap);
+				int totalnumber=iProductionService.selectCountProductionByParam2(paramMap);
+				
+				Map tempMap=new HashMap();
+				resultMap.put("status", "0");
+				tempMap.put("num", totalnumber);
+				tempMap.put("data", list);
+				resultMap.put("msg", tempMap);
+				
+				
+				
+			}
+			else{
+				resultMap.put("status", "-1");
+				resultMap.put("msg", "分页参数不能为空！");
+			}
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "查询失败！");
+			logger.info("查询失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/exportProduction")
@@ -749,8 +824,8 @@ public class ProductionController {
 					rateStr=String.format("%.1f", rate)+"%";
 				}
 				
-				String[] strings = {(index+1)+"", temp.getProduction(), temp.getPlancomp(),temp.getActualcomp(),  
-						comRateStr,temp.getProdtime(),rateStr,sdf1.format(temp.getAdddate())};
+				String[] strings = {(index+1)+"", temp.getProduction(),temp.getVariety(), temp.getPlancomp(),temp.getActualcomp(),  
+						comRateStr,sdf.format(temp.getStarttime()),sdf.format(temp.getEndtime()),temp.getProdtime()};
 				exportList.add(strings);
 			}
 			/*String[] strings = {"合计", "", "", "", "","", "", "","","", 
@@ -762,9 +837,9 @@ public class ProductionController {
 			String fileName = "生产完成统计"+sdf1.format(new Date());
 			response.setContentType("application/vnd.ms-excel;charset=utf-8");
 			response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xls");
-			String[] titles = { "序号","生产线", "计划完成", "实际完成", "完成率", "生产时间", "可动率", "日期"}; 
+			String[] titles = { "序号","生产线", "品种","计划完成", "实际完成", "完成率","开始生产时间","结束生产时间", "生产时间"}; 
 			ExcelUtil.export(titles, out, exportList);
-			
+			 
 		} catch (Exception e) {
 			resultMap.put("status", "-1");
 			resultMap.put("msg", "查询失败！");

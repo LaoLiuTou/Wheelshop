@@ -307,5 +307,23 @@ public class CopyOfProductionServiceImpl  implements IProductionService {
 		return iProductionMapper.deleteproduction(id);
 	}
 
+	@Override
+	public List<Production> selectProductionByParam2(Map paramMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Production> selectproductionInIds(String ids) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectCountProductionByParam2(Map paramMap) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
 
