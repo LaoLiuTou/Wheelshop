@@ -187,7 +187,9 @@ public class ProductionServiceImpl  implements IProductionService {
 			
 			//end-start
 			int durtime=0;
-			durtime=(int) ((p.getEndtime().getTime()-p.getStarttime().getTime())/1000);
+			if(p.getEndtime()!=null&&p.getStarttime()!=null){
+				durtime=(int) ((p.getEndtime().getTime()-p.getStarttime().getTime())/1000);
+			}
 			//timer
 			paramMap=new HashMap(); 
 			paramMap.put("prodnum",p.getProdnum()+"");

@@ -380,14 +380,14 @@ function initwebsocket(type){
                 audio.play();
 
                 equipstopInterval=setInterval(function (){
-                    var equipstopTime=sessionStorage.getItem('equipstopTime');
+                    var equipstopTime=sessionStorage.getItem('equipstopTime'+msg['PRO']);
                     if(equipstopTime==null){
                         equipstopTime=0;
                     }
                     else{
                         equipstopTime=Number(equipstopTime)+1;
                     }
-                    sessionStorage.setItem('equipstopTime',equipstopTime);
+                    sessionStorage.setItem('equipstopTime'+msg['PRO'],equipstopTime);
                     $('#equipstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(equipstopTime));
                 },1000);
 
@@ -400,14 +400,14 @@ function initwebsocket(type){
                 audio.play();
 
                 toolstopInterval=setInterval(function (){
-                    var toolstopTime=sessionStorage.getItem('toolstopTime');
+                    var toolstopTime=sessionStorage.getItem('toolstopTime'+msg['PRO']);
                     if(toolstopTime==null){
                         toolstopTime=0;
                     }
                     else{
                         toolstopTime=Number(toolstopTime)+1;
                     }
-                    sessionStorage.setItem('toolstopTime',toolstopTime);
+                    sessionStorage.setItem('toolstopTime'+msg['PRO'],toolstopTime);
                     $('#toolstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(toolstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);
@@ -420,14 +420,14 @@ function initwebsocket(type){
                 audio.play();
 
                 prodstopInterval=setInterval(function (){
-                    var prodstopTime=sessionStorage.getItem('prodstopTime');
+                    var prodstopTime=sessionStorage.getItem('prodstopTime'+msg['PRO']);
                     if(prodstopTime==null){
                         prodstopTime=0;
                     }
                     else{
                         prodstopTime=Number(prodstopTime)+1;
                     }
-                    sessionStorage.setItem('prodstopTime',prodstopTime);
+                    sessionStorage.setItem('prodstopTime'+msg['PRO'],prodstopTime);
                     $('#prodstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(prodstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);

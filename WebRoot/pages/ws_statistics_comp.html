@@ -167,13 +167,13 @@
                                 <div class="form-group col-md-3 mr10">
                                     <label class="control-label col-md-3 form-sm-title pdnone">选择日期：</label>
                                     <div class="col-md-4 pdnone">
-                                        <input class="form-control  m-bot15 default-date-picker" id="adddate_from" size="16" type="text"  />
+                                        <input class="form-control  m-bot15 default-date-picker" id="endtimeFrom" size="16" type="text"  />
                                     </div>
                                     <div class="col-md-1 pdnone">
                                         <label class="control-label ml10">--</label>
                                     </div>
                                     <div class="col-md-4 pdnone">
-                                        <input class="form-control  m-bot15 default-date-picker"  id="adddate_to" size="16" type="text"  />
+                                        <input class="form-control  m-bot15 default-date-picker"  id="endtimeTo" size="16" type="text"  />
                                     </div>
 
                                 </div>
@@ -290,11 +290,11 @@
         /*if($('#production').val()!=''){
             bodyParam['prodnum']=$('#production').val();
         }
-        if($('#adddate_from').val()!=''){
-            bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
+        if($('#endtimeFrom').val()!=''){
+            bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
         }
-        if($('#adddate_to').val()!=''){
-            bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
+        if($('#endtimeTo').val()!=''){
+            bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
         }*/
 
         var userinfo=sessionStorage.getItem('userinfo');
@@ -314,13 +314,13 @@
 
 
 
-        if($('#adddate_from').val()==''){
+        if($('#endtimeFrom').val()==''){
             var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-            bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            bodyParam['endtimeFrom']=currentTime+' 00:00:00';
         }
-        if($('#adddate_to').val()==''){
+        if($('#endtimeTo').val()==''){
             var currentTime = new Date().format("yyyy-MM-dd");
-            bodyParam['adddateTo']=currentTime+' 23:59:59';
+            bodyParam['endtimeTo']=currentTime+' 23:59:59';
         }
 
         queryProduction2(bodyParam,currentPage,pageSize);
@@ -328,10 +328,10 @@
 
         //搜索
         $('#searchBtn').click(function () {
-            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+            if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
                 var oDate1, oDate2;
-                oDate1 = new Date($('#adddate_from').val()).getTime();
-                oDate2 = new Date($('#adddate_to').val()).getTime();
+                oDate1 = new Date($('#endtimeFrom').val()).getTime();
+                oDate2 = new Date($('#endtimeTo').val()).getTime();
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
@@ -345,27 +345,27 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
-            if($('#adddate_from').val()!=''){
-                bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
-                if($('#adddate_to').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+            if($('#endtimeFrom').val()!=''){
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                if($('#endtimeTo').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
                 }
             }
-            if($('#adddate_to').val()!=''){
-                bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
-                if($('#adddate_from').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            if($('#endtimeTo').val()!=''){
+                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                if($('#endtimeFrom').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
                 }
             }
-            if($('#adddate_from').val()==''){
+            if($('#endtimeFrom').val()==''){
                 var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
             }
-            if($('#adddate_to').val()==''){
+            if($('#endtimeTo').val()==''){
                 var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['adddateTo']=currentTime+' 23:59:59';
+                bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
             queryProduction2(bodyParam,currentPage,pageSize);
         });
@@ -373,10 +373,10 @@
 
 
         $('.pagination').on('click','.pageBtn',function(){
-            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+            if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
                 var oDate1, oDate2;
-                oDate1 = new Date($('#adddate_from').val()).getTime();
-                oDate2 = new Date($('#adddate_to').val()).getTime();
+                oDate1 = new Date($('#endtimeFrom').val()).getTime();
+                oDate2 = new Date($('#endtimeTo').val()).getTime();
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
@@ -388,36 +388,36 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
-            if($('#adddate_from').val()!=''){
-                bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
-                if($('#adddate_to').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+            if($('#endtimeFrom').val()!=''){
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                if($('#endtimeTo').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
                 }
             }
-            if($('#adddate_to').val()!=''){
-                bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
-                if($('#adddate_from').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            if($('#endtimeTo').val()!=''){
+                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                if($('#endtimeFrom').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
                 }
             }
-            if($('#adddate_from').val()==''){
+            if($('#endtimeFrom').val()==''){
                 var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
             }
-            if($('#adddate_to').val()==''){
+            if($('#endtimeTo').val()==''){
                 var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['adddateTo']=currentTime+' 23:59:59';
+                bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
 
             queryProduction2(bodyParam,currentPage,pageSize);
         });
         $('.pagination').on('click','.prevBtn',function(){
-            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+            if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
                 var oDate1, oDate2;
-                oDate1 = new Date($('#adddate_from').val()).getTime();
-                oDate2 = new Date($('#adddate_to').val()).getTime();
+                oDate1 = new Date($('#endtimeFrom').val()).getTime();
+                oDate2 = new Date($('#endtimeTo').val()).getTime();
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
@@ -429,36 +429,36 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
-            if($('#adddate_from').val()!=''){
-                bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
-                if($('#adddate_to').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+            if($('#endtimeFrom').val()!=''){
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                if($('#endtimeTo').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
                 }
             }
-            if($('#adddate_to').val()!=''){
-                bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
-                if($('#adddate_from').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            if($('#endtimeTo').val()!=''){
+                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                if($('#endtimeFrom').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
                 }
             }
-            if($('#adddate_from').val()==''){
+            if($('#endtimeFrom').val()==''){
                 var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
             }
-            if($('#adddate_to').val()==''){
+            if($('#endtimeTo').val()==''){
                 var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['adddateTo']=currentTime+' 23:59:59';
+                bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
             queryProduction2(bodyParam,currentPage,pageSize);
 
         });
         $('.pagination').on('click','.nextBtn',function(){
-            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+            if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
                 var oDate1, oDate2;
-                oDate1 = new Date($('#adddate_from').val()).getTime();
-                oDate2 = new Date($('#adddate_to').val()).getTime();
+                oDate1 = new Date($('#endtimeFrom').val()).getTime();
+                oDate2 = new Date($('#endtimeTo').val()).getTime();
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
@@ -471,27 +471,27 @@
             if($('#production').val()!=''){
                 bodyParam['flag']=$('#production').val();
             }
-            if($('#adddate_from').val()!=''){
-                bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
-                if($('#adddate_to').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+            if($('#endtimeFrom').val()!=''){
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                if($('#endtimeTo').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
                 }
             }
-            if($('#adddate_to').val()!=''){
-                bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
-                if($('#adddate_from').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            if($('#endtimeTo').val()!=''){
+                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                if($('#endtimeFrom').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
                 }
             }
-            if($('#adddate_from').val()==''){
+            if($('#endtimeFrom').val()==''){
                 var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
             }
-            if($('#adddate_to').val()==''){
+            if($('#endtimeTo').val()==''){
                 var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['adddateTo']=currentTime+' 23:59:59';
+                bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
             queryProduction2(bodyParam,currentPage,pageSize);
         });
@@ -510,11 +510,11 @@
             if($('#production').val()!=''){
                 htmlExport+='&prodnum='+$('#production').val();
             }
-            if($('#adddate_from').val()!=''){
-                htmlExport+='&adddateFrom='+$('#adddate_from').val()+' 00:00:00';
+            if($('#endtimeFrom').val()!=''){
+                htmlExport+='&endtimeFrom='+$('#endtimeFrom').val()+' 00:00:00';
             }
-            if($('#adddate_to').val()!=''){
-                htmlExport+='&adddateTo='+$('#adddate_to').val()+' 23:59:59';
+            if($('#endtimeTo').val()!=''){
+                htmlExport+='&endtimeTo='+$('#endtimeTo').val()+' 23:59:59';
             }
 
             window.open(htmlExport);
@@ -539,10 +539,10 @@
             var plancomps=[];    //计划
             var actualcomps=[];    //实际
 
-            if($('#adddate_from').val()!=''&&$('#adddate_to').val()!=''){
+            if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
                 var oDate1, oDate2;
-                oDate1 = new Date($('#adddate_from').val()).getTime();
-                oDate2 = new Date($('#adddate_to').val()).getTime();
+                oDate1 = new Date($('#endtimeFrom').val()).getTime();
+                oDate2 = new Date($('#endtimeTo').val()).getTime();
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
@@ -554,27 +554,27 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
-            if($('#adddate_from').val()!=''){
-                bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
-                if($('#adddate_to').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_from').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateTo']=currentTime+' 23:59:59';
+            if($('#endtimeFrom').val()!=''){
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                if($('#endtimeTo').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
                 }
             }
-            if($('#adddate_to').val()!=''){
-                bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
-                if($('#adddate_from').val()==''){
-                    var currentTime = new Date(new Date($('#adddate_to').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['adddateFrom']=currentTime+' 00:00:00';
+            if($('#endtimeTo').val()!=''){
+                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                if($('#endtimeFrom').val()==''){
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
+                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
                 }
             }
-            if($('#adddate_from').val()==''){
+            if($('#endtimeFrom').val()==''){
                 var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['adddateFrom']=currentTime+' 00:00:00';
+                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
             }
-            if($('#adddate_to').val()==''){
+            if($('#endtimeTo').val()==''){
                 var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['adddateTo']=currentTime+' 23:59:59';
+                bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
 
 

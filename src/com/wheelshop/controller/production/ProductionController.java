@@ -573,6 +573,7 @@ public class ProductionController {
 				//
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 				paramMap=new HashMap();
+				paramMap.put("prodnum",production.getProdnum());
 				paramMap.put("starttimeFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
 				List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
 				
