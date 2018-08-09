@@ -72,7 +72,9 @@ public class ProductionServiceImpl  implements IProductionService {
 			
 			
 			int prodtime= durtime-rest;
-			list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
+			//list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
+			if(prodtime>=60)
+			list.get(index).setProdtime((prodtime/60)+"");
 		}
 		
 		/////////////////////////
@@ -118,7 +120,9 @@ public class ProductionServiceImpl  implements IProductionService {
 			
 			
 			int prodtime= durtime-rest;
-			list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
+			//list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
+			if(prodtime>=60)
+			list.get(index).setProdtime((prodtime/60)+"");
 		}
 
 		

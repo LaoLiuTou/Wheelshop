@@ -577,6 +577,7 @@ public class ProductionController {
 				List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
 				
 				for(int index=0;index<list.size();index++){
+					list.get(index).setStarttime(null);
 					if(temp.size()>0){
 						list.get(index).setStarttime(temp.get(temp.size()-1).getStarttime());
 					}
@@ -742,7 +743,7 @@ public class ProductionController {
 				}
 				String  comRateStr="",rateStr="";
 				if(comRate!=null){
-					comRateStr=String.format("%.0f", comRate);
+					comRateStr=String.format("%.1f", comRate)+"%";
 				}
 				if(rate!=null){
 					rateStr=String.format("%.1f", rate)+"%";

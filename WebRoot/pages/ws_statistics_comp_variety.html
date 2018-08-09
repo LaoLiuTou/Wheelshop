@@ -69,8 +69,7 @@
                 <li id="menu3" class="menu-list active" ><a href=""><i class="fa fa-bar-chart-o"></i> <span>生产数据统计</span></a>
                     <ul class="sub-menu-list">
                         <li id="menu3-1"><a href="ws_statistics_stop.html">停台数据统计</a></li>
-                        <li id="menu3-2" class="active"><a href="ws_statistics_comp.html">生产完成统计-合计</a></li>
-                        <li id="menu3-3" class="active"><a href="ws_statistics_comp_variety.html">生产完成统计-品种</a></li>
+                        <li id="menu3-2" class="active"><a href="ws_statistics_comp.html">生产完成统计</a></li>
                     </ul>
                 </li>
                 <li id="menu4" class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>系统设置</span></a>
@@ -132,7 +131,7 @@
                 <li>
                     <a href="#">生产数据统计</a>
                 </li>
-                <li class="active">生产完成统计-合计</li>
+                <li class="active">生产完成统计-品种</li>
             </ul>
 
         </div>
@@ -153,6 +152,21 @@
                                     <label class="control-label col-md-3 form-sm-title pdnone">生产线：</label>
                                     <div class="col-md-9 pdnone">
                                         <select class="form-control m-bot15"  id="production" >
+                                            <!--<option value="">全部</option>
+                                            <option value="1">旋压A线</option>
+                                            <option value="2">旋压B线</option>
+                                            <option value="3">滚型轮辋</option>
+                                            <option value="4">型钢轮辋</option>
+                                            <option value="5">旋压轮辐</option>
+                                            <option value="6">滚型轮辐</option>-->
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 mr10">
+                                    <label class="control-label col-md-3 form-sm-title pdnone">品种：</label>
+                                    <div class="col-md-9 pdnone">
+                                        <select class="form-control m-bot15"  id="variety" >
                                             <!--<option value="">全部</option>
                                             <option value="1">旋压A线</option>
                                             <option value="2">旋压B线</option>
@@ -194,12 +208,16 @@
                                     <tr>
 
                                         <th>生产线</th>
+                                        <th>品种</th>
                                         <th>计划完成</th>
                                         <th>实际完成</th>
                                         <th>完成率</th>
-                                        <th>开始生产时间-结束生产时间</th>
-                                        <th>班次</th>
+                                        <th>开始生产时间</th>
+                                        <th>结束生产时间</th>
                                         <th>生产时间</th>
+
+
+
                                     </tr>
                                     </thead>
                                     <tbody id="productionTbody">
@@ -273,6 +291,7 @@
 <script src="js/main/config.js"></script>
 <script src="js/main/md5.js"></script>
 <script src="js/main/ws_production.js"></script>
+<script src="js/main/ws_varieties.js"></script>
 
 <!--echarts-->
 <script src="js/build/dist/echarts.js"></script>
@@ -344,6 +363,9 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
+            }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
                 if($('#adddate_to').val()==''){
@@ -387,6 +409,9 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
+            }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
                 if($('#adddate_to').val()==''){
@@ -427,6 +452,9 @@
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
+            }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
             }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
@@ -470,6 +498,9 @@
             if($('#production').val()!=''){
                 bodyParam['flag']=$('#production').val();
             }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
+            }
             if($('#adddate_from').val()!=''){
                 bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
                 if($('#adddate_to').val()==''){
@@ -508,6 +539,9 @@
 
             if($('#production').val()!=''){
                 htmlExport+='&prodnum='+$('#production').val();
+            }
+            if($('#variety').val()!=''){
+                htmlExport+='&variety='+$('#variety').val();
             }
             if($('#adddate_from').val()!=''){
                 htmlExport+='&adddateFrom='+$('#adddate_from').val()+' 00:00:00';
@@ -668,6 +702,12 @@
         });
 
 
+
+
+        $('#production').change(function () {
+
+            selectVarieties2($(this).val());
+        });
 
 
 

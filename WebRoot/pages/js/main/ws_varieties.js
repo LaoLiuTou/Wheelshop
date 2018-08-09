@@ -406,3 +406,30 @@ function  selectVarieties (production) {
         }
     });
 }
+function  selectVarieties2 (production) {
+
+    var bodyParam={};
+    if(production=='0'){
+
+    }
+    else{
+        bodyParam={'prodnum':production};
+    }
+
+    var httpR = new createHttpR(url+'allVarieties','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        var msg = obj['msg'];
+        if(status=='0'){
+            var data=msg['data'];
+            var html='';
+            html+='<option value="" ></option>\n';
+            for(var o in data){
+                html+='<option value="'+data[o].variety+'">'+data[o].production+'-'+data[o].variety+'</option>\n';
+            }
+            $('#variety').html(html);
+
+        }
+    });
+}
