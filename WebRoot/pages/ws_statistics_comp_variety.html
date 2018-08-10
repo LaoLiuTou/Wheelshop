@@ -197,7 +197,7 @@
                                     <button id="searchBtn" type="button" class="btn btn-info popovers mb10">查询</button>
                                     <button id="resetBtn" type="button" class="btn btn-default mb10">重置</button>
                                     <button id="exportBtn" type="button" class="btn btn-default mb10">导出</button>
-                                    <button id="statisticBtn" data-toggle="modal" data-target="#statistic-box" type="button" class="btn btn-default mb10">统计图</button>
+                                    <button id="statisticBtn" data-toggle="modal" data-target="#statistic-box" type="button" class="btn btn-default mb10 hide">统计图</button>
                                 </div>
 
 
@@ -497,7 +497,7 @@
             currentPage++;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
-                bodyParam['flag']=$('#production').val();
+                bodyParam['prodnum']=$('#production').val();
             }
             if($('#variety').val()!=''){
                 bodyParam['variety']=$('#variety').val();

@@ -241,10 +241,7 @@
             <div class="modal-body">
 
                 <div class="chart">
-                    <div id="main" style="height: 300px;"></div>
-                </div>
-                <div class="chart">
-                    <div id="main2" style="height: 300px;"></div>
+                    <div id="main" style="height: 400px;"></div>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -472,7 +469,7 @@
             currentPage++;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
-                bodyParam['prodnum']=$('#production').val();
+                bodyParam['flag']=$('#production').val();
             }
             if($('#endtimeFrom').val()!=''){
                 bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
@@ -581,25 +578,23 @@
                 bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
 
-            bodyParam.page='1';
-            bodyParam.size='5';
+
             var httpR = new createHttpR(url+'statisticProduction2','post','text',bodyParam,'callBack');
             httpR.HttpRequest(function(response){
                 var obj = JSON.parse(response);
                 var status = obj['status'];
                 var msg = obj['msg'];
-                var msg2 = obj['msg2'];
                 if(status=='0'){
 
-                    //降序前五
                     for(var i=0;i<msg.length;i++){
-                        var currentTime = new Date(msg[i].starttime).format("yyyy-MM-dd");
+                        var currentTime = new Date(msg[i].startTime).format("yyyy-MM-DD");
                         //names.push(currentTime);
                         names.push(msg[i].production+currentTime+msg[i].bc);
                         plancomps.push(msg[i].allplancomp);
                         actualcomps.push(msg[i].allactualcomp);
-                        comRate.push((Number(msg[i].allactualcomp)/Number(msg[i].allplancomp)*100).toFixed(1));
+                        comRate.push((Number(msg[i].allactualcomp)/Number(msg[i].allplancomp)).toFixed(1)+'%');
                     }
+
                     //统计
                     var ECharts;
                     // 路径配置
@@ -635,14 +630,7 @@
                                 ],
                                 yAxis: [
                                     {
-                                        type: 'value',
-                                        axisLabel: {
-                                            show: true,
-                                            interval: 'auto',
-                                            formatter: '{value} %'
-                                        },
-                                        show: true,
-                                        scale: true
+                                        type: 'value'
                                     }
                                 ],
                                 series: [
@@ -651,16 +639,10 @@
                                         type: 'line',
                                         data: comRate,
                                         itemStyle: {
-
                                             normal: {
-                                                color: '#c0504d',
-                                                label: {
-                                                    show: true,
-                                                    position: 'top',
-                                                    formatter: '{c}%'
-                                                }
+                                                color: '#c0504d'
                                             }
-                                        },
+                                        }
                                     }
                                 ]
                             };
@@ -668,79 +650,6 @@
                             //接下来我们就可以进行图表的init操作了
                             var myChart = ECharts.init(document.getElementById("main"));
                             myChart.setOption(option);
-                        } );
-
-
-                    //升序前五
-                    var names2=[];    //类别数组
-                    var comRate2=[];
-                    for(var i=0;i<msg2.length;i++){
-                        var currentTime = new Date(msg2[i].starttime).format("yyyy-MM-dd");
-                        //names.push(currentTime);
-                        names2.push(msg2[i].production+currentTime+msg2[i].bc);
-                        comRate2.push((Number(msg2[i].allactualcomp)/Number(msg2[i].allplancomp)*100).toFixed(1));
-                    }
-
-
-                    // 使用
-                    require(
-                        [
-                            'echarts',
-                            'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
-                        ],
-                        function (ec) {
-                            ECharts = ec;
-                            var option2 = {
-
-                                tooltip: {
-                                    trigger: 'axis'
-                                },
-                                legend: {
-                                    data: ['完成率']
-                                },
-
-                                calculable: true,
-                                xAxis: [
-                                    {
-                                        type: 'category',
-                                        data: names2,
-                                    }
-                                ],
-                                yAxis: [
-                                    {
-                                        type: 'value',
-                                        axisLabel: {
-                                            show: true,
-                                            interval: 'auto',
-                                            formatter: '{value} %'
-                                        },
-                                        show: true,
-                                        scale: true
-                                    }
-                                ],
-                                series: [
-                                    {
-                                        name: '完成率',
-                                        type: 'line',
-                                        data: comRate2,
-                                        itemStyle: {
-
-                                            normal: {
-                                                color: '#c0504d',
-                                                label: {
-                                                    show: true,
-                                                    position: 'top',
-                                                    formatter: '{c}%'
-                                                }
-                                            }
-                                        },
-                                    }
-                                ]
-                            };
-
-                            //接下来我们就可以进行图表的init操作了
-                            var myChart2 = ECharts.init(document.getElementById("main2"));
-                            myChart2.setOption(option2);
                         } );
                 }
                 else{

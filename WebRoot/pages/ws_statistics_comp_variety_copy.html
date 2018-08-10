@@ -69,8 +69,8 @@
                 <li id="menu3" class="menu-list active" ><a href=""><i class="fa fa-bar-chart-o"></i> <span>生产数据统计</span></a>
                     <ul class="sub-menu-list">
                         <li id="menu3-1"><a href="ws_statistics_stop.html">停台数据统计</a></li>
-                        <li id="menu3-2" class="active"><a href="ws_statistics_comp.html">生产完成统计-合计</a></li>
-                        <li id="menu3-3" ><a href="ws_statistics_comp_variety.html">生产完成统计-品种</a></li>
+                        <li id="menu3-2" ><a href="ws_statistics_comp.html">生产完成统计-合计</a></li>
+                        <li id="menu3-3" class="active"><a href="ws_statistics_comp_variety.html">生产完成统计-品种</a></li>
                     </ul>
                 </li>
                 <li id="menu4" class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>系统设置</span></a>
@@ -132,7 +132,7 @@
                 <li>
                     <a href="#">生产数据统计</a>
                 </li>
-                <li class="active">生产完成统计-合计</li>
+                <li class="active">生产完成统计-品种</li>
             </ul>
 
         </div>
@@ -165,6 +165,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-3 mr10">
+                                    <label class="control-label col-md-3 form-sm-title pdnone">品种：</label>
+                                    <div class="col-md-9 pdnone">
+                                        <select class="form-control m-bot15"  id="variety" >
+                                            <!--<option value="">全部</option>
+                                            <option value="1">旋压A线</option>
+                                            <option value="2">旋压B线</option>
+                                            <option value="3">滚型轮辋</option>
+                                            <option value="4">型钢轮辋</option>
+                                            <option value="5">旋压轮辐</option>
+                                            <option value="6">滚型轮辐</option>-->
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 mr10">
                                     <label class="control-label col-md-3 form-sm-title pdnone">选择日期：</label>
                                     <div class="col-md-4 pdnone">
                                         <input class="form-control  m-bot15 default-date-picker" id="endtimeFrom" size="16" type="text"  />
@@ -182,7 +197,7 @@
                                     <button id="searchBtn" type="button" class="btn btn-info popovers mb10">查询</button>
                                     <button id="resetBtn" type="button" class="btn btn-default mb10">重置</button>
                                     <button id="exportBtn" type="button" class="btn btn-default mb10">导出</button>
-                                    <button id="statisticBtn" data-toggle="modal" data-target="#statistic-box" type="button" class="btn btn-default mb10">统计图</button>
+                                    <button id="statisticBtn" data-toggle="modal" data-target="#statistic-box" type="button" class="btn btn-default mb10 hide">统计图</button>
                                 </div>
 
 
@@ -194,12 +209,16 @@
                                     <tr>
 
                                         <th>生产线</th>
+                                        <th>品种</th>
                                         <th>计划完成</th>
                                         <th>实际完成</th>
                                         <th>完成率</th>
-                                        <th>开始生产时间-结束生产时间</th>
-                                        <th>班次</th>
+                                        <th>开始生产时间</th>
+                                        <th>结束生产时间</th>
                                         <th>生产时间</th>
+
+
+
                                     </tr>
                                     </thead>
                                     <tbody id="productionTbody">
@@ -241,10 +260,7 @@
             <div class="modal-body">
 
                 <div class="chart">
-                    <div id="main" style="height: 300px;"></div>
-                </div>
-                <div class="chart">
-                    <div id="main2" style="height: 300px;"></div>
+                    <div id="main" style="height: 400px;"></div>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -293,11 +309,11 @@
         /*if($('#production').val()!=''){
             bodyParam['prodnum']=$('#production').val();
         }
-        if($('#endtimeFrom').val()!=''){
-            bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+        if($('#adddate_from').val()!=''){
+            bodyParam['adddateFrom']=$('#adddate_from').val()+' 00:00:00';
         }
-        if($('#endtimeTo').val()!=''){
-            bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+        if($('#adddate_to').val()!=''){
+            bodyParam['adddateTo']=$('#adddate_to').val()+' 23:59:59';
         }*/
 
         var userinfo=sessionStorage.getItem('userinfo');
@@ -326,7 +342,7 @@
             bodyParam['endtimeTo']=currentTime+' 23:59:59';
         }
 
-        queryProduction2(bodyParam,currentPage,pageSize);
+        queryProduction(bodyParam,currentPage,pageSize);
 
 
         //搜索
@@ -348,10 +364,13 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
+            }
             if($('#endtimeFrom').val()!=''){
                 bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
                 if($('#endtimeTo').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
                     bodyParam['endtimeTo']=currentTime+' 23:59:59';
                 }
             }
@@ -370,7 +389,7 @@
                 var currentTime = new Date().format("yyyy-MM-dd");
                 bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
-            queryProduction2(bodyParam,currentPage,pageSize);
+            queryProduction(bodyParam,currentPage,pageSize);
         });
 
 
@@ -391,6 +410,9 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
+            }
             if($('#endtimeFrom').val()!=''){
                 bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
                 if($('#endtimeTo').val()==''){
@@ -414,7 +436,7 @@
                 bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
 
-            queryProduction2(bodyParam,currentPage,pageSize);
+            queryProduction(bodyParam,currentPage,pageSize);
         });
         $('.pagination').on('click','.prevBtn',function(){
             if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
@@ -432,6 +454,9 @@
             if($('#production').val()!=''){
                 bodyParam['prodnum']=$('#production').val();
             }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
+            }
             if($('#endtimeFrom').val()!=''){
                 bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
                 if($('#endtimeTo').val()==''){
@@ -454,7 +479,7 @@
                 var currentTime = new Date().format("yyyy-MM-dd");
                 bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
-            queryProduction2(bodyParam,currentPage,pageSize);
+            queryProduction(bodyParam,currentPage,pageSize);
 
         });
         $('.pagination').on('click','.nextBtn',function(){
@@ -472,7 +497,10 @@
             currentPage++;
             bodyParam={'page':currentPage,'size':pageSize};
             if($('#production').val()!=''){
-                bodyParam['prodnum']=$('#production').val();
+                bodyParam['flag']=$('#production').val();
+            }
+            if($('#variety').val()!=''){
+                bodyParam['variety']=$('#variety').val();
             }
             if($('#endtimeFrom').val()!=''){
                 bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
@@ -496,7 +524,7 @@
                 var currentTime = new Date().format("yyyy-MM-dd");
                 bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
-            queryProduction2(bodyParam,currentPage,pageSize);
+            queryProduction(bodyParam,currentPage,pageSize);
         });
 
 
@@ -508,10 +536,13 @@
 
         //导出
         $('#exportBtn').on('click',function(){
-            var htmlExport=url+'exportProduction2?1=1';
+            var htmlExport=url+'exportProduction?1=1';
 
             if($('#production').val()!=''){
                 htmlExport+='&prodnum='+$('#production').val();
+            }
+            if($('#variety').val()!=''){
+                htmlExport+='&variety='+$('#variety').val();
             }
             if($('#endtimeFrom').val()!=''){
                 htmlExport+='&endtimeFrom='+$('#endtimeFrom').val()+' 00:00:00';
@@ -541,7 +572,6 @@
             var names=[];    //类别数组
             var plancomps=[];    //计划
             var actualcomps=[];    //实际
-            var comRate=[];
 
             if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
                 var oDate1, oDate2;
@@ -581,25 +611,22 @@
                 bodyParam['endtimeTo']=currentTime+' 23:59:59';
             }
 
-            bodyParam.page='1';
-            bodyParam.size='5';
-            var httpR = new createHttpR(url+'statisticProduction2','post','text',bodyParam,'callBack');
+
+            var httpR = new createHttpR(url+'statisticProduction','post','text',bodyParam,'callBack');
             httpR.HttpRequest(function(response){
                 var obj = JSON.parse(response);
                 var status = obj['status'];
                 var msg = obj['msg'];
-                var msg2 = obj['msg2'];
                 if(status=='0'){
 
-                    //降序前五
                     for(var i=0;i<msg.length;i++){
-                        var currentTime = new Date(msg[i].starttime).format("yyyy-MM-dd");
-                        //names.push(currentTime);
-                        names.push(msg[i].production+currentTime+msg[i].bc);
-                        plancomps.push(msg[i].allplancomp);
-                        actualcomps.push(msg[i].allactualcomp);
-                        comRate.push((Number(msg[i].allactualcomp)/Number(msg[i].allplancomp)*100).toFixed(1));
+                        var currentTime = new Date(msg[i].adddate).format("MM月dd日");
+                        names.push(currentTime);
+                        plancomps.push(msg[i].plancomp);
+                        actualcomps.push(msg[i].actualcomp);
+
                     }
+
                     //统计
                     var ECharts;
                     // 路径配置
@@ -613,7 +640,7 @@
                     require(
                         [
                             'echarts',
-                            'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+                            'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
                         ],
                         function (ec) {
                             ECharts = ec;
@@ -623,7 +650,7 @@
                                     trigger: 'axis'
                                 },
                                 legend: {
-                                    data: ['完成率']
+                                    data: ['实际完成', '计划完成']
                                 },
 
                                 calculable: true,
@@ -635,32 +662,29 @@
                                 ],
                                 yAxis: [
                                     {
-                                        type: 'value',
-                                        axisLabel: {
-                                            show: true,
-                                            interval: 'auto',
-                                            formatter: '{value} %'
-                                        },
-                                        show: true,
-                                        scale: true
+                                        type: 'value'
                                     }
                                 ],
                                 series: [
                                     {
-                                        name: '完成率',
-                                        type: 'line',
-                                        data: comRate,
+                                        name: '实际完成',
+                                        type: 'bar',
+                                        data: plancomps,
                                         itemStyle: {
-
                                             normal: {
-                                                color: '#c0504d',
-                                                label: {
-                                                    show: true,
-                                                    position: 'top',
-                                                    formatter: '{c}%'
-                                                }
+                                                color: '#c0504d'
                                             }
-                                        },
+                                        }
+                                    },
+                                    {
+                                        name: '计划完成',
+                                        type: 'bar',
+                                        data: actualcomps,
+                                        itemStyle: {
+                                            normal: {
+                                                color: '#4f81bd'
+                                            }
+                                        }
                                     }
                                 ]
                             };
@@ -668,79 +692,6 @@
                             //接下来我们就可以进行图表的init操作了
                             var myChart = ECharts.init(document.getElementById("main"));
                             myChart.setOption(option);
-                        } );
-
-
-                    //升序前五
-                    var names2=[];    //类别数组
-                    var comRate2=[];
-                    for(var i=0;i<msg2.length;i++){
-                        var currentTime = new Date(msg2[i].starttime).format("yyyy-MM-dd");
-                        //names.push(currentTime);
-                        names2.push(msg2[i].production+currentTime+msg2[i].bc);
-                        comRate2.push((Number(msg2[i].allactualcomp)/Number(msg2[i].allplancomp)*100).toFixed(1));
-                    }
-
-
-                    // 使用
-                    require(
-                        [
-                            'echarts',
-                            'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
-                        ],
-                        function (ec) {
-                            ECharts = ec;
-                            var option2 = {
-
-                                tooltip: {
-                                    trigger: 'axis'
-                                },
-                                legend: {
-                                    data: ['完成率']
-                                },
-
-                                calculable: true,
-                                xAxis: [
-                                    {
-                                        type: 'category',
-                                        data: names2,
-                                    }
-                                ],
-                                yAxis: [
-                                    {
-                                        type: 'value',
-                                        axisLabel: {
-                                            show: true,
-                                            interval: 'auto',
-                                            formatter: '{value} %'
-                                        },
-                                        show: true,
-                                        scale: true
-                                    }
-                                ],
-                                series: [
-                                    {
-                                        name: '完成率',
-                                        type: 'line',
-                                        data: comRate2,
-                                        itemStyle: {
-
-                                            normal: {
-                                                color: '#c0504d',
-                                                label: {
-                                                    show: true,
-                                                    position: 'top',
-                                                    formatter: '{c}%'
-                                                }
-                                            }
-                                        },
-                                    }
-                                ]
-                            };
-
-                            //接下来我们就可以进行图表的init操作了
-                            var myChart2 = ECharts.init(document.getElementById("main2"));
-                            myChart2.setOption(option2);
                         } );
                 }
                 else{
@@ -752,6 +703,12 @@
         });
 
 
+
+
+        $('#production').change(function () {
+
+            selectVarieties2($(this).val());
+        });
 
 
 
