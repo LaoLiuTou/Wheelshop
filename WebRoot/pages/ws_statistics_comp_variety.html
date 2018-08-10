@@ -179,16 +179,30 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3 mr10">
+                                <!--<div class="form-group col-md-3 mr10">
                                     <label class="control-label col-md-3 form-sm-title pdnone">选择日期：</label>
                                     <div class="col-md-4 pdnone">
-                                        <input class="form-control  m-bot15 default-date-picker" id="endtimeFrom" size="16" type="text"  />
+                                        <input class="form-control  m-bot15 form_datetime-component" id="endtimeFrom" size="10" type="text"  />
                                     </div>
                                     <div class="col-md-1 pdnone">
-                                        <label class="control-label ml10">--</label>
+                                        <label class="control-label ml10">&#45;&#45;</label>
                                     </div>
                                     <div class="col-md-4 pdnone">
-                                        <input class="form-control  m-bot15 default-date-picker"  id="endtimeTo" size="16" type="text"  />
+                                        <input class="form-control  m-bot15 form_datetime-component"  id="endtimeTo" size="10" type="text"  />
+                                    </div>
+
+                                </div>-->
+                                <div class="form-group col-md-3 mr10">
+                                    <label class="control-label col-md-3 form-sm-title pdnone">开始日期：</label>
+                                    <div class="col-md-9 pdnone">
+                                        <input class="form-control  m-bot15 form_datetime-component" id="endtimeFrom" size="10" type="text"  />
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-3 mr10">
+                                    <label class="control-label col-md-3 form-sm-title pdnone">结束日期：</label>
+                                    <div class="col-md-9 pdnone">
+                                        <input class="form-control  m-bot15 form_datetime-component"  id="endtimeTo" size="10" type="text"  />
                                     </div>
 
                                 </div>
@@ -528,10 +542,12 @@
         });
 
 
-        $('.default-date-picker').datepicker({
+        /*$('.default-date-picker').datepicker({
             format: 'yyyy-mm-dd'
+        });*/
+        $(".form_datetime-component").datetimepicker({
+            format: "yyyy-mm-dd hh:ii"
         });
-
 
 
         //导出
