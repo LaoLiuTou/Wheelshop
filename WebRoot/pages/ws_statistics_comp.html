@@ -164,16 +164,30 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3 mr10">
+                                <!--<div class="form-group col-md-3 mr10">
                                     <label class="control-label col-md-3 form-sm-title pdnone">选择日期：</label>
                                     <div class="col-md-4 pdnone">
                                         <input class="form-control  m-bot15 default-date-picker" id="endtimeFrom" size="16" type="text"  />
                                     </div>
                                     <div class="col-md-1 pdnone">
-                                        <label class="control-label ml10">--</label>
+                                        <label class="control-label ml10">&#45;&#45;</label>
                                     </div>
                                     <div class="col-md-4 pdnone">
                                         <input class="form-control  m-bot15 default-date-picker"  id="endtimeTo" size="16" type="text"  />
+                                    </div>
+
+                                </div>-->
+                                <div class="form-group col-md-3 mr10">
+                                    <label class="control-label col-md-3 form-sm-title pdnone">开始日期：</label>
+                                    <div class="col-md-9 pdnone">
+                                        <input class="form-control  m-bot15 form_datetime-component" id="endtimeFrom" size="10" type="text"  />
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-3 mr10">
+                                    <label class="control-label col-md-3 form-sm-title pdnone">结束日期：</label>
+                                    <div class="col-md-9 pdnone">
+                                        <input class="form-control  m-bot15 form_datetime-component"  id="endtimeTo" size="10" type="text"  />
                                     </div>
 
                                 </div>
@@ -232,7 +246,7 @@
     <!-- main content end-->
 </section>
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="statistic-box" class="modal fade">
-    <div class="modal-dialog" style="width:1000px">
+    <div class="modal-dialog" style="width:1200px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -294,10 +308,10 @@
             bodyParam['prodnum']=$('#production').val();
         }
         if($('#endtimeFrom').val()!=''){
-            bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+            bodyParam['endtimeFrom']=$('#endtimeFrom').val();
         }
         if($('#endtimeTo').val()!=''){
-            bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+            bodyParam['endtimeTo']=$('#endtimeTo').val();
         }*/
 
         var userinfo=sessionStorage.getItem('userinfo');
@@ -318,12 +332,12 @@
 
 
         if($('#endtimeFrom').val()==''){
-            var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-            bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+            var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+            bodyParam['endtimeFrom']=currentTime;
         }
         if($('#endtimeTo').val()==''){
-            var currentTime = new Date().format("yyyy-MM-dd");
-            bodyParam['endtimeTo']=currentTime+' 23:59:59';
+            var currentTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+            bodyParam['endtimeTo']=currentTime;
         }
 
         queryProduction2(bodyParam,currentPage,pageSize);
@@ -349,26 +363,26 @@
                 bodyParam['prodnum']=$('#production').val();
             }
             if($('#endtimeFrom').val()!=''){
-                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val();
                 if($('#endtimeTo').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeTo']=currentTime;
                 }
             }
             if($('#endtimeTo').val()!=''){
-                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                bodyParam['endtimeTo']=$('#endtimeTo').val();
                 if($('#endtimeFrom').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeFrom']=currentTime;
                 }
             }
             if($('#endtimeFrom').val()==''){
-                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeFrom']=currentTime;
             }
             if($('#endtimeTo').val()==''){
-                var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                var currentTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeTo']=currentTime;
             }
             queryProduction2(bodyParam,currentPage,pageSize);
         });
@@ -392,26 +406,26 @@
                 bodyParam['prodnum']=$('#production').val();
             }
             if($('#endtimeFrom').val()!=''){
-                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val();
                 if($('#endtimeTo').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeTo']=currentTime;
                 }
             }
             if($('#endtimeTo').val()!=''){
-                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                bodyParam['endtimeTo']=$('#endtimeTo').val();
                 if($('#endtimeFrom').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeFrom']=currentTime;
                 }
             }
             if($('#endtimeFrom').val()==''){
-                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeFrom']=currentTime;
             }
             if($('#endtimeTo').val()==''){
-                var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                var currentTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeTo']=currentTime;
             }
 
             queryProduction2(bodyParam,currentPage,pageSize);
@@ -433,26 +447,26 @@
                 bodyParam['prodnum']=$('#production').val();
             }
             if($('#endtimeFrom').val()!=''){
-                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val();
                 if($('#endtimeTo').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeTo']=currentTime;
                 }
             }
             if($('#endtimeTo').val()!=''){
-                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                bodyParam['endtimeTo']=$('#endtimeTo').val();
                 if($('#endtimeFrom').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeFrom']=currentTime;
                 }
             }
             if($('#endtimeFrom').val()==''){
-                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeFrom']=currentTime;
             }
             if($('#endtimeTo').val()==''){
-                var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                var currentTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeTo']=currentTime;
             }
             queryProduction2(bodyParam,currentPage,pageSize);
 
@@ -475,33 +489,36 @@
                 bodyParam['prodnum']=$('#production').val();
             }
             if($('#endtimeFrom').val()!=''){
-                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val();
                 if($('#endtimeTo').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeTo']=currentTime;
                 }
             }
             if($('#endtimeTo').val()!=''){
-                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                bodyParam['endtimeTo']=$('#endtimeTo').val();
                 if($('#endtimeFrom').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeFrom']=currentTime;
                 }
             }
             if($('#endtimeFrom').val()==''){
-                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeFrom']=currentTime;
             }
             if($('#endtimeTo').val()==''){
-                var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                var currentTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeTo']=currentTime;
             }
             queryProduction2(bodyParam,currentPage,pageSize);
         });
 
 
-        $('.default-date-picker').datepicker({
-            format: 'yyyy-mm-dd'
+        $(".form_datetime-component").datetimepicker({
+            format: 'yyyy-mm-dd hh:ii:ss',
+            autoclose: true,
+            minView: 0,
+            minuteStep:1
         });
 
 
@@ -514,10 +531,10 @@
                 htmlExport+='&prodnum='+$('#production').val();
             }
             if($('#endtimeFrom').val()!=''){
-                htmlExport+='&endtimeFrom='+$('#endtimeFrom').val()+' 00:00:00';
+                htmlExport+='&endtimeFrom='+$('#endtimeFrom').val();
             }
             if($('#endtimeTo').val()!=''){
-                htmlExport+='&endtimeTo='+$('#endtimeTo').val()+' 23:59:59';
+                htmlExport+='&endtimeTo='+$('#endtimeTo').val();
             }
 
             window.open(htmlExport);
@@ -559,26 +576,26 @@
                 bodyParam['prodnum']=$('#production').val();
             }
             if($('#endtimeFrom').val()!=''){
-                bodyParam['endtimeFrom']=$('#endtimeFrom').val()+' 00:00:00';
+                bodyParam['endtimeFrom']=$('#endtimeFrom').val();
                 if($('#endtimeTo').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                    var currentTime = new Date(new Date($('#endtimeFrom').val()).getTime() + 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeTo']=currentTime;
                 }
             }
             if($('#endtimeTo').val()!=''){
-                bodyParam['endtimeTo']=$('#endtimeTo').val()+' 23:59:59';
+                bodyParam['endtimeTo']=$('#endtimeTo').val();
                 if($('#endtimeFrom').val()==''){
-                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                    bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                    var currentTime = new Date(new Date($('#endtimeTo').val()).getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                    bodyParam['endtimeFrom']=currentTime;
                 }
             }
             if($('#endtimeFrom').val()==''){
-                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd");
-                bodyParam['endtimeFrom']=currentTime+' 00:00:00';
+                var currentTime = new Date(new Date().getTime() - 7*24*60*60*1000).format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeFrom']=currentTime;
             }
             if($('#endtimeTo').val()==''){
-                var currentTime = new Date().format("yyyy-MM-dd");
-                bodyParam['endtimeTo']=currentTime+' 23:59:59';
+                var currentTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+                bodyParam['endtimeTo']=currentTime;
             }
 
             bodyParam.page='1';
@@ -593,7 +610,7 @@
 
                     //降序前五
                     for(var i=0;i<msg.length;i++){
-                        var currentTime = new Date(msg[i].starttime).format("yyyy-MM-dd");
+                        var currentTime = new Date(msg[i].starttime).format("yyyy-MM-dd hh:mm:ss");
                         //names.push(currentTime);
                         names.push(msg[i].production+currentTime+msg[i].bc);
                         plancomps.push(msg[i].allplancomp);
@@ -631,6 +648,10 @@
                                     {
                                         type: 'category',
                                         data: names,
+                                        axisLabel:{
+                                            interval:0,//横轴信息全部显示
+
+                                        }
                                     }
                                 ],
                                 yAxis: [
@@ -675,7 +696,7 @@
                     var names2=[];    //类别数组
                     var comRate2=[];
                     for(var i=0;i<msg2.length;i++){
-                        var currentTime = new Date(msg2[i].starttime).format("yyyy-MM-dd");
+                        var currentTime = new Date(msg2[i].starttime).format("yyyy-MM-dd hh:mm:ss");
                         //names.push(currentTime);
                         names2.push(msg2[i].production+currentTime+msg2[i].bc);
                         comRate2.push((Number(msg2[i].allactualcomp)/Number(msg2[i].allplancomp)*100).toFixed(1));
@@ -704,6 +725,10 @@
                                     {
                                         type: 'category',
                                         data: names2,
+                                        axisLabel:{
+                                            interval:0,//横轴信息全部显示
+
+                                        }
                                     }
                                 ],
                                 yAxis: [

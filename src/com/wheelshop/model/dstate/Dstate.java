@@ -74,6 +74,15 @@ public class Dstate {
 		this.flag = flag;
 	}
 
+	private String devicename;
+	public String getDevicename() {
+		return devicename;
+	}
+	public void setDevicename(String devicename) {
+		this.devicename = devicename;
+	}
+	 
+	
 
 
 }

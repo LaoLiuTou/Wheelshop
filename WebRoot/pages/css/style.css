@@ -4765,7 +4765,8 @@ ol.comment-list {
 }
 .tips-box-2 {
     display: block;
-    max-width: 200px;
+    min-width: 200px;
+    max-width: 300px;
     height: auto;
     line-height: 26px;
     white-space: normal;

@@ -266,7 +266,7 @@
 </div>
 
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="statistic-box" class="modal fade">
-    <div class="modal-dialog" style="width:1000px">
+    <div class="modal-dialog" style="width:1200px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -274,7 +274,7 @@
             </div>
             <div class="modal-body">
                 <div class="chart">
-                    <div id="main" style="height: 400px;"></div>
+                    <div id="main" style="height: 500px;"></div>
                 </div>
 
             </div>
@@ -438,11 +438,14 @@
         });
 
 
-        $('.default-date-picker').datepicker({
-            format: 'yyyy-mm-dd'
+
+
+        $('.default-date-picker').datetimepicker({
+            format: "yyyy-mm-dd",
+            todayBtn: "linked",
+            minView: 4,
+            autoclose:true
         });
-
-
 
 
         //导出
@@ -558,8 +561,18 @@
                                     {
                                         type: 'category',
                                         data: names,
+                                        axisLabel:{
+                                            interval:0,//横轴信息全部显示
+                                            rotate:-30,//-30度角倾斜显示
+                                        }
+
                                     }
                                 ],
+                                grid: { // 控制图的大小，调整下面这些值就可以，
+                                    x: 80,
+                                      x2: 150,
+                                      y2: 100// y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
+                                },
                                 yAxis: [
                                     {
                                         type: 'value'

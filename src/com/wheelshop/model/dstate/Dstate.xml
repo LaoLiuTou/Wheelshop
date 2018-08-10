@@ -11,41 +11,44 @@
 	</delete>
 
 	<select id="selectalldstateByParam" parameterType="java.util.Map" resultType="Dstate">
-		SELECT *
-		FROM dstate
+		SELECT a.*,b.flag as devicename 
+		FROM dstate a
+		LEFT JOIN DEVICE b ON a.deviceno=b.deviceno and a.production=b.production 
+		
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="id != null"> AND ID =#{id} </if>
-			<if test="production != null"> AND PRODUCTION =#{production} </if>
-			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
-			<if test="state != null"> AND STATE =#{state} </if>
-			<if test="duration != null"> AND DURATION =#{duration} </if>
-			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
-			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = #{adddate} </if>
-			<if test="comment != null"> AND COMMENT =#{comment} </if>
-			<if test="flag != null"> AND FLAG =#{flag} </if>
-			<if test="statein != null"> AND STATE IN ('01','02','03')  </if>
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="production != null"> AND a.PRODUCTION =#{production} </if>
+			<if test="deviceno != null"> AND a.DEVICENO =#{deviceno} </if>
+			<if test="state != null"> AND a.STATE =#{state} </if>
+			<if test="duration != null"> AND a.DURATION =#{duration} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = #{adddate} </if>
+			<if test="comment != null"> AND a.COMMENT =#{comment} </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+			<if test="statein != null"> AND a.STATE IN ('01','02','03')  </if>
 		</trim>  
-		ORDER BY ID DESC 
+		ORDER BY a.ID DESC 
 		 
 	</select>
 	<select id="selectdstateByParam" parameterType="java.util.Map" resultType="Dstate">
-		SELECT *
-		FROM dstate
+		SELECT a.*,b.flag as devicename 
+		FROM dstate a
+		LEFT JOIN DEVICE b ON a.deviceno=b.deviceno and a.production=b.production 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="id != null"> AND ID =#{id} </if>
-			<if test="production != null"> AND PRODUCTION =#{production} </if>
-			<if test="deviceno != null"> AND DEVICENO =#{deviceno} </if>
-			<if test="state != null"> AND STATE =#{state} </if>
-			<if test="duration != null"> AND DURATION =#{duration} </if>
-			<if test="adddateFrom != null"> AND unix_timestamp(ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
-			<if test="adddateTo != null"> AND unix_timestamp(ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
-			<if test="adddate != null"> AND DATE_FORMAT(ADDDATE,'%Y-%m-%d') = #{adddate} </if>
-			<if test="comment != null"> AND COMMENT =#{comment} </if>
-			<if test="flag != null"> AND FLAG =#{flag} </if>
-			<if test="statein != null"> AND STATE IN ('01','02','03')  </if>
+			<if test="id != null"> AND a.ID =#{id} </if>
+			<if test="production != null"> AND a.PRODUCTION =#{production} </if>
+			<if test="deviceno != null"> AND a.DEVICENO =#{deviceno} </if>
+			<if test="state != null"> AND a.STATE =#{state} </if>
+			<if test="duration != null"> AND a.DURATION =#{duration} </if>
+			<if test="adddateFrom != null"> AND unix_timestamp(a.ADDDATE) &gt;=unix_timestamp(#{adddateFrom}) </if>
+			<if test="adddateTo != null"> AND unix_timestamp(a.ADDDATE) &lt;=unix_timestamp(#{adddateTo}) </if>
+			<if test="adddate != null"> AND DATE_FORMAT(a.ADDDATE,'%Y-%m-%d') = #{adddate} </if>
+			<if test="comment != null"> AND a.COMMENT =#{comment} </if>
+			<if test="flag != null"> AND a.FLAG =#{flag} </if>
+			<if test="statein != null"> AND a.STATE IN ('01','02','03')  </if>
 		</trim>  
-		ORDER BY ID DESC 
+		ORDER BY a.ID DESC 
 		LIMIT #{fromPage},#{toPage} 
 	</select>
 
@@ -70,12 +73,14 @@
 
 	<select id="selectStatisticdstateByParam" parameterType="java.util.Map" resultType="Dstate">
 		SELECT 
-		 CONCAT(b.PRODUCTION,'_',a.DEVICENO) as production ,
+		 CONCAT(b.PRODUCTION,'_',c.flag) as production ,
 		SUM(CASE WHEN a.STATE='01' THEN a.DURATION ELSE 0 END)  as deviceno, 
 		SUM(CASE WHEN a.STATE='02' THEN a.DURATION ELSE 0 END)  as state, 
-		SUM(CASE WHEN a.STATE='03' THEN a.DURATION ELSE 0 END)  as duration  
+		SUM(CASE WHEN a.STATE='03' THEN a.DURATION ELSE 0 END)  as duration  ,
+		c.flag as devicename 
 		FROM dstate a 
 		LEFT JOIN prodnum b on a.production=b.id 
+		LEFT JOIN DEVICE c ON a.deviceno=c.deviceno and a.production=c.production 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="id != null"> AND a.ID =#{id} </if>
 			<if test="production != null"> AND a.PRODUCTION =#{production} </if>
@@ -88,7 +93,7 @@
 			<if test="comment != null"> AND a.COMMENT =#{comment} </if>
 			<if test="flag != null"> AND a.FLAG =#{flag} </if> 
 		</trim>  
-		GROUP by  CONCAT(b.PRODUCTION,'_',a.DEVICENO) 
+		GROUP by  CONCAT(b.PRODUCTION,'_',c.flag) 
 		 
 	</select>
 	

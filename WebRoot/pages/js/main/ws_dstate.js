@@ -90,9 +90,8 @@ function  queryDstates (bodyParam,currentPage,pageSize) {
                 else if(data[o].state=='03'){html+='<td>生产停台</td>\n' ;}
                 else{html+='<td></td>\n' ;}
 
-
                 html+='<td>'+data[o].duration+'</td>\n' +
-                    '<td>'+data[o].deviceno+'</td>\n' +
+                    '<td>'+data[o].devicename+'</td>\n' +
                     '<td>'+data[o].adddate+'</td>\n' +
                     '<td>'+data[o].comment+'</td>\n' ;
 
