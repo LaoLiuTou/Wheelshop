@@ -384,14 +384,14 @@ function initwebsocket(type){
                 audio.play();
 
                 equipstopInterval=setInterval(function (){
-                    var equipstopTime=sessionStorage.getItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime);
+                    var equipstopTime=localStorage.getItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime);
                     if(equipstopTime==null){
                         equipstopTime=0;
                     }
                     else{
                         equipstopTime=Number(equipstopTime)+1;
                     }
-                    sessionStorage.setItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime,equipstopTime);
+                    localStorage.setItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime,equipstopTime);
                     $('#equipstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(equipstopTime));
                 },1000);
 
@@ -404,14 +404,14 @@ function initwebsocket(type){
                 audio.play();
 
                 toolstopInterval=setInterval(function (){
-                    var toolstopTime=sessionStorage.getItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime);
+                    var toolstopTime=localStorage.getItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime);
                     if(toolstopTime==null){
                         toolstopTime=0;
                     }
                     else{
                         toolstopTime=Number(toolstopTime)+1;
                     }
-                    sessionStorage.setItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime,toolstopTime);
+                    localStorage.setItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime,toolstopTime);
                     $('#toolstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(toolstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);
@@ -424,14 +424,14 @@ function initwebsocket(type){
                 audio.play();
 
                 prodstopInterval=setInterval(function (){
-                    var prodstopTime=sessionStorage.getItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime);
+                    var prodstopTime=localStorage.getItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime);
                     if(prodstopTime==null){
                         prodstopTime=0;
                     }
                     else{
                         prodstopTime=Number(prodstopTime)+1;
                     }
-                    sessionStorage.setItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime,prodstopTime);
+                    localStorage.setItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime,prodstopTime);
                     $('#prodstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(prodstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);
