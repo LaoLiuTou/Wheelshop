@@ -4,9 +4,9 @@ var url = 'http://127.0.0.1/Wheelshop/';
 var websocketurl = 'ws://127.0.0.1:8888';
 
 //后台服务地址
-//var url = 'http://10.63.6.242/Wheelshop/';
+//var url = 'http://10.63.6.243/Wheelshop/';
 //websocket地址
-//var websocketurl = 'ws://10.63.6.242:8888';
+//var websocketurl = 'ws://10.63.6.243:8888';
 //secret key
 var sk = 'TTILY';
 
@@ -347,6 +347,10 @@ function initwebsocket(type){
             //停止产量计数
             clearInterval(yieldvarInterval);
 
+            var date=new Date();
+            var currentTime = date.format("yyyyMMdd");
+
+
             if(msg['STATE']=='04'){//正常 取消按钮
 
                 lastProduction2(msg['PRO']);
@@ -380,14 +384,14 @@ function initwebsocket(type){
                 audio.play();
 
                 equipstopInterval=setInterval(function (){
-                    var equipstopTime=sessionStorage.getItem('equipstopTime'+msg['PRO']);
+                    var equipstopTime=sessionStorage.getItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime);
                     if(equipstopTime==null){
                         equipstopTime=0;
                     }
                     else{
                         equipstopTime=Number(equipstopTime)+1;
                     }
-                    sessionStorage.setItem('equipstopTime'+msg['PRO'],equipstopTime);
+                    sessionStorage.setItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime,equipstopTime);
                     $('#equipstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(equipstopTime));
                 },1000);
 
@@ -400,14 +404,14 @@ function initwebsocket(type){
                 audio.play();
 
                 toolstopInterval=setInterval(function (){
-                    var toolstopTime=sessionStorage.getItem('toolstopTime'+msg['PRO']);
+                    var toolstopTime=sessionStorage.getItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime);
                     if(toolstopTime==null){
                         toolstopTime=0;
                     }
                     else{
                         toolstopTime=Number(toolstopTime)+1;
                     }
-                    sessionStorage.setItem('toolstopTime'+msg['PRO'],toolstopTime);
+                    sessionStorage.setItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime,toolstopTime);
                     $('#toolstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(toolstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);
@@ -420,14 +424,14 @@ function initwebsocket(type){
                 audio.play();
 
                 prodstopInterval=setInterval(function (){
-                    var prodstopTime=sessionStorage.getItem('prodstopTime'+msg['PRO']);
+                    var prodstopTime=sessionStorage.getItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime);
                     if(prodstopTime==null){
                         prodstopTime=0;
                     }
                     else{
                         prodstopTime=Number(prodstopTime)+1;
                     }
-                    sessionStorage.setItem('prodstopTime'+msg['PRO'],prodstopTime);
+                    sessionStorage.setItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime,prodstopTime);
                     $('#prodstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(prodstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);

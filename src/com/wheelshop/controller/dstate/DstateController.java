@@ -151,6 +151,7 @@ public class DstateController {
 				            	contentMap.put("PRO", dstate.getProduction());
 				            	contentMap.put("NUM", list.get(0).getNodeno());
 				            	contentMap.put("STATE", dstate.getState());
+				            	contentMap.put("VAR", plist.get(0).getVariety());
 								
 								String json = "";
 								json = mapper.writeValueAsString(contentMap);
