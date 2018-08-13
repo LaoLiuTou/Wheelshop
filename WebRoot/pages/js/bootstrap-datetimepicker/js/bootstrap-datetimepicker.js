@@ -1439,7 +1439,8 @@
 								val.P  = val.p.toUpperCase();
 				val.hh = (val.h < 10 ? '0' : '') + val.h;
 				val.ii = (val.i < 10 ? '0' : '') + val.i;
-				val.ss = (val.s < 10 ? '0' : '') + val.s;
+				//val.ss = (val.s < 10 ? '0' : '') + val.s;
+                val.ss = '00';
 				val.dd = (val.d < 10 ? '0' : '') + val.d;
 				val.mm = (val.m < 10 ? '0' : '') + val.m;
 			} else if (type == 'php') {
