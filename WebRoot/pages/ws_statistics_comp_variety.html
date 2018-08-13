@@ -370,6 +370,10 @@
                     alert("查询时间区间不能大于一个月！");
                     return;
                 }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
             }
 
 
@@ -418,6 +422,10 @@
                     alert("查询时间区间不能大于一个月！");
                     return;
                 }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
             }
             currentPage=$(this).attr('index');
             bodyParam={'page':currentPage,'size':pageSize};
@@ -462,6 +470,10 @@
                     alert("查询时间区间不能大于一个月！");
                     return;
                 }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
             }
             currentPage--;
             bodyParam={'page':currentPage,'size':pageSize};
@@ -504,6 +516,10 @@
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
                     return;
                 }
             }
@@ -555,6 +571,20 @@
 
         //导出
         $('#exportBtn').on('click',function(){
+            if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
+                var oDate1, oDate2;
+                oDate1 = new Date($('#endtimeFrom').val()).getTime();
+                oDate2 = new Date($('#endtimeTo').val()).getTime();
+                var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
+                if(TotalMilliseconds>31*24*60*60*1000){
+                    alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
+            }
             var htmlExport=url+'exportProduction?1=1';
 
             if($('#production').val()!=''){
@@ -599,6 +629,11 @@
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    $('#statistic-box').modal("hide");
                     return;
                 }
             }

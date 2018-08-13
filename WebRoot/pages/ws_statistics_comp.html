@@ -354,6 +354,10 @@
                     alert("查询时间区间不能大于一个月！");
                     return;
                 }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
             }
 
 
@@ -399,6 +403,10 @@
                     alert("查询时间区间不能大于一个月！");
                     return;
                 }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
             }
             currentPage=$(this).attr('index');
             bodyParam={'page':currentPage,'size':pageSize};
@@ -440,6 +448,10 @@
                     alert("查询时间区间不能大于一个月！");
                     return;
                 }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
             }
             currentPage--;
             bodyParam={'page':currentPage,'size':pageSize};
@@ -479,6 +491,10 @@
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
                     return;
                 }
             }
@@ -525,6 +541,20 @@
 
         //导出
         $('#exportBtn').on('click',function(){
+            if($('#endtimeFrom').val()!=''&&$('#endtimeTo').val()!=''){
+                var oDate1, oDate2;
+                oDate1 = new Date($('#endtimeFrom').val()).getTime();
+                oDate2 = new Date($('#endtimeTo').val()).getTime();
+                var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
+                if(TotalMilliseconds>31*24*60*60*1000){
+                    alert("查询时间区间不能大于一个月！");
+                    return;
+                }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    return;
+                }
+            }
             var htmlExport=url+'exportProduction2?1=1';
 
             if($('#production').val()!=''){
@@ -567,6 +597,12 @@
                 var TotalMilliseconds =oDate2-oDate1;//相差的毫秒数
                 if(TotalMilliseconds>31*24*60*60*1000){
                     alert("查询时间区间不能大于一个月！");
+                    $('#statistic-box').modal("hide");
+                    return;
+                }
+                else if(TotalMilliseconds<0){
+                    alert("开始时间不能晚于结束时间！");
+                    $('#statistic-box').modal("hide");
                     return;
                 }
             }
@@ -615,7 +651,14 @@
                         names.push(msg[i].production+currentTime+msg[i].bc);
                         plancomps.push(msg[i].allplancomp);
                         actualcomps.push(msg[i].allactualcomp);
-                        comRate.push((Number(msg[i].allactualcomp)/Number(msg[i].allplancomp)*100).toFixed(1));
+
+                        if(msg[i].allplancomp!='0'){
+
+                            comRate.push((Number(msg[i].allactualcomp)/Number(msg[i].allplancomp)*100).toFixed(1));
+                        }
+                        else{
+                            comRate.push('0.0');
+                        }
                     }
                     //统计
                     var ECharts;
@@ -699,7 +742,14 @@
                         var currentTime = new Date(msg2[i].starttime).format("yyyy-MM-dd hh:mm:ss");
                         //names.push(currentTime);
                         names2.push(msg2[i].production+currentTime+msg2[i].bc);
-                        comRate2.push((Number(msg2[i].allactualcomp)/Number(msg2[i].allplancomp)*100).toFixed(1));
+
+                        if(msg2[i].allplancomp!='0'){
+
+                            comRate2.push((Number(msg2[i].allactualcomp)/Number(msg2[i].allplancomp)*100).toFixed(1));
+                        }
+                        else{
+                            comRate2.push('0.0');
+                        }
                     }
 
 
