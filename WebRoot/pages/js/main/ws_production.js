@@ -534,10 +534,10 @@ function  queryProduction (bodyParam,currentPage,pageSize) {
                 html+='<tr index='+o+' class="gradeX">\n'+
                     '<td>'+data[o].production+'</td>\n' +
                     '<td>'+data[o].variety+'</td>\n' +
-                    '<td>'+data[o].plancomp+'</td>\n' +
+                    '<td>'+data[o].yield+'</td>\n' +
                     '<td>'+data[o].actualcomp+'</td>\n' ;
-                if(data[o].actualcomp!=''&&data[o].plancomp!=''){
-                    html+='<td>'+((data[o].actualcomp/data[o].plancomp)*100).toFixed(1)+'%</td>\n';
+                if(data[o].actualcomp!=''&&data[o].yield!=''&&data[o].yield!='0'){
+                    html+='<td>'+((data[o].actualcomp/data[o].yield)*100).toFixed(1)+'%</td>\n';
                 }
                 else{
                     html+='<td></td>\n';
@@ -655,7 +655,7 @@ function  queryProduction2 (bodyParam,currentPage,pageSize) {
                     '<td>'+data[o].production+'</td>\n' +
                     '<td>'+data[o].allplancomp+'</td>\n' +
                     '<td>'+data[o].allactualcomp+'</td>\n' ;
-                if(data[o].allactualcomp!=''&&data[o].allplancomp!=''){
+                if(data[o].allactualcomp!=''&&data[o].allplancomp!=''&&data[o].allplancomp!='0'){
                     html+='<td>'+((data[o].allactualcomp/data[o].allplancomp)*100).toFixed(1)+'%</td>\n';
                 }
                 else{

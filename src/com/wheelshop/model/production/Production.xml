@@ -138,8 +138,8 @@
 	<select id="selectproductionByParam2" parameterType="java.util.Map" resultType="Production">
 		SELECT a.*,b.production as production ,
 		SUM(a.actualcomp)  as allactualcomp, 
-		SUM(a.plancomp)  as allplancomp ,
-		SUM(a.actualcomp)/SUM(a.plancomp) as comrate,
+		SUM(a.yield)  as allplancomp ,
+		SUM(a.actualcomp)/SUM(a.yield) as comrate,
 		group_concat(a.id) as ids ,
 		CASE WHEN DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&gt;='07:00:00' 
 		      AND DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&lt;='18:30:00' THEN '白班' ELSE '夜班' END as bc 
@@ -190,7 +190,7 @@
 		(
 		SELECT a.*,b.production as production ,
 		SUM(a.actualcomp)  as allactualcomp, 
-		SUM(a.plancomp)  as allplancomp ,
+		SUM(a.yield)  as allplancomp ,
 		group_concat(a.id) as ids ,
 		CASE WHEN DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&gt;='07:00:00' 
 		      AND DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&lt;='18:30:00' THEN 1 ELSE 0 END as bc 
@@ -239,8 +239,8 @@
 	<select id="selectStatisticproductionByParam" parameterType="java.util.Map" resultType="Production">
 		SELECT a.*,b.production as production ,
 		SUM(a.actualcomp)  as allactualcomp, 
-		SUM(a.plancomp)  as allplancomp ,
-		SUM(a.actualcomp)/SUM(a.plancomp) as comrate,
+		SUM(a.yield)  as allplancomp ,
+		SUM(a.actualcomp)/SUM(a.yield) as comrate,
 		group_concat(a.id) as ids ,
 		CASE WHEN DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&gt;='07:00:00' 
 		      AND DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&lt;='18:30:00' THEN '白班' ELSE '夜班' END as bc 

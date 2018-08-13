@@ -810,8 +810,9 @@ public class ProductionController {
 				Production temp = list.get(index);
 				
 				Float comRate = null;
-				if(StringUtils.isNumeric(temp.getActualcomp())&&StringUtils.isNumeric(temp.getPlancomp())){
-					comRate= (Float.parseFloat(temp.getActualcomp())/Float.parseFloat(temp.getPlancomp()))*100;
+				if(StringUtils.isNumeric(temp.getActualcomp())&&StringUtils.isNumeric(temp.getYield())){
+					if(!temp.getYield().equals("0"))
+					comRate= (Float.parseFloat(temp.getActualcomp())/Float.parseFloat(temp.getYield()))*100;
 				}
 				Float rate = null;
 				if(StringUtils.isNumeric(temp.getActualcomp())&&StringUtils.isNumeric(temp.getPower())){
@@ -825,7 +826,7 @@ public class ProductionController {
 					rateStr=String.format("%.1f", rate)+"%";
 				}
 				if(temp.getStarttime()!=null&&temp.getEndtime()!=null){
-					String[] strings = {(index+1)+"", temp.getProduction(),temp.getVariety(), temp.getPlancomp(),temp.getActualcomp(),  
+					String[] strings = {(index+1)+"", temp.getProduction(),temp.getVariety(), temp.getYield(),temp.getActualcomp(),  
 							comRateStr,temp.getStarttime()==null?"":sdf.format(temp.getStarttime()),
 									temp.getEndtime()==null?"":sdf.format(temp.getEndtime()),temp.getProdtime()};
 					exportList.add(strings);
@@ -912,6 +913,7 @@ public class ProductionController {
 				
 				Float comRate = null;
 				if(StringUtils.isNumeric(temp.getAllactualcomp())&&StringUtils.isNumeric(temp.getAllplancomp())){
+					if(!temp.getAllplancomp().equals("0"))
 					comRate= (Float.parseFloat(temp.getAllactualcomp())/Float.parseFloat(temp.getAllplancomp()))*100;
 				}
 				Float rate = null;
