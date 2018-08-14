@@ -350,9 +350,31 @@ function initwebsocket(type){
             var date=new Date();
             var currentTime = date.format("yyyyMMdd");
 
+            if(date.getHours()>0&&date.getHours()<6){
+                currentTime= new Date(new Date()-24*60*60*1000).format("yyyyMMdd")+"夜";
+            }
+            else if(date.getHours()>7&&date.getHours()<18){
+
+                currentTime= currentTime+"白";
+            }
+            else if(date.getHours()==18){
+                if(date.getMinutes()<=30){
+                    currentTime= currentTime+"白";
+                }
+                else if(date.getMinutes()>=40){
+                    currentTime= currentTime+"夜";
+                }
+            }
+            else if(date.getHours()>18){
+                currentTime= currentTime+"夜";
+            }
+
+
 
             if(msg['STATE']=='04'){//正常 取消按钮
-
+                clearInterval(prodstopInterval);
+                clearInterval(equipstopInterval);
+                clearInterval(toolstopInterval);
                 lastProduction2(msg['PRO']);
 
                 $('#'+msg['NUM']+'_01[prod="'+msg['PRO']+'"]').removeClass('bg-green-red').addClass('bg-green');
@@ -375,6 +397,7 @@ function initwebsocket(type){
 
             }
             else if(msg['STATE']=='01'){//设备异常
+                clearInterval(equipstopInterval);
                 $('#'+msg['NUM']+'_01[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
                 //$('#equipstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="01"][prod="'+msg['PRO']+'"]').length);
                 $('#shebei[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
@@ -384,19 +407,20 @@ function initwebsocket(type){
                 audio.play();
 
                 equipstopInterval=setInterval(function (){
-                    var equipstopTime=localStorage.getItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime);
+                    var equipstopTime=localStorage.getItem('equipstopTime'+msg['PRO']+currentTime);
                     if(equipstopTime==null){
                         equipstopTime=0;
                     }
                     else{
                         equipstopTime=Number(equipstopTime)+1;
                     }
-                    localStorage.setItem('equipstopTime'+msg['PRO']+msg['VAR']+currentTime,equipstopTime);
+                    localStorage.setItem('equipstopTime'+msg['PRO']+currentTime,equipstopTime);
                     $('#equipstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(equipstopTime));
                 },1000);
 
             }
             else if(msg['STATE']=='02'){//工装异常
+                clearInterval(toolstopInterval);
                 $('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
                 //$('#toolstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="02"][prod="'+msg['PRO']+'"]').length);
                 $('#gongzhuang[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
@@ -404,19 +428,20 @@ function initwebsocket(type){
                 audio.play();
 
                 toolstopInterval=setInterval(function (){
-                    var toolstopTime=localStorage.getItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime);
+                    var toolstopTime=localStorage.getItem('toolstopTime'+msg['PRO']+currentTime);
                     if(toolstopTime==null){
                         toolstopTime=0;
                     }
                     else{
                         toolstopTime=Number(toolstopTime)+1;
                     }
-                    localStorage.setItem('toolstopTime'+msg['PRO']+msg['VAR']+currentTime,toolstopTime);
+                    localStorage.setItem('toolstopTime'+msg['PRO']+currentTime,toolstopTime);
                     $('#toolstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(toolstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);
             }
             else if(msg['STATE']=='03'){//生产异常
+                clearInterval(prodstopInterval);
                 $('#'+msg['NUM']+'_03[prod="'+msg['PRO']+'"]').removeClass('bg-green').addClass('bg-green-red');
                 //$('#prodstop[prod="'+msg['PRO']+'"]').text($('.bg-green-red[id$="03"][prod="'+msg['PRO']+'"]').length);
                 $('#shengchan[prod="'+msg['PRO']+'"]').addClass('bg-green-red');
@@ -424,14 +449,14 @@ function initwebsocket(type){
                 audio.play();
 
                 prodstopInterval=setInterval(function (){
-                    var prodstopTime=localStorage.getItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime);
+                    var prodstopTime=localStorage.getItem('prodstopTime'+msg['PRO']+currentTime);
                     if(prodstopTime==null){
                         prodstopTime=0;
                     }
                     else{
                         prodstopTime=Number(prodstopTime)+1;
                     }
-                    localStorage.setItem('prodstopTime'+msg['PRO']+msg['VAR']+currentTime,prodstopTime);
+                    localStorage.setItem('prodstopTime'+msg['PRO']+currentTime,prodstopTime);
                     $('#prodstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(prodstopTime));
                     //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                 },1000);

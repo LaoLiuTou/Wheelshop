@@ -113,27 +113,48 @@ function lastProduction(type,production){
                         $('#equipstop[prod="'+production+'"]').text(equipstop);
                         $('#toolstop[prod="'+production+'"]').text(toolstop);*/
 
+                        var date=new Date();
+                        var currentTime = date.format("yyyyMMdd");
                         clearInterval(prodstopInterval);
                         clearInterval(equipstopInterval);
                         clearInterval(toolstopInterval);
-                        var date=new Date();
-                        var currentTime = date.format("yyyyMMdd");
-                        $('#prodstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('prodstopTime'+production+data[o]['variety']+currentTime)==null?0:localStorage.getItem('prodstopTime'+production+data[o]['variety']+currentTime)));
-                        $('#equipstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('equipstopTime'+production+data[o]['variety']+currentTime)==null?0:localStorage.getItem('equipstopTime'+production+data[o]['variety']+currentTime)));
-                        $('#toolstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('toolstopTime'+production+data[o]['variety']+currentTime)==null?0:localStorage.getItem('toolstopTime'+production+data[o]['variety']+currentTime)));
+
+                        if(date.getHours()>0&&date.getHours()<6){
+                            currentTime= new Date(new Date()-24*60*60*1000).format("yyyyMMdd")+"夜";
+                        }
+                        else if(date.getHours()>7&&date.getHours()<18){
+
+                            currentTime= currentTime+"白";
+                        }
+                        else if(date.getHours()==18){
+                            if(date.getMinutes()<=30){
+                                currentTime= currentTime+"白";
+                            }
+                            else if(date.getMinutes()>=40){
+                                currentTime= currentTime+"夜";
+                            }
+                        }
+                        else if(date.getHours()>18){
+                            currentTime= currentTime+"夜";
+                        }
+
+
+                        $('#prodstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('prodstopTime'+production+currentTime)==null?0:localStorage.getItem('prodstopTime'+production+currentTime)));
+                        $('#equipstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('equipstopTime'+production+currentTime)==null?0:localStorage.getItem('equipstopTime'+production+currentTime)));
+                        $('#toolstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('toolstopTime'+production+currentTime)==null?0:localStorage.getItem('toolstopTime'+production+currentTime)));
 
 
                         if(equipstop>0){
                             $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
                             equipstopInterval=setInterval(function (){
-                                var equipstopTime=localStorage.getItem('equipstopTime'+production+data[o]['variety']+currentTime);
+                                var equipstopTime=localStorage.getItem('equipstopTime'+production+currentTime);
                                 if(equipstopTime==null){
                                     equipstopTime=0;
                                 }
                                 else{
                                     equipstopTime=Number(equipstopTime)+1;
                                 }
-                                localStorage.setItem('equipstopTime'+production+data[o]['variety']+currentTime,equipstopTime);
+                                localStorage.setItem('equipstopTime'+production+currentTime,equipstopTime);
                                 $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(equipstopTime));
                                 //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
                                 //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
@@ -143,14 +164,14 @@ function lastProduction(type,production){
                         if(prodstop>0){
                             $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
                             prodstopInterval=setInterval(function (){
-                                var prodstopTime=localStorage.getItem('prodstopTime'+production+data[o]['variety']+currentTime);
+                                var prodstopTime=localStorage.getItem('prodstopTime'+production+currentTime);
                                 if(prodstopTime==null){
                                     prodstopTime=0;
                                 }
                                 else{
                                     prodstopTime=Number(prodstopTime)+1;
                                 }
-                                localStorage.setItem('prodstopTime'+production+data[o]['variety']+currentTime,prodstopTime);
+                                localStorage.setItem('prodstopTime'+production+currentTime,prodstopTime);
                                 $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(prodstopTime));
                                 //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                             },1000);
@@ -158,14 +179,14 @@ function lastProduction(type,production){
                         if(toolstop>0){
                             $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
                             toolstopInterval=setInterval(function (){
-                                var toolstopTime=localStorage.getItem('toolstopTime'+production+data[o]['variety']+currentTime);
+                                var toolstopTime=localStorage.getItem('toolstopTime'+production+currentTime);
                                 if(toolstopTime==null){
                                     toolstopTime=0;
                                 }
                                 else{
                                     toolstopTime=Number(toolstopTime)+1;
                                 }
-                                localStorage.setItem('toolstopTime'+production+data[o]['variety']+currentTime,toolstopTime);
+                                localStorage.setItem('toolstopTime'+production+currentTime,toolstopTime);
                                 $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(toolstopTime));
                                 //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                             },1000);
@@ -314,27 +335,50 @@ function lastProduction2(production){
                         }
 
                     }
+
+                    var date=new Date();
+                    var currentTime = date.format("yyyyMMdd");
                     clearInterval(prodstopInterval);
                     clearInterval(equipstopInterval);
                     clearInterval(toolstopInterval);
-                    var date=new Date();
-                    var currentTime = date.format("yyyyMMdd");
-                    $('#prodstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('prodstopTime'+production+data[o]['variety']+currentTime)==null?0:localStorage.getItem('prodstopTime'+production+data[o]['variety']+currentTime)));
-                    $('#equipstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('equipstopTime'+production+data[o]['variety']+currentTime)==null?0:localStorage.getItem('equipstopTime'+production+data[o]['variety']+currentTime)));
-                    $('#toolstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('toolstopTime'+production+data[o]['variety']+currentTime)==null?0:localStorage.getItem('toolstopTime'+production+data[o]['variety']+currentTime)));
+
+
+                    if(date.getHours()>0&&date.getHours()<6){
+                        currentTime= new Date(new Date()-24*60*60*1000).format("yyyyMMdd")+"夜";
+                    }
+                    else if(date.getHours()>7&&date.getHours()<18){
+
+                            currentTime= currentTime+"白";
+                    }
+                    else if(date.getHours()==18){
+                        if(date.getMinutes()<=30){
+                            currentTime= currentTime+"白";
+                        }
+                        else if(date.getMinutes()>=40){
+                            currentTime= currentTime+"夜";
+                        }
+                    }
+                    else if(date.getHours()>18){
+                        currentTime= currentTime+"夜";
+                    }
+
+
+                    $('#prodstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('prodstopTime'+production+currentTime)==null?0:localStorage.getItem('prodstopTime'+production+currentTime)));
+                    $('#equipstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('equipstopTime'+production+currentTime)==null?0:localStorage.getItem('equipstopTime'+production+currentTime)));
+                    $('#toolstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('toolstopTime'+production+currentTime)==null?0:localStorage.getItem('toolstopTime'+production+currentTime)));
 
                     if(equipstop>0){
                         $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
 
                         equipstopInterval=setInterval(function (){
-                            var equipstopTime=localStorage.getItem('equipstopTime'+production+data[o]['variety']+currentTime);
+                            var equipstopTime=localStorage.getItem('equipstopTime'+production+currentTime);
                             if(equipstopTime==null){
                                 equipstopTime=0;
                             }
                             else{
                                 equipstopTime=Number(equipstopTime)+1;
                             }
-                            localStorage.setItem('equipstopTime'+production+data[o]['variety']+currentTime,equipstopTime);
+                            localStorage.setItem('equipstopTime'+production+currentTime,equipstopTime);
                             $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(equipstopTime));
                             //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
                             //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
@@ -344,14 +388,14 @@ function lastProduction2(production){
                     if(prodstop>0){
                         $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
                         prodstopInterval=setInterval(function (){
-                            var prodstopTime=localStorage.getItem('prodstopTime'+production+data[o]['variety']+currentTime);
+                            var prodstopTime=localStorage.getItem('prodstopTime'+production+currentTime);
                             if(prodstopTime==null){
                                 prodstopTime=0;
                             }
                             else{
                                 prodstopTime=Number(prodstopTime)+1;
                             }
-                            localStorage.setItem('prodstopTime'+production+data[o]['variety']+currentTime,prodstopTime);
+                            localStorage.setItem('prodstopTime'+production+currentTime,prodstopTime);
                             $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(prodstopTime));
                             //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                         },1000);
@@ -359,14 +403,14 @@ function lastProduction2(production){
                     if(toolstop>0){
                         $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
                         toolstopInterval=setInterval(function (){
-                            var toolstopTime=localStorage.getItem('toolstopTime'+production+data[o]['variety']+currentTime);
+                            var toolstopTime=localStorage.getItem('toolstopTime'+production+currentTime);
                             if(toolstopTime==null){
                                 toolstopTime=0;
                             }
                             else{
                                 toolstopTime=Number(toolstopTime)+1;
                             }
-                            localStorage.setItem('toolstopTime'+production+data[o]['variety']+currentTime,toolstopTime);
+                            localStorage.setItem('toolstopTime'+production+currentTime,toolstopTime);
                             $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(toolstopTime));
                             //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
                         },1000);
