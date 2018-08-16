@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,9 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wheelshop.chat.common.NettyChannelMap;
+import com.wheelshop.model.production.Production;
 import com.wheelshop.model.timer.Timer;
+import com.wheelshop.service.production.IProductionService;
 import com.wheelshop.service.timer.ITimerService;
 /**
  * @author lt
@@ -42,11 +45,15 @@ public class TokenUtils {
     
     @SuppressWarnings("rawtypes")
 	public static void main(String[] s){
-    	System.out.println(get("b6f71e0e-6634-4529-aee5-324cecdb1fbe"));
+    	/*System.out.println(get("b6f71e0e-6634-4529-aee5-324cecdb1fbe"));
     	for (Map.Entry entry:map.entrySet()){
             
             System.out.println(entry.getValue()+":"+entry.getKey());
-        }
+        }*/
+    	Calendar calendar = Calendar.getInstance();
+		System.out.println(calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
+		System.out.println(calendar.get(Calendar.HOUR_OF_DAY)==18&&calendar.get(Calendar.MINUTE)==30);
+    	
     }
 
     
@@ -105,12 +112,15 @@ public class TokenUtils {
 
     @Autowired
 	private ITimerService iTimerService;
+    @Autowired
+    private IProductionService iProductionService;
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	@Scheduled(cron="0 0/1 * * * ? ")  
     public void getRest(){  
     	try {
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 			
 			Map paramMap=new HashMap();
 			paramMap.put("starttime",sdf.format(new Date()));
@@ -179,6 +189,75 @@ public class TokenUtils {
 		            }
 		        }
 			}
+			 
+			 
+			if(sdf.format(new Date()).equals("18:30")){
+				
+				paramMap=new HashMap();
+				paramMap.put("flag","1");
+				List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
+				logger.info("查询白班结束时间:"+temp.size());
+				for(Production prod:temp){
+					prod.setEndtime(new Date());
+					prod.setFlag("0");
+					iProductionService.updateProduction(prod);
+					
+					//推送
+					for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+			            if (entry.getKey().toString().substring(0, 1).equals(prod.getProdnum())){
+			            	 
+							ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+			            	Map<String, String> contentMap = new HashMap<String, String>();
+			            	contentMap.put("T", "7");
+			            	contentMap.put("NAME", "system");
+			            	contentMap.put("FI", entry.getKey().toString());  
+			            	contentMap.put("PRO", prod.getProdnum()); 
+							ObjectMapper mapper = new ObjectMapper();
+							String json = "";
+							json = mapper.writeValueAsString(contentMap);
+							
+							if(channelHandlerContext!=null){
+								
+							   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+					        }
+			            }
+			        }
+				}
+			}
+			else if(sdf.format(new Date()).equals("06:00")){
+				
+				paramMap=new HashMap();
+				paramMap.put("flag","1");
+				List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
+				logger.info("查询夜班结束时间:"+temp.size());
+				for(Production prod:temp){
+					prod.setEndtime(new Date());
+					prod.setFlag("0");
+					iProductionService.updateProduction(prod);
+					
+					//推送
+					for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+			            if (entry.getKey().toString().substring(0, 1).equals(prod.getProdnum())){
+			            	 
+							ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+			            	Map<String, String> contentMap = new HashMap<String, String>();
+			            	contentMap.put("T", "7");
+			            	contentMap.put("NAME", "system");
+			            	contentMap.put("FI", entry.getKey().toString());  
+			            	contentMap.put("PRO", prod.getProdnum()); 
+							ObjectMapper mapper = new ObjectMapper();
+							String json = "";
+							json = mapper.writeValueAsString(contentMap);
+							
+							if(channelHandlerContext!=null){
+								
+							   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+					        }
+			            }
+			        }
+				}
+			}
+			
 			
 			
 		} catch (Exception e) {
@@ -187,4 +266,6 @@ public class TokenUtils {
 		}
     	 
     } 
+    
+     
 }
