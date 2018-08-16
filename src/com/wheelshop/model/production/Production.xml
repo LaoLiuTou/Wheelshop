@@ -54,7 +54,9 @@
 		ORDER BY a.ID DESC 
 	</select>
 	<select id="selectproductionByParam" parameterType="java.util.Map" resultType="Production">
-		SELECT a.*,b.production as production 
+		SELECT a.*,b.production as production ,
+		CASE WHEN DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&gt;='07:00:00' 
+		      AND DATE_FORMAT(a.STARTTIME,'%H:%i:%s')&lt;='18:30:00' THEN '白班' ELSE '夜班' END as bc 
 		FROM production a 
 		LEFT JOIN prodnum b on a.prodnum=b.id 
 		<trim prefix="WHERE" prefixOverrides="AND|OR">

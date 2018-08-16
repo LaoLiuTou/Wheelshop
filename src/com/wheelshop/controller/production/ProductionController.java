@@ -4,6 +4,7 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -574,7 +575,40 @@ public class ProductionController {
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 				paramMap=new HashMap();
 				paramMap.put("prodnum",production.getProdnum());
-				paramMap.put("starttimeFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
+				
+				if(list.size()>0&&list.get(0).getBc()!=null&&list.get(0).getBc().equals("白班")){
+					paramMap.put("starttimeFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
+					paramMap.put("starttimeTo",sdf.parse(sdf2.format(new Date())+" 18:30:00"));
+					
+				}
+				else if(list.size()>0&&list.get(0).getBc()!=null&&list.get(0).getBc().equals("夜班")){
+					//白班：07:00:00—18:30:00
+					//夜班：18:40:00—06:00:00
+
+					Date date=new Date();
+					
+					
+					Calendar calendar = Calendar.getInstance();
+					
+					if(calendar.get(Calendar.HOUR_OF_DAY) >=0&&calendar.get(Calendar.HOUR_OF_DAY) <=6){
+						calendar.setTime(date);
+						calendar.add(Calendar.DAY_OF_MONTH, -1);
+						date = calendar.getTime();
+						//System.out.println(sdf.format(date));
+						paramMap.put("starttimeFrom",sdf.parse(sdf2.format(date)+" 18:40:00"));
+						paramMap.put("starttimeTo",sdf.parse(sdf2.format(new Date())+" 06:00:00"));
+					}
+					else{
+						paramMap.put("starttimeFrom",sdf.parse(sdf2.format(new Date())+" 18:40:00"));
+						paramMap.put("starttimeTo",sdf.parse(sdf2.format(new Date())+" 23:59:59"));
+					}
+
+					
+					
+				}
+				
+				
+				
 				List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
 				
 				for(int index=0;index<list.size();index++){
