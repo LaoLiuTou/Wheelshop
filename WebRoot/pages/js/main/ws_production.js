@@ -133,9 +133,15 @@ function lastProduction(type,production){
                             else if(date.getMinutes()>=40){
                                 currentTime= currentTime+"夜";
                             }
+                            else{
+                                currentTime='0';
+                            }
                         }
                         else if(date.getHours()>18){
                             currentTime= currentTime+"夜";
+                        }
+                        else{
+                            currentTime='0';
                         }
 
 
@@ -146,50 +152,56 @@ function lastProduction(type,production){
 
                         if(equipstop>0){
                             $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
-                            equipstopInterval=setInterval(function (){
-                                var equipstopTime=localStorage.getItem('equipstopTime'+production+currentTime);
-                                if(equipstopTime==null){
-                                    equipstopTime=0;
-                                }
-                                else{
-                                    equipstopTime=Number(equipstopTime)+1;
-                                }
-                                localStorage.setItem('equipstopTime'+production+currentTime,equipstopTime);
-                                $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(equipstopTime));
-                                //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
-                                //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
-                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                            },1000);
+                            if(currentTime!=0) {
+                                equipstopInterval = setInterval(function () {
+                                    var equipstopTime = localStorage.getItem('equipstopTime' + production + currentTime);
+                                    if (equipstopTime == null) {
+                                        equipstopTime = 0;
+                                    }
+                                    else {
+                                        equipstopTime = Number(equipstopTime) + 1;
+                                    }
+                                    localStorage.setItem('equipstopTime' + production + currentTime, equipstopTime);
+                                    $('#equipstop' + '[prod="' + production + '"]').text(sec_to_time(equipstopTime));
+                                    //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                                    //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                                }, 1000);
+                            }
                         }
                         if(prodstop>0){
                             $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
-                            prodstopInterval=setInterval(function (){
-                                var prodstopTime=localStorage.getItem('prodstopTime'+production+currentTime);
-                                if(prodstopTime==null){
-                                    prodstopTime=0;
-                                }
-                                else{
-                                    prodstopTime=Number(prodstopTime)+1;
-                                }
-                                localStorage.setItem('prodstopTime'+production+currentTime,prodstopTime);
-                                $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(prodstopTime));
-                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                            },1000);
+                            if(currentTime!=0) {
+                                prodstopInterval = setInterval(function () {
+                                    var prodstopTime = localStorage.getItem('prodstopTime' + production + currentTime);
+                                    if (prodstopTime == null) {
+                                        prodstopTime = 0;
+                                    }
+                                    else {
+                                        prodstopTime = Number(prodstopTime) + 1;
+                                    }
+                                    localStorage.setItem('prodstopTime' + production + currentTime, prodstopTime);
+                                    $('#prodstop' + '[prod="' + production + '"]').text(sec_to_time(prodstopTime));
+                                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                                }, 1000);
+                            }
                         }
                         if(toolstop>0){
                             $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
-                            toolstopInterval=setInterval(function (){
-                                var toolstopTime=localStorage.getItem('toolstopTime'+production+currentTime);
-                                if(toolstopTime==null){
-                                    toolstopTime=0;
-                                }
-                                else{
-                                    toolstopTime=Number(toolstopTime)+1;
-                                }
-                                localStorage.setItem('toolstopTime'+production+currentTime,toolstopTime);
-                                $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(toolstopTime));
-                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                            },1000);
+                            if(currentTime!=0) {
+                                toolstopInterval = setInterval(function () {
+                                    var toolstopTime = localStorage.getItem('toolstopTime' + production + currentTime);
+                                    if (toolstopTime == null) {
+                                        toolstopTime = 0;
+                                    }
+                                    else {
+                                        toolstopTime = Number(toolstopTime) + 1;
+                                    }
+                                    localStorage.setItem('toolstopTime' + production + currentTime, toolstopTime);
+                                    $('#toolstop' + '[prod="' + production + '"]').text(sec_to_time(toolstopTime));
+                                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                                }, 1000);
+                            }
                         }
 
 
@@ -357,11 +369,16 @@ function lastProduction2(production){
                         else if(date.getMinutes()>=40){
                             currentTime= currentTime+"夜";
                         }
+                        else{
+                            currentTime='0';
+                        }
                     }
                     else if(date.getHours()>18){
                         currentTime= currentTime+"夜";
                     }
-
+                    else{
+                        currentTime='0';
+                    }
 
                     $('#prodstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('prodstopTime'+production+currentTime)==null?0:localStorage.getItem('prodstopTime'+production+currentTime)));
                     $('#equipstop[prod="'+production+'"]').text(sec_to_time(localStorage.getItem('equipstopTime'+production+currentTime)==null?0:localStorage.getItem('equipstopTime'+production+currentTime)));
@@ -370,50 +387,57 @@ function lastProduction2(production){
                     if(equipstop>0){
                         $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
 
-                        equipstopInterval=setInterval(function (){
-                            var equipstopTime=localStorage.getItem('equipstopTime'+production+currentTime);
-                            if(equipstopTime==null){
-                                equipstopTime=0;
-                            }
-                            else{
-                                equipstopTime=Number(equipstopTime)+1;
-                            }
-                            localStorage.setItem('equipstopTime'+production+currentTime,equipstopTime);
-                            $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(equipstopTime));
-                            //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
-                            //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
-                            //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                        },1000);
+                        if(currentTime!=0){
+                            equipstopInterval=setInterval(function (){
+                                var equipstopTime=localStorage.getItem('equipstopTime'+production+currentTime);
+                                if(equipstopTime==null){
+                                    equipstopTime=0;
+                                }
+                                else{
+                                    equipstopTime=Number(equipstopTime)+1;
+                                }
+                                localStorage.setItem('equipstopTime'+production+currentTime,equipstopTime);
+                                $('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(equipstopTime));
+                                //$('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['prodstop']));
+                                //$('#equipstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['equipstop']));
+                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                            },1000);
+                        }
+
                     }
                     if(prodstop>0){
                         $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
-                        prodstopInterval=setInterval(function (){
-                            var prodstopTime=localStorage.getItem('prodstopTime'+production+currentTime);
-                            if(prodstopTime==null){
-                                prodstopTime=0;
-                            }
-                            else{
-                                prodstopTime=Number(prodstopTime)+1;
-                            }
-                            localStorage.setItem('prodstopTime'+production+currentTime,prodstopTime);
-                            $('#prodstop'+'[prod="'+production+'"]').text(sec_to_time(prodstopTime));
-                            //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                        },1000);
+                        if(currentTime!=0) {
+                            prodstopInterval = setInterval(function () {
+                                var prodstopTime = localStorage.getItem('prodstopTime' + production + currentTime);
+                                if (prodstopTime == null) {
+                                    prodstopTime = 0;
+                                }
+                                else {
+                                    prodstopTime = Number(prodstopTime) + 1;
+                                }
+                                localStorage.setItem('prodstopTime' + production + currentTime, prodstopTime);
+                                $('#prodstop' + '[prod="' + production + '"]').text(sec_to_time(prodstopTime));
+                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                            }, 1000);
+                        }
                     }
                     if(toolstop>0){
                         $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
-                        toolstopInterval=setInterval(function (){
-                            var toolstopTime=localStorage.getItem('toolstopTime'+production+currentTime);
-                            if(toolstopTime==null){
-                                toolstopTime=0;
-                            }
-                            else{
-                                toolstopTime=Number(toolstopTime)+1;
-                            }
-                            localStorage.setItem('toolstopTime'+production+currentTime,toolstopTime);
-                            $('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(toolstopTime));
-                            //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                        },1000);
+                        if(currentTime!=0) {
+                            toolstopInterval = setInterval(function () {
+                                var toolstopTime = localStorage.getItem('toolstopTime' + production + currentTime);
+                                if (toolstopTime == null) {
+                                    toolstopTime = 0;
+                                }
+                                else {
+                                    toolstopTime = Number(toolstopTime) + 1;
+                                }
+                                localStorage.setItem('toolstopTime' + production + currentTime, toolstopTime);
+                                $('#toolstop' + '[prod="' + production + '"]').text(sec_to_time(toolstopTime));
+                                //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                            }, 1000);
+                        }
                     }
 
                     //第六条生产线

@@ -161,7 +161,7 @@ public class ProductionController {
 			List<Production> list=iProductionService.selectProductionByParam(paramMap);
 			
 			if(list.size()>0){
-				resultMap.put("variety", list.get(0).getVariety()+"|"+list.get(0).getId());
+				resultMap.put("variety", list.get(0).getVariety()+"|"+list.get(0).getId()+list.get(0).getBc());
 			}
 			else{
 				resultMap.put("variety", "");

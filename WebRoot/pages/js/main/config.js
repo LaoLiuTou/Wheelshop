@@ -364,9 +364,15 @@ function initwebsocket(type){
                 else if(date.getMinutes()>=40){
                     currentTime= currentTime+"夜";
                 }
+                else{
+                    currentTime='0';
+                }
             }
             else if(date.getHours()>18){
                 currentTime= currentTime+"夜";
+            }
+            else{
+                currentTime='0';
             }
 
 
@@ -406,17 +412,19 @@ function initwebsocket(type){
                 audio.src = "audio/"+msg['PRO']+"/1/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
 
-                equipstopInterval=setInterval(function (){
-                    var equipstopTime=localStorage.getItem('equipstopTime'+msg['PRO']+currentTime);
-                    if(equipstopTime==null){
-                        equipstopTime=0;
-                    }
-                    else{
-                        equipstopTime=Number(equipstopTime)+1;
-                    }
-                    localStorage.setItem('equipstopTime'+msg['PRO']+currentTime,equipstopTime);
-                    $('#equipstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(equipstopTime));
-                },1000);
+                if(currentTime!=0) {
+                    equipstopInterval = setInterval(function () {
+                        var equipstopTime = localStorage.getItem('equipstopTime' + msg['PRO'] + currentTime);
+                        if (equipstopTime == null) {
+                            equipstopTime = 0;
+                        }
+                        else {
+                            equipstopTime = Number(equipstopTime) + 1;
+                        }
+                        localStorage.setItem('equipstopTime' + msg['PRO'] + currentTime, equipstopTime);
+                        $('#equipstop' + '[prod="' + msg['PRO'] + '"]').text(sec_to_time(equipstopTime));
+                    }, 1000);
+                }
 
             }
             else if(msg['STATE']=='02'){//工装异常
@@ -427,18 +435,20 @@ function initwebsocket(type){
                 audio.src = "audio/"+msg['PRO']+"/2/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
 
-                toolstopInterval=setInterval(function (){
-                    var toolstopTime=localStorage.getItem('toolstopTime'+msg['PRO']+currentTime);
-                    if(toolstopTime==null){
-                        toolstopTime=0;
-                    }
-                    else{
-                        toolstopTime=Number(toolstopTime)+1;
-                    }
-                    localStorage.setItem('toolstopTime'+msg['PRO']+currentTime,toolstopTime);
-                    $('#toolstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(toolstopTime));
-                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                },1000);
+                if(currentTime!=0) {
+                    toolstopInterval = setInterval(function () {
+                        var toolstopTime = localStorage.getItem('toolstopTime' + msg['PRO'] + currentTime);
+                        if (toolstopTime == null) {
+                            toolstopTime = 0;
+                        }
+                        else {
+                            toolstopTime = Number(toolstopTime) + 1;
+                        }
+                        localStorage.setItem('toolstopTime' + msg['PRO'] + currentTime, toolstopTime);
+                        $('#toolstop' + '[prod="' + msg['PRO'] + '"]').text(sec_to_time(toolstopTime));
+                        //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                    }, 1000);
+                }
             }
             else if(msg['STATE']=='03'){//生产异常
                 clearInterval(prodstopInterval);
@@ -448,18 +458,20 @@ function initwebsocket(type){
                 audio.src = "audio/"+msg['PRO']+"/3/"+$('#'+msg['NUM']+'_02[prod="'+msg['PRO']+'"]').text()+".mp3";
                 audio.play();
 
-                prodstopInterval=setInterval(function (){
-                    var prodstopTime=localStorage.getItem('prodstopTime'+msg['PRO']+currentTime);
-                    if(prodstopTime==null){
-                        prodstopTime=0;
-                    }
-                    else{
-                        prodstopTime=Number(prodstopTime)+1;
-                    }
-                    localStorage.setItem('prodstopTime'+msg['PRO']+currentTime,prodstopTime);
-                    $('#prodstop'+'[prod="'+msg['PRO']+'"]').text(sec_to_time(prodstopTime));
-                    //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
-                },1000);
+                if(currentTime!=0) {
+                    prodstopInterval = setInterval(function () {
+                        var prodstopTime = localStorage.getItem('prodstopTime' + msg['PRO'] + currentTime);
+                        if (prodstopTime == null) {
+                            prodstopTime = 0;
+                        }
+                        else {
+                            prodstopTime = Number(prodstopTime) + 1;
+                        }
+                        localStorage.setItem('prodstopTime' + msg['PRO'] + currentTime, prodstopTime);
+                        $('#prodstop' + '[prod="' + msg['PRO'] + '"]').text(sec_to_time(prodstopTime));
+                        //$('#toolstop'+'[prod="'+production+'"]').text(sec_to_time(data[o]['toolstop']));
+                    }, 1000);
+                }
             }
             else if(msg['STATE']=='05'){//关闭声音
 
@@ -585,6 +597,18 @@ function initwebsocket(type){
             }
 
             window.location.href=pageName;
+        }
+        else if(msg['T']=='8'){
+            //lastProduction2(msg['PRO']);
+
+            clearInterval(prodstopInterval);
+            clearInterval(equipstopInterval);
+            clearInterval(toolstopInterval);
+            clearInterval(yieldvarInterval);
+            $('#rate').text('');
+            $('#yield').text('');
+            $('#actualcomp').text('');
+
         }
 
     }

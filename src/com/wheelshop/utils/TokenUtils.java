@@ -173,7 +173,7 @@ public class TokenUtils {
 		            	 
 						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 		            	Map<String, String> contentMap = new HashMap<String, String>();
-		            	contentMap.put("T", "7");
+		            	contentMap.put("T", "8");
 		            	contentMap.put("NAME", "system");
 		            	contentMap.put("FI", entry.getKey().toString());  
 		            	contentMap.put("PRO", list.get(0).getProdnum());
@@ -208,7 +208,7 @@ public class TokenUtils {
 			            	 
 							ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 			            	Map<String, String> contentMap = new HashMap<String, String>();
-			            	contentMap.put("T", "7");
+			            	contentMap.put("T", "8");
 			            	contentMap.put("NAME", "system");
 			            	contentMap.put("FI", entry.getKey().toString());  
 			            	contentMap.put("PRO", prod.getProdnum()); 
