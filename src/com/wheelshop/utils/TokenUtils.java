@@ -201,28 +201,23 @@ public class TokenUtils {
 					prod.setEndtime(new Date());
 					prod.setFlag("0");
 					iProductionService.updateProduction(prod);
-					
-					//推送
-					for (Map.Entry entry:NettyChannelMap.map.entrySet()){
-			            if (entry.getKey().toString().substring(0, 1).equals(prod.getProdnum())){
-			            	 
-							ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
-			            	Map<String, String> contentMap = new HashMap<String, String>();
-			            	contentMap.put("T", "8");
-			            	contentMap.put("NAME", "system");
-			            	contentMap.put("FI", entry.getKey().toString());  
-			            	contentMap.put("PRO", prod.getProdnum()); 
-							ObjectMapper mapper = new ObjectMapper();
-							String json = "";
-							json = mapper.writeValueAsString(contentMap);
-							
-							if(channelHandlerContext!=null){
-								
-							   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
-					        }
-			            }
-			        }
 				}
+				
+				//推送
+				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+		            	Map<String, String> contentMap = new HashMap<String, String>();
+		            	contentMap.put("T", "8");
+		            	contentMap.put("NAME", "system");
+		            	contentMap.put("FI", entry.getKey().toString());  
+		            	contentMap.put("PRO", entry.getKey().toString().substring(0, 1)); 
+						ObjectMapper mapper = new ObjectMapper();
+						String json = "";
+						json = mapper.writeValueAsString(contentMap);
+						if(channelHandlerContext!=null){
+						   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+				        }
+		        }
 			}
 			else if(sdf.format(new Date()).equals("06:00")){
 				
@@ -234,28 +229,23 @@ public class TokenUtils {
 					prod.setEndtime(new Date());
 					prod.setFlag("0");
 					iProductionService.updateProduction(prod);
-					
-					//推送
-					for (Map.Entry entry:NettyChannelMap.map.entrySet()){
-			            if (entry.getKey().toString().substring(0, 1).equals(prod.getProdnum())){
-			            	 
-							ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
-			            	Map<String, String> contentMap = new HashMap<String, String>();
-			            	contentMap.put("T", "7");
-			            	contentMap.put("NAME", "system");
-			            	contentMap.put("FI", entry.getKey().toString());  
-			            	contentMap.put("PRO", prod.getProdnum()); 
-							ObjectMapper mapper = new ObjectMapper();
-							String json = "";
-							json = mapper.writeValueAsString(contentMap);
-							
-							if(channelHandlerContext!=null){
-								
-							   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
-					        }
-			            }
-			        }
 				}
+				
+				//推送
+				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+					ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+	            	Map<String, String> contentMap = new HashMap<String, String>();
+	            	contentMap.put("T", "7");
+	            	contentMap.put("NAME", "system");
+	            	contentMap.put("FI", entry.getKey().toString());  
+	            	contentMap.put("PRO", entry.getKey().toString().substring(0, 1)); 
+					ObjectMapper mapper = new ObjectMapper();
+					String json = "";
+					json = mapper.writeValueAsString(contentMap);
+					if(channelHandlerContext!=null){
+					   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+			        }
+		        }
 			}
 			
 			
