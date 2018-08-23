@@ -234,7 +234,8 @@ public class FileUploadController {
 			Map deviceMap=new HashMap();
 			for(Device device:deviceList){
 				if(device.getDeviceno()!=null&&device.getNodeno()!=null){
-					deviceMap.put(device.getDeviceno(), device.getNodeno().replace("device", ""));
+					//deviceMap.put(device.getDeviceno(), device.getNodeno().replace("device", ""));
+					deviceMap.put(device.getFlag(), device.getNodeno().replace("device", ""));
 				}
 			}
 			for(int index=1;index<inList.size();index++){
