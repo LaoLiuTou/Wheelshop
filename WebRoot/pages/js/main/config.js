@@ -806,6 +806,23 @@ function playEndSound(){
     audio.play();
 }
 
+
+$('input:radio').click(function(){
+    //alert(this.checked);
+    //
+
+    var domName = $(this).attr('name');
+    if ($(this).data('waschecked')== true){
+        $(this).prop('checked', false);
+        $("input:radio[name='" + domName + "']").data('waschecked',false);
+    }
+    else {
+        $(this).prop('checked', true);
+        $("input:radio[name='" + domName + "']").data('waschecked',false);
+        $(this).data('waschecked', true);
+    }
+});
+
 function setMenu(par,sub){
     var menuStr='<ul class="nav nav-pills nav-stacked custom-nav">\n' +
         '      <li id="menu1"><a href="index.html"><i class="fa fa-home"></i> <span>首页</span></a></li>\n' +

@@ -1,4 +1,5 @@
 package com.wheelshop.service.production;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class ProductionServiceImpl  implements IProductionService {
 	@Transactional
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Production> selectProductionByParam(Map paramMap){ 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		List<Production> list=iProductionMapper.selectproductionByParam(paramMap);
 		///////////////////////
 		
@@ -51,30 +52,44 @@ public class ProductionServiceImpl  implements IProductionService {
 			
 			//end-start
 			int durtime=0;
-			if(p.getEndtime()!=null&&p.getStarttime()!=null){
-				durtime=(int) ((p.getEndtime().getTime()-p.getStarttime().getTime())/1000);
-			}
-			//timer
-			paramMap=new HashMap(); 
-			paramMap.put("prodnum",p.getProdnum()+"");
-			//paramMap.put("type","间休");
-			int timenumber=iTimerMapper.selectCounttimerByParam(paramMap);
-			paramMap.put("fromPage",0);
-			paramMap.put("toPage",timenumber); 
-			List<Timer> timerList=iTimerMapper.selecttimerByParam(paramMap);
 			//间休时间
 			int rest= 0;
-			for(Timer t:timerList){
-				String[] starttimes=t.getStarttime().split(":");
-				String[] endtimes=t.getEndtime().split(":");
-				 //t.getEndtime()-t.getStarttime();
-				if(endtimes.length==3&&starttimes.length==3){
-					rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
-							(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
+			if(p.getEndtime()!=null&&p.getStarttime()!=null){
+				durtime=(int) ((p.getEndtime().getTime()-p.getStarttime().getTime())/1000);
+			
+				//timer
+				paramMap=new HashMap(); 
+				paramMap.put("prodnum",p.getProdnum()+"");
+				//paramMap.put("type","间休");
+				int timenumber=iTimerMapper.selectCounttimerByParam(paramMap);
+				paramMap.put("fromPage",0);
+				paramMap.put("toPage",timenumber); 
+				List<Timer> timerList=iTimerMapper.selecttimerByParam(paramMap);
+				
+				for(Timer t:timerList){
+					
+					String[] starttimes=t.getStarttime().split(":");
+					String[] endtimes=t.getEndtime().split(":");
+					 //t.getEndtime()-t.getStarttime();
+					if(endtimes.length==3&&starttimes.length==3){
+						
+						try {
+							if(!sdf.parse(t.getStarttime()).before(sdf.parse(sdf.format(p.getStarttime())))&&
+									!sdf.parse(t.getEndtime()).after(sdf.parse(sdf.format(p.getEndtime())))){
+								rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
+										(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
+							
+							}
+							
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
+			
 			}
-			
-			
 			int prodtime= durtime-rest;
 			//list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
 			if(prodtime>=60)
@@ -103,9 +118,7 @@ public class ProductionServiceImpl  implements IProductionService {
 			List<Production> list=iProductionMapper.selectproductionInIds(alllist.get(i).getIds());
 			for(int index=0;index<list.size();index++){
 				Production p= list.get(index);
-				
 				//保存班次开始结束时间
-				
 				if(p.getStarttime()!=null){
 					if(startTime==null){
 						startTime=p.getStarttime();
@@ -126,40 +139,50 @@ public class ProductionServiceImpl  implements IProductionService {
 						}
 					}
 				}
-				
-				//end-start
-				int durtime=0;
-				if(p.getEndtime()!=null&&p.getStarttime()!=null){
-					durtime=(int) ((p.getEndtime().getTime()-p.getStarttime().getTime())/1000);
-				}
+			}
+			
+			//end-start
+			int durtime=0;
+			//间休时间
+			int rest= 0;
+			if(startTime!=null&&endTime!=null){
+				durtime=(int) ((endTime.getTime()-startTime.getTime())/1000);
+			 
 				//timer
 				paramMap=new HashMap(); 
-				paramMap.put("prodnum",p.getProdnum()+"");
+				paramMap.put("prodnum",alllist.get(i).getProdnum()+"");
 				//paramMap.put("type","间休");
 				int timenumber=iTimerMapper.selectCounttimerByParam(paramMap);
 				paramMap.put("fromPage",0);
 				paramMap.put("toPage",timenumber); 
 				List<Timer> timerList=iTimerMapper.selecttimerByParam(paramMap);
-				//间休时间
-				int rest= 0;
+				
 				for(Timer t:timerList){
 					String[] starttimes=t.getStarttime().split(":");
 					String[] endtimes=t.getEndtime().split(":");
 					//t.getEndtime()-t.getStarttime();
 					if(endtimes.length==3&&starttimes.length==3){
-						rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
-								(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
+						
+						try {
+							if(!sdf.parse(t.getStarttime()).before(sdf.parse(sdf.format(startTime)))&&
+									!sdf.parse(t.getEndtime()).after(sdf.parse(sdf.format(endTime)))){
+								rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
+										(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
+							}
+						 
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
-				
-				
-				int prodtime= durtime-rest;
-				//list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
-				if(prodtime>=60){
-					allProdTime+=(prodtime/60);
-				}
-					//list.get(index).setProdtime((prodtime/60)+"");
 			}
+			int prodtime= durtime-rest;
+			//list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
+			if(prodtime>=60){
+				allProdTime+=(prodtime/60);
+			}
+			//list.get(index).setProdtime((prodtime/60)+"");
 			alllist.get(i).setStarttime(startTime);
 			alllist.get(i).setEndtime(endTime);
 			alllist.get(i).setProdtime(allProdTime+"");
