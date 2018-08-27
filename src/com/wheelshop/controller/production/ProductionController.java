@@ -613,9 +613,14 @@ public class ProductionController {
 				
 				for(int index=0;index<list.size();index++){
 					list.get(index).setStarttime(null);
-					if(temp.size()>0){
-						list.get(index).setStarttime(temp.get(temp.size()-1).getStarttime());
+					
+					for(Production p:temp){
+						if(list.get(index).getStarttime()==null||
+								list.get(index).getStarttime().after(p.getStarttime())){
+							list.get(index).setStarttime(p.getStarttime());
+						}
 					}
+					
 				}
 				
 				

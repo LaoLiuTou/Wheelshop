@@ -152,7 +152,7 @@ function lastProduction(type,production){
 
                         if(equipstop>0){
                             $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
-                            if(currentTime!=0) {
+                            if(currentTime!=0&&data[o]['starttime']!='') {
                                 equipstopInterval = setInterval(function () {
                                     var equipstopTime = localStorage.getItem('equipstopTime' + production + currentTime);
                                     if (equipstopTime == null) {
@@ -171,7 +171,7 @@ function lastProduction(type,production){
                         }
                         if(prodstop>0){
                             $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
-                            if(currentTime!=0) {
+                            if(currentTime!=0&&data[o]['starttime']!='') {
                                 prodstopInterval = setInterval(function () {
                                     var prodstopTime = localStorage.getItem('prodstopTime' + production + currentTime);
                                     if (prodstopTime == null) {
@@ -188,7 +188,7 @@ function lastProduction(type,production){
                         }
                         if(toolstop>0){
                             $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
-                            if(currentTime!=0) {
+                            if(currentTime!=0&&data[o]['starttime']!='') {
                                 toolstopInterval = setInterval(function () {
                                     var toolstopTime = localStorage.getItem('toolstopTime' + production + currentTime);
                                     if (toolstopTime == null) {
@@ -387,7 +387,7 @@ function lastProduction2(production){
                     if(equipstop>0){
                         $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
 
-                        if(currentTime!=0){
+                        if(currentTime!=0&&data[o]['starttime']!=''){
                             equipstopInterval=setInterval(function (){
                                 var equipstopTime=localStorage.getItem('equipstopTime'+production+currentTime);
                                 if(equipstopTime==null){
@@ -407,7 +407,7 @@ function lastProduction2(production){
                     }
                     if(prodstop>0){
                         $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
-                        if(currentTime!=0) {
+                        if(currentTime!=0&&data[o]['starttime']!='') {
                             prodstopInterval = setInterval(function () {
                                 var prodstopTime = localStorage.getItem('prodstopTime' + production + currentTime);
                                 if (prodstopTime == null) {
@@ -424,7 +424,7 @@ function lastProduction2(production){
                     }
                     if(toolstop>0){
                         $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
-                        if(currentTime!=0) {
+                        if(currentTime!=0&&data[o]['starttime']!='') {
                             toolstopInterval = setInterval(function () {
                                 var toolstopTime = localStorage.getItem('toolstopTime' + production + currentTime);
                                 if (toolstopTime == null) {

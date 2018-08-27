@@ -599,15 +599,15 @@ function initwebsocket(type){
             window.location.href=pageName;
         }
         else if(msg['T']=='8'){
-            //lastProduction2(msg['PRO']);
+            lastProduction2(msg['PRO']);
 
-            clearInterval(prodstopInterval);
+            /*clearInterval(prodstopInterval);
             clearInterval(equipstopInterval);
             clearInterval(toolstopInterval);
             clearInterval(yieldvarInterval);
             $('#rate').text('');
             $('#yield').text('');
-            $('#actualcomp').text('');
+            $('#actualcomp').text('');*/
 
         }
 

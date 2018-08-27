@@ -94,6 +94,63 @@ public class ProductionServiceImpl  implements IProductionService {
 			//list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
 			if(prodtime>=60)
 			list.get(index).setProdtime((prodtime/60)+"");
+			
+			
+			
+			//dstate
+			paramMap=new HashMap(); 
+			paramMap.put("production",p.getProdnum()+"");
+			paramMap.put("state","01");
+			paramMap.put("adddate",sdf.format(p.getAdddate()));
+			int equipstopnumber=iDstateMapper.selectCountdstateByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",equipstopnumber); 
+			List<Dstate> equipstopList=iDstateMapper.selectdstateByParam(paramMap);
+			//设备停台时间
+			int equipstopTime=0;
+			for(Dstate dstate:equipstopList){
+				if(dstate.getDuration()!=null){
+					equipstopTime+=Integer.parseInt(dstate.getDuration());
+				}
+				
+			}
+			list.get(index).setEquipstop(equipstopTime+"");
+			
+			paramMap=new HashMap(); 
+			paramMap.put("production",p.getProdnum()+"");
+			paramMap.put("state","02");
+			paramMap.put("adddate",sdf.format(p.getAdddate()));
+			int toolstopnumber=iDstateMapper.selectCountdstateByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",toolstopnumber); 
+			List<Dstate> toolstopList=iDstateMapper.selectdstateByParam(paramMap);
+			//工装停台时间
+			int toolstopduration=0;
+			for(Dstate dstate:toolstopList){
+				if(dstate.getDuration()!=null){
+					toolstopduration+=Integer.parseInt(dstate.getDuration());
+				}
+				
+			}
+			list.get(index).setToolstop(toolstopduration+"");
+			
+			paramMap=new HashMap(); 
+			paramMap.put("production",p.getProdnum()+"");
+			paramMap.put("state","03");
+			paramMap.put("adddate",sdf.format(p.getAdddate()));
+			int prodstopnumber=iDstateMapper.selectCountdstateByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",prodstopnumber); 
+			List<Dstate> prodstopList=iDstateMapper.selectdstateByParam(paramMap);
+			//生产停台时间
+			int prodstopduration=0;
+			for(Dstate dstate:prodstopList){
+				if(dstate.getDuration()!=null){
+					prodstopduration+=Integer.parseInt(dstate.getDuration());
+				}
+				
+			}
+			list.get(index).setProdstop(prodstopduration+"");
 		}
 		
 		/////////////////////////
@@ -188,7 +245,6 @@ public class ProductionServiceImpl  implements IProductionService {
 			alllist.get(i).setProdtime(allProdTime+"");
 			/////////////////////////
 			
-			
 		}
 		
 		
@@ -210,34 +266,104 @@ public class ProductionServiceImpl  implements IProductionService {
 			
 			//end-start
 			int durtime=0;
-			if(p.getEndtime()!=null&&p.getStarttime()!=null){
-				durtime=(int) ((p.getEndtime().getTime()-p.getStarttime().getTime())/1000);
-			}
-			//timer
-			paramMap=new HashMap(); 
-			paramMap.put("prodnum",p.getProdnum()+"");
-			//paramMap.put("type","间休");
-			int timenumber=iTimerMapper.selectCounttimerByParam(paramMap);
-			paramMap.put("fromPage",0);
-			paramMap.put("toPage",timenumber); 
-			List<Timer> timerList=iTimerMapper.selecttimerByParam(paramMap);
 			//间休时间
 			int rest= 0;
-			for(Timer t:timerList){
-				String[] starttimes=t.getStarttime().split(":");
-				String[] endtimes=t.getEndtime().split(":");
-				 //t.getEndtime()-t.getStarttime();
-				if(endtimes.length==3&&starttimes.length==3){
-					rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
-							(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
+			if(p.getEndtime()!=null&&p.getStarttime()!=null){
+				durtime=(int) ((p.getEndtime().getTime()-p.getStarttime().getTime())/1000);
+			
+				//timer
+				paramMap=new HashMap(); 
+				paramMap.put("prodnum",p.getProdnum()+"");
+				//paramMap.put("type","间休");
+				int timenumber=iTimerMapper.selectCounttimerByParam(paramMap);
+				paramMap.put("fromPage",0);
+				paramMap.put("toPage",timenumber); 
+				List<Timer> timerList=iTimerMapper.selecttimerByParam(paramMap);
+				
+				for(Timer t:timerList){
+					String[] starttimes=t.getStarttime().split(":");
+					String[] endtimes=t.getEndtime().split(":");
+					 //t.getEndtime()-t.getStarttime();
+					if(endtimes.length==3&&starttimes.length==3){
+						
+						
+						try {
+							if(!sdf.parse(t.getStarttime()).before(sdf.parse(sdf.format(p.getStarttime())))&&
+									!sdf.parse(t.getEndtime()).after(sdf.parse(sdf.format(p.getEndtime())))){
+								rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
+										(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
+							
+							}
+							
+							
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
+			
 			}
-			
-			
 			int prodtime= durtime-rest;
 			//list.get(index).setProdtime(TimeUtils.formatTime(Long.parseLong((prodtime*1000)+"")));
 			if(prodtime>=60)
 			list.get(index).setProdtime((prodtime/60)+"");
+			
+			
+			//dstate
+			paramMap=new HashMap(); 
+			paramMap.put("production",p.getProdnum()+"");
+			paramMap.put("state","01");
+			paramMap.put("adddate",sdf.format(p.getAdddate()));
+			int equipstopnumber=iDstateMapper.selectCountdstateByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",equipstopnumber); 
+			List<Dstate> equipstopList=iDstateMapper.selectdstateByParam(paramMap);
+			//设备停台时间
+			int equipstopTime=0;
+			for(Dstate dstate:equipstopList){
+				if(dstate.getDuration()!=null){
+					equipstopTime+=Integer.parseInt(dstate.getDuration());
+				}
+				
+			}
+			list.get(index).setEquipstop(equipstopTime+"");
+			
+			paramMap=new HashMap(); 
+			paramMap.put("production",p.getProdnum()+"");
+			paramMap.put("state","02");
+			paramMap.put("adddate",sdf.format(p.getAdddate()));
+			int toolstopnumber=iDstateMapper.selectCountdstateByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",toolstopnumber); 
+			List<Dstate> toolstopList=iDstateMapper.selectdstateByParam(paramMap);
+			//工装停台时间
+			int toolstopduration=0;
+			for(Dstate dstate:toolstopList){
+				if(dstate.getDuration()!=null){
+					toolstopduration+=Integer.parseInt(dstate.getDuration());
+				}
+				
+			}
+			list.get(index).setToolstop(toolstopduration+"");
+			
+			paramMap=new HashMap(); 
+			paramMap.put("production",p.getProdnum()+"");
+			paramMap.put("state","03");
+			paramMap.put("adddate",sdf.format(p.getAdddate()));
+			int prodstopnumber=iDstateMapper.selectCountdstateByParam(paramMap);
+			paramMap.put("fromPage",0);
+			paramMap.put("toPage",prodstopnumber); 
+			List<Dstate> prodstopList=iDstateMapper.selectdstateByParam(paramMap);
+			//生产停台时间
+			int prodstopduration=0;
+			for(Dstate dstate:prodstopList){
+				if(dstate.getDuration()!=null){
+					prodstopduration+=Integer.parseInt(dstate.getDuration());
+				}
+				
+			}
+			list.get(index).setProdstop(prodstopduration+"");
 		}
 
 		
