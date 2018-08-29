@@ -41,7 +41,8 @@ public class ProductionServiceImpl  implements IProductionService {
 	@Transactional
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Production> selectProductionByParam(Map paramMap){ 
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
 		List<Production> list=iProductionMapper.selectproductionByParam(paramMap);
 		///////////////////////
 		
@@ -74,8 +75,8 @@ public class ProductionServiceImpl  implements IProductionService {
 					if(endtimes.length==3&&starttimes.length==3){
 						
 						try {
-							if(!sdf.parse(t.getStarttime()).before(sdf.parse(sdf.format(p.getStarttime())))&&
-									!sdf.parse(t.getEndtime()).after(sdf.parse(sdf.format(p.getEndtime())))){
+							if(!sdf2.parse(t.getStarttime()).before(sdf2.parse(sdf2.format(p.getStarttime())))&&
+									!sdf2.parse(t.getEndtime()).after(sdf2.parse(sdf2.format(p.getEndtime())))){
 								rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
 										(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
 							
@@ -162,7 +163,8 @@ public class ProductionServiceImpl  implements IProductionService {
 	@Transactional
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Production> selectProductionByParam2(Map paramMap){ 
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
 		List<Production> alllist=iProductionMapper.selectproductionByParam2(paramMap);
 		
 		
@@ -221,8 +223,8 @@ public class ProductionServiceImpl  implements IProductionService {
 					if(endtimes.length==3&&starttimes.length==3){
 						
 						try {
-							if(!sdf.parse(t.getStarttime()).before(sdf.parse(sdf.format(startTime)))&&
-									!sdf.parse(t.getEndtime()).after(sdf.parse(sdf.format(endTime)))){
+							if(!sdf2.parse(t.getStarttime()).before(sdf2.parse(sdf2.format(startTime)))&&
+									!sdf2.parse(t.getEndtime()).after(sdf2.parse(sdf2.format(endTime)))){
 								rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
 										(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
 							}
@@ -256,6 +258,7 @@ public class ProductionServiceImpl  implements IProductionService {
 	@SuppressWarnings("rawtypes")
 	public List<Production> selectAllProductionByParam(Map paramMap){ 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
 		List<Production> list=iProductionMapper.selectallproductionByParam(paramMap);
 		///////////////////////
 				
@@ -288,8 +291,8 @@ public class ProductionServiceImpl  implements IProductionService {
 						
 						
 						try {
-							if(!sdf.parse(t.getStarttime()).before(sdf.parse(sdf.format(p.getStarttime())))&&
-									!sdf.parse(t.getEndtime()).after(sdf.parse(sdf.format(p.getEndtime())))){
+							if(!sdf2.parse(t.getStarttime()).before(sdf2.parse(sdf2.format(p.getStarttime())))&&
+									!sdf2.parse(t.getEndtime()).after(sdf2.parse(sdf2.format(p.getEndtime())))){
 								rest+=(Integer.parseInt(endtimes[0])*60*60+Integer.parseInt(endtimes[1])*60+Integer.parseInt(endtimes[2]))-
 										(Integer.parseInt(starttimes[0])*60*60+Integer.parseInt(starttimes[1])*60+Integer.parseInt(endtimes[2]));
 							

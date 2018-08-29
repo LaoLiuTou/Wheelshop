@@ -385,16 +385,65 @@ public class ProductionController {
 				resultMap.put("msg", "参数不能为空！");
 			}
 			else{
+				
 				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			 
+			 
+				
 				Map paramMap=new HashMap();
 				paramMap.put("fromPage",0);
 				paramMap.put("toPage",1); 
 				paramMap.put("prodnum",production.getProdnum());
 				//使用过的
 				//paramMap.put("startstatus","1");
-				//今天的
-				paramMap.put("adddateFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
+				Date date=new Date();
+				Calendar calendar = Calendar.getInstance();
+				if(calendar.get(Calendar.HOUR_OF_DAY) >6&&calendar.get(Calendar.HOUR_OF_DAY) <18){
+					paramMap.put("adddateFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
+					paramMap.put("adddateTo",sdf.parse(sdf2.format(new Date())+" 18:30:00"));
+				}
+				else if(calendar.get(Calendar.HOUR_OF_DAY) >=0&&calendar.get(Calendar.HOUR_OF_DAY) <=6){
+					calendar.setTime(date);
+					calendar.add(Calendar.DAY_OF_MONTH, -1);
+					date = calendar.getTime();
+					//System.out.println(sdf.format(date));
+					paramMap.put("adddateFrom",sdf.parse(sdf2.format(date)+" 18:40:00"));
+					paramMap.put("adddateTo",sdf.parse(sdf2.format(new Date())+" 06:00:00"));
+				}
+				else if(calendar.get(Calendar.HOUR_OF_DAY) >=19&&calendar.get(Calendar.HOUR_OF_DAY) <24){
+					paramMap.put("adddateFrom",sdf.parse(sdf2.format(new Date())+" 18:40:00"));
+					paramMap.put("adddateTo",sdf.parse(sdf2.format(new Date())+" 23:59:59"));
+				}
+				else if(calendar.get(Calendar.HOUR_OF_DAY) ==18){
+					if(calendar.get(Calendar.MINUTE)>=40){
+						paramMap.put("adddateFrom",sdf.parse(sdf2.format(new Date())+" 18:40:00"));
+						paramMap.put("adddateTo",sdf.parse(sdf2.format(new Date())+" 23:59:59"));
+					}
+					else{
+						paramMap.put("adddateFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
+						paramMap.put("adddateTo",sdf.parse(sdf2.format(new Date())+" 18:30:00"));
+					}
+				}
+				
+				
+				//paramMap.put("adddateFrom",sdf.parse(sdf2.format(new Date())+" 07:00:00"));
 				List<Production> plist=iProductionService.selectProductionByParam(paramMap);
+				
+				//是否是第一个开始的品种，需要清空停台时间
+				boolean flag=false;
+				if(production.getFlag().equals("1")){
+					List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
+					for(Production p:temp){
+						if(p.getStarttime()!=null){
+							flag=true;	 
+						}
+					}
+				}
+				else{
+					flag=true;	
+				}
+				
+					
 				if(plist.size()>0){
 					if(production.getFlag()!=null&&production.getFlag().equals("1")){
 						if(plist.get(0).getStarttime()==null)
@@ -407,6 +456,7 @@ public class ProductionController {
 				}
 				else{
 					paramMap.remove("adddateFrom");
+					paramMap.remove("adddateTo");
 					plist=iProductionService.selectProductionByParam(paramMap);
 					if(plist.size()>0){
 						production.setAdddate(new Date());
@@ -421,6 +471,7 @@ public class ProductionController {
 						production.setRequired(plist.get(0).getRequired());
 						production.setChangtime(plist.get(0).getChangtime());
 						production.setPlancomp(plist.get(0).getPlancomp());
+						production.setStops(plist.get(0).getStops());
 						 
 
 						if(production.getFlag()!=null&&production.getFlag().equals("1")){
@@ -441,12 +492,13 @@ public class ProductionController {
 		            	 
 						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 		            	Map<String, String> contentMap = new HashMap<String, String>();
-		            	contentMap.put("T", "5");
+		            	contentMap.put("T", "9");
 		            	contentMap.put("NAME", "system");
 		            	contentMap.put("FI", entry.getKey().toString());  
 		            	contentMap.put("PRO", production.getProdnum());
 		            	contentMap.put("TYPE", production.getProdstate());
 		            	contentMap.put("TIMES", "");
+		            	contentMap.put("CLEAN", flag+"");
 						ObjectMapper mapper = new ObjectMapper();
 						String json = "";
 						json = mapper.writeValueAsString(contentMap);
