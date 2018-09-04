@@ -69,18 +69,21 @@ public class DstateController {
 			paramMap.put("deviceno",dstate.getDeviceno());
 			paramMap.put("production",dstate.getProduction());
 			List<Device> list=iDeviceService.selectDeviceByParam(paramMap);
-			if(dstate.getProduction().equals("6")){
-				List<Map<String, String>> requiredList = mapper.readValue(plist.get(0).getRequired(), List.class);
-				for(Map<String,String> map:requiredList){
-					for(Entry<String, String> entry:map.entrySet()){
-						if(entry.getValue().contains(dstate.getDeviceno())){
-							flag=true;
+			if(dstate.getProduction().equals("6")&&!dstate.getState().equals("04")){
+				if(plist.get(0).getRequired()!=null){
+					List<Map<String, String>> requiredList = mapper.readValue(plist.get(0).getRequired(), List.class);
+					for(Map<String,String> map:requiredList){
+						for(Entry<String, String> entry:map.entrySet()){
+							if(entry.getValue().contains(dstate.getDeviceno())){
+								flag=true;
+							}
 						}
+						/*if(map.containsValue(dstate.getDeviceno())){
+							flag=true;
+						}*/
 					}
-					/*if(map.containsValue(dstate.getDeviceno())){
-						flag=true;
-					}*/
 				}
+				
 			}
 			else{
 				flag=true;
