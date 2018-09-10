@@ -173,7 +173,7 @@ public class TokenUtils {
 		            	 
 						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 		            	Map<String, String> contentMap = new HashMap<String, String>();
-		            	contentMap.put("T", "8");
+		            	contentMap.put("T", "7");
 		            	contentMap.put("NAME", "system");
 		            	contentMap.put("FI", entry.getKey().toString());  
 		            	contentMap.put("PRO", list.get(0).getProdnum());
@@ -284,7 +284,7 @@ public class TokenUtils {
 				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
 					ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 	            	Map<String, String> contentMap = new HashMap<String, String>();
-	            	contentMap.put("T", "7");
+	            	contentMap.put("T", "8");
 	            	contentMap.put("NAME", "system");
 	            	contentMap.put("FI", entry.getKey().toString());  
 	            	contentMap.put("PRO", entry.getKey().toString().substring(0, 1)); 
