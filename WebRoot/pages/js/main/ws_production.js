@@ -484,18 +484,18 @@ function lastProduction2(production){
 
             //计划完成
             if(itemtime!=0){
-                if(prodstop==0&&equipstop==0&&toolstop==0&&startflag=='1'){
+                //if(prodstop==0&&equipstop==0&&toolstop==0&&startflag=='1'){
+                if(startflag=='1'){
                     yieldvarInterval=setInterval(function (){
                         yield+=1;
                         var params={};
                         params['id']=id;
                         params['yield']=yield;
-                        updateProduction(params);
+                        updateProduction(params);tea
 
                     },itemtime*1000);
                 }
             }
-
         }
     });
 }
