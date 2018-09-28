@@ -74,9 +74,14 @@
 <script src="js/main/md5.js"></script>
 <script src="js/main/ws_production.js"></script>
 <script>
-
+    var audio = new Audio();
     $(document).ready(function(){
-
+        if(GetQueryString('restType')=='午休'){
+            audio.src = "audio/wuxiu2.mp3";
+            //audio.loop = true;
+            //播放(继续播放)
+            audio.play();
+        }
         guestLogin(GetQueryString('prod'));
 
         //interval= setInterval(timer,1000);
@@ -99,18 +104,25 @@
             if(GetQueryString('restType')=='换模'){
                 //playEndSound();
                 $('.show-time').addClass('text-black-red');
-                var audio = new Audio();
+                /*var audio = new Audio();
                 audio.src = "audio/huanmo.mp3";
+                //audio.loop = true;
+                //播放(继续播放)
+                audio.play();*/
+            }
+            else if(GetQueryString('restType')=='午休'){
+                audio.pause();
+                audio.src = "audio/wuxiu2.mp3";
                 //audio.loop = true;
                 //播放(继续播放)
                 audio.play();
             }
             else{
-                var audio = new Audio();
+                /*var audio = new Audio();
                 audio.src = "audio/rest.mp3";
                 //audio.loop = true;
                 //播放(继续播放)
-                audio.play();
+                audio.play();*/
             }
 
         }

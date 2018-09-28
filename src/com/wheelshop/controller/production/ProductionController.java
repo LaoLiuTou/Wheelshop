@@ -1190,5 +1190,44 @@ public class ProductionController {
 		}
 		return resultMap;
 	}
-	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping("/overSound")
+	@ResponseBody
+	public Map overSound(Production production){
+		Map resultMap=new HashMap();
+		try {
+			 
+			//推送
+			for (Map.Entry entry:NettyChannelMap.map.entrySet()){
+	            if (entry.getKey().toString().substring(0, 1).equals(production.getProdnum())){
+	            	
+					ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
+	            	Map<String, String> contentMap = new HashMap<String, String>();
+	            	contentMap.put("T", "10");
+	            	contentMap.put("NAME", "system");
+	            	contentMap.put("FI", entry.getKey().toString());  
+	            	 
+					ObjectMapper mapper = new ObjectMapper();
+					String json = "";
+					json = mapper.writeValueAsString(contentMap);
+					
+					if(channelHandlerContext!=null){
+						
+					   channelHandlerContext.writeAndFlush(new TextWebSocketFrame(json));
+			        }
+					 
+	            }
+	        }
+			
+			resultMap.put("status", "0");
+			resultMap.put("msg", "修改成功！");
+			//System.out.println(production.getProdnum()+":"+production.getActualcomp());
+		} catch (Exception e) {
+			resultMap.put("status", "-1");
+			resultMap.put("msg", "修改失败！");
+			logger.info("新建失败！"+e.getLocalizedMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 }

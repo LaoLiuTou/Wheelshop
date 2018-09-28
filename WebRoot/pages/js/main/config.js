@@ -616,6 +616,14 @@ function initwebsocket(type){
             lastProduction2(msg['PRO']);
 
         }
+        else if(msg['T']=='10'){
+            var xbAudio = new Audio();
+            xbAudio.src = "audio/xiaban.mp3";
+            //audio.loop = true;
+            //播放(继续播放)
+            xbAudio.play();
+
+        }
 
     }
 
