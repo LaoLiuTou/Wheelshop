@@ -896,3 +896,23 @@ var sec_to_time = function(s) {
         }
         return t;
     }
+
+
+
+/**
+ * 播放下班声音
+ */
+function overSound(bodyParam){
+
+    var httpR = new createHttpR(url+'overSound','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            alert("开始播放下班声音");
+            //window.location.reload();
+            //window.location.href="interface.html?index="+interfaceIndex;
+        }
+    });
+}
