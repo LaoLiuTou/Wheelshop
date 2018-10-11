@@ -305,14 +305,14 @@
         var date=new Date();
         var currentTime = date.format("yyyy年MM月dd日 hh:mm:ss");
         $('#currentTime').text(currentTime);
-       if(date.getHours()=='7'&&date.getMinutes()=='30') {
+       if(date.getHours()=='7'&&date.getMinutes()=='30'&&date.getSeconds()=='0') {
 
            sbAudio.src = "audio/shangban.mp3";
            //audio.loop = true;
            //播放(继续播放)
            sbAudio.play();
        }
-       else if(date.getHours()=='19'&&date.getMinutes()=='0'){
+       else if(date.getHours()=='19'&&date.getMinutes()=='0'&&date.getSeconds()=='0'){
 
            sbAudio.src = "audio/shangban.mp3";
            //audio.loop = true;
