@@ -491,7 +491,7 @@ function lastProduction2(production){
                         var params={};
                         params['id']=id;
                         params['yield']=yield;
-                        updateProduction(params);tea
+                        updateProduction(params);
 
                     },itemtime*1000);
                 }
