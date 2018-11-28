@@ -483,7 +483,7 @@ function lastProduction2(production){
             }
 
             //计划完成
-            if(itemtime!=0){
+            /*if(itemtime!=0){
                 //if(prodstop==0&&equipstop==0&&toolstop==0&&startflag=='1'){
                 if(startflag=='1'){
                     yieldvarInterval=setInterval(function (){
@@ -495,7 +495,7 @@ function lastProduction2(production){
 
                     },itemtime*1000);
                 }
-            }
+            }*/
         }
     });
 }

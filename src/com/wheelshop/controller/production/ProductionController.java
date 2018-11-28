@@ -30,6 +30,7 @@ import com.wheelshop.service.production.IProductionService;
 import com.wheelshop.service.timer.ITimerService;
 import com.wheelshop.service.varieties.IVarietiesService;
 import com.wheelshop.utils.ExcelUtil;
+import com.wheelshop.utils.YieldUtils;
 import com.wheelshop.chat.common.NettyChannelMap;
 import com.wheelshop.model.device.Device;
 import com.wheelshop.model.dstate.Dstate;
@@ -448,6 +449,9 @@ public class ProductionController {
 					if(production.getFlag()!=null&&production.getFlag().equals("1")){
 						if(plist.get(0).getStarttime()==null)
 						production.setStarttime(new Date());
+						
+						//开始计时计划完成
+						YieldUtils.startSchedule(production.getId()+"",plist.get(0).getProdnum(),plist.get(0).getItemtime());
 					}
 					else if(production.getFlag()!=null&&production.getFlag().equals("0")){
 						production.setEndtime(new Date());
@@ -476,11 +480,17 @@ public class ProductionController {
 
 						if(production.getFlag()!=null&&production.getFlag().equals("1")){
 							production.setStarttime(new Date());
+							 
 						}
 						else if(production.getFlag()!=null&&production.getFlag().equals("0")){
 							production.setEndtime(new Date());
 						}
 						iProductionService.addProduction(production);
+						if(production.getFlag()!=null&&production.getFlag().equals("1")){
+							//开始计时计划完成
+							YieldUtils.startSchedule(production.getId()+"",plist.get(0).getProdnum(),plist.get(0).getItemtime());
+						}
+						
 					}
 					
 					
