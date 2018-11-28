@@ -483,19 +483,19 @@ function lastProduction2(production){
             }
 
             //计划完成
-            /*if(itemtime!=0){
+            if(itemtime!=0){
                 //if(prodstop==0&&equipstop==0&&toolstop==0&&startflag=='1'){
                 if(startflag=='1'){
                     yieldvarInterval=setInterval(function (){
-                        yield+=1;
+                        //yield+=1;
                         var params={};
                         params['id']=id;
-                        params['yield']=yield;
-                        updateProduction(params);
-
+                        //params['yield']=yield;
+                        //updateProduction(params);
+                        selectProduction(params);
                     },itemtime*1000);
                 }
-            }*/
+            }
         }
     });
 }
@@ -532,6 +532,22 @@ function updateProduction(bodyParam){
         //var msg = obj['msg'];
         if(status=='0'){
             $('#yield').text(bodyParam['yield']);
+            //alert("修改成功！");
+            //window.location.reload();
+            //window.location.href="interface.html?index="+interfaceIndex;
+        }
+    });
+}
+function selectProduction(bodyParam){
+
+    var httpR = new createHttpR(url+'selectProduction','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            var msg = obj['msg'];
+            $('#yield').text(msg['yield']);
             //alert("修改成功！");
             //window.location.reload();
             //window.location.href="interface.html?index="+interfaceIndex;
