@@ -519,6 +519,7 @@
         });
 
         $('#changedForm input:radio').click(function(){
+            changed={};
             var redNum=0,greenNum=0;
             $('#changedForm input:radio:checked').each(function(){
                 changed[$(this).attr('name')]=$(this).val();
@@ -531,7 +532,6 @@
             });
             $('#redNum').text(redNum);
             $('#greenNum').text(greenNum);
-
         });
 
 
@@ -596,12 +596,13 @@
                 params['changed']=JSON.stringify(changed);
             }
             params['prodnum']=production;
+            console.log(JSON.stringify(params));
             addProduction(params);
         });
 
         $('#overSound').click(function () {
             var params={};
-            params['prodnum']=production;
+            params['prodnum']=production;s
             overSound(params);
 
         });

@@ -26,8 +26,8 @@ public class YieldUtils {
 		Timer timer = new Timer();
 		
 		if(timerMap.get(prodnum)!=null){
-			timer=timerMap.get(prodnum);
-			timer.cancel();
+			timerMap.get(prodnum).cancel();
+			timerMap.put(prodnum, timer);
 		}
 		else{
 			timerMap.put(prodnum, timer);

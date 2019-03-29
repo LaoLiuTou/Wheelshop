@@ -476,6 +476,7 @@
         });
 
         $('#changedForm input:radio').click(function(){
+            changed={};
             var redNum=0,greenNum=0;
             $('#changedForm input:radio:checked').each(function(){
                 changed[$(this).attr('name')]=$(this).val();
