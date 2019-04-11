@@ -90,9 +90,10 @@ function  queryDstates (bodyParam,currentPage,pageSize) {
                 else if(data[o].state=='03'){html+='<td>生产停台</td>\n' ;}
                 else{html+='<td></td>\n' ;}
 
-                html+='<td>'+data[o].duration+'</td>\n' +
+                html+='<td>'+data[o].adddate+'</td>\n' +
+                    '<td>'+data[o].duration+'</td>\n' +
                     '<td>'+data[o].devicename+'</td>\n' +
-                    '<td>'+data[o].adddate+'</td>\n' +
+                    '<td>'+data[o].adddate.substr(0,10)+'</td>\n' +
                     '<td>'+data[o].comment+'</td>\n' ;
 
                 html+='<td><a class="updateDstate" href="" index='+o+' data-toggle="modal" data-target="#update-box"><span class="label label-info label-mini">编辑备注</span></a>   ' ;

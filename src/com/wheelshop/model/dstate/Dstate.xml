@@ -48,6 +48,7 @@
 			<if test="flag != null"> AND a.FLAG =#{flag} </if>
 			<if test="statein != null"> AND a.STATE IN ('01','02','03')  </if>
 		</trim>  
+		GROUP BY a.production,a.deviceno,a.state,a.adddate
 		ORDER BY a.ID DESC 
 		LIMIT #{fromPage},#{toPage} 
 	</select>

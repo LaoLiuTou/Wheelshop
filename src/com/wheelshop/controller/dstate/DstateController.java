@@ -99,7 +99,41 @@ public class DstateController {
 						dstate.setState("01");
 					}
 				}
-				iDstateService.addDstate(dstate);
+				
+				//如果已经停台则不新建
+				paramMap=new HashMap();
+				paramMap.put("fromPage",0);
+				paramMap.put("toPage",1); 
+				paramMap.put("deviceno",dstate.getDeviceno());
+				paramMap.put("production",dstate.getProduction());
+				paramMap.put("state",dstate.getState());
+				//paramMap.put("adddateFrom",sdf.format(new Date()));
+				List<Dstate> sameDstateList=iDstateService.selectDstateByParam(paramMap);
+				
+				if(sameDstateList.size()==0){
+					iDstateService.addDstate(dstate);
+				}
+				else{
+					Dstate sameDstate=sameDstateList.get(0);
+					
+					paramMap=new HashMap();
+					paramMap.put("deviceno",dstate.getDeviceno());
+					paramMap.put("production",dstate.getProduction());
+					paramMap.put("state","04");
+					paramMap.put("adddateFrom",sdf.format(sameDstate.getAdddate()));
+					int cancelValue=iDstateService.selectCountDstateByParam(paramMap);
+					if(cancelValue>0){
+						iDstateService.addDstate(dstate);
+					}
+					else{
+						resultMap.put("status", "-1");
+						resultMap.put("msg", "已经为停台设备！");
+						return resultMap;
+						
+					}
+					
+				}
+				
 				if(list.size()>0){
 					if(plist.size()>0){
 						Map stopsmap;
