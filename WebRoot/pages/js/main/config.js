@@ -500,7 +500,6 @@ function initwebsocket(type){
         }
         else if(msg['T']=='5'){
 
-
             //lastProduction(1,msg['PRO']);
             var pageName="";
             if(msg['PRO']=='1'){
@@ -599,15 +598,30 @@ function initwebsocket(type){
             window.location.href=pageName;
         }
         else if(msg['T']=='8'){
-            //lastProduction2(msg['PRO']);
+            lastProduction2(msg['PRO']);
 
-            clearInterval(prodstopInterval);
+            /*clearInterval(prodstopInterval);
             clearInterval(equipstopInterval);
             clearInterval(toolstopInterval);
             clearInterval(yieldvarInterval);
             $('#rate').text('');
             $('#yield').text('');
-            $('#actualcomp').text('');
+            $('#actualcomp').text('');*/
+
+        }
+        else if(msg['T']=='9'){
+            if(msg['CLEAN']=='false'){
+                localStorage.clear();
+            }
+            lastProduction2(msg['PRO']);
+
+        }
+        else if(msg['T']=='10'){
+            var xbAudio = new Audio();
+            xbAudio.src = "audio/xiaban.mp3";
+            //audio.loop = true;
+            //播放(继续播放)
+            xbAudio.play();
 
         }
 

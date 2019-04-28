@@ -211,6 +211,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             throws Exception {
         cause.printStackTrace();
         ctx.close();
+        NettyChannelMap.remove(ctx);
     }
     
   

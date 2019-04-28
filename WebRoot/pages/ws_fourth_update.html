@@ -242,6 +242,9 @@
                                                 <button type="button" class="startbtn btn-info popovers" id="startBtn" >开始</button>
                                                 <button type="button" class="startbtn btn-info popovers" id="endBtn" >结束</button>
                                             </div>
+                                            <div class="btn-group ml10">
+                                                <button type="button" class="startbtn btn-info popovers" id="overSound" >下班</button>
+                                            </div>
                                         </div>
 
                                     </form>
@@ -556,6 +559,7 @@
         });
 
         $('#changedForm input:radio').click(function(){
+            changed={};
             var redNum=0,greenNum=0;
             $('#changedForm input:radio:checked').each(function(){
                 changed[$(this).attr('name')]=$(this).val();
@@ -635,7 +639,12 @@
             addProduction(params);
         });
 
+        $('#overSound').click(function () {
+            var params={};
+            params['prodnum']=production;
+            overSound(params);
 
+        });
 
     });
 

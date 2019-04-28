@@ -4,14 +4,18 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 /**
  * @author lt
  * @version 1.0 
  */
 public class NettyChannelMap {
     public static Map<String,ChannelHandlerContext> map=new ConcurrentHashMap<String, ChannelHandlerContext>();
+    
     public static void add(String clientId,ChannelHandlerContext channelHandlerContext){
         map.put(clientId,channelHandlerContext);
+        Logger logger = Logger.getLogger("WheelshopLogger");
+        logger.info("在线账号数量："+map.size());
     }
     public static ChannelHandlerContext get(String clientId){
        return map.get(clientId);

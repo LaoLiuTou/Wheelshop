@@ -152,6 +152,7 @@ function lastProduction(type,production){
 
                         if(equipstop>0){
                             $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
+                            //if(currentTime!=0&&data[o]['starttime']!='') {
                             if(currentTime!=0) {
                                 equipstopInterval = setInterval(function () {
                                     var equipstopTime = localStorage.getItem('equipstopTime' + production + currentTime);
@@ -171,6 +172,7 @@ function lastProduction(type,production){
                         }
                         if(prodstop>0){
                             $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
+                            //if(currentTime!=0&&data[o]['starttime']!='') {
                             if(currentTime!=0) {
                                 prodstopInterval = setInterval(function () {
                                     var prodstopTime = localStorage.getItem('prodstopTime' + production + currentTime);
@@ -188,6 +190,7 @@ function lastProduction(type,production){
                         }
                         if(toolstop>0){
                             $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
+                            //if(currentTime!=0&&data[o]['starttime']!='') {
                             if(currentTime!=0) {
                                 toolstopInterval = setInterval(function () {
                                     var toolstopTime = localStorage.getItem('toolstopTime' + production + currentTime);
@@ -387,6 +390,7 @@ function lastProduction2(production){
                     if(equipstop>0){
                         $('#shebei[prod="'+production+'"]').addClass('bg-green-red');
 
+                        //if(currentTime!=0&&data[o]['starttime']!=''){
                         if(currentTime!=0){
                             equipstopInterval=setInterval(function (){
                                 var equipstopTime=localStorage.getItem('equipstopTime'+production+currentTime);
@@ -407,6 +411,7 @@ function lastProduction2(production){
                     }
                     if(prodstop>0){
                         $('#shengchan[prod="'+production+'"]').addClass('bg-green-red');
+                        //if(currentTime!=0&&data[o]['starttime']!='') {
                         if(currentTime!=0) {
                             prodstopInterval = setInterval(function () {
                                 var prodstopTime = localStorage.getItem('prodstopTime' + production + currentTime);
@@ -424,6 +429,7 @@ function lastProduction2(production){
                     }
                     if(toolstop>0){
                         $('#gongzhuang[prod="'+production+'"]').addClass('bg-green-red');
+                        //if(currentTime!=0&&data[o]['starttime']!='') {
                         if(currentTime!=0) {
                             toolstopInterval = setInterval(function () {
                                 var toolstopTime = localStorage.getItem('toolstopTime' + production + currentTime);
@@ -478,18 +484,18 @@ function lastProduction2(production){
 
             //计划完成
             if(itemtime!=0){
-                if(prodstop==0&&equipstop==0&&toolstop==0&&startflag=='1'){
+                //if(prodstop==0&&equipstop==0&&toolstop==0&&startflag=='1'){
+                if(startflag=='1'){
                     yieldvarInterval=setInterval(function (){
-                        yield+=1;
+                        //yield+=1;
                         var params={};
                         params['id']=id;
-                        params['yield']=yield;
-                        updateProduction(params);
-
+                        //params['yield']=yield;
+                        //updateProduction(params);
+                        selectProduction(params);
                     },itemtime*1000);
                 }
             }
-
         }
     });
 }
@@ -526,6 +532,22 @@ function updateProduction(bodyParam){
         //var msg = obj['msg'];
         if(status=='0'){
             $('#yield').text(bodyParam['yield']);
+            //alert("修改成功！");
+            //window.location.reload();
+            //window.location.href="interface.html?index="+interfaceIndex;
+        }
+    });
+}
+function selectProduction(bodyParam){
+
+    var httpR = new createHttpR(url+'selectProduction','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            var msg = obj['msg'];
+            $('#yield').text(msg['yield']);
             //alert("修改成功！");
             //window.location.reload();
             //window.location.href="interface.html?index="+interfaceIndex;
@@ -890,3 +912,23 @@ var sec_to_time = function(s) {
         }
         return t;
     }
+
+
+
+/**
+ * 播放下班声音
+ */
+function overSound(bodyParam){
+
+    var httpR = new createHttpR(url+'overSound','post','text',bodyParam,'callBack');
+    httpR.HttpRequest(function(response){
+        var obj = JSON.parse(response);
+        var status = obj['status'];
+        //var msg = obj['msg'];
+        if(status=='0'){
+            alert("开始播放下班声音");
+            //window.location.reload();
+            //window.location.href="interface.html?index="+interfaceIndex;
+        }
+    });
+}

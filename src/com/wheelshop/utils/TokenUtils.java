@@ -173,7 +173,7 @@ public class TokenUtils {
 		            	 
 						ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 		            	Map<String, String> contentMap = new HashMap<String, String>();
-		            	contentMap.put("T", "8");
+		            	contentMap.put("T", "7");
 		            	contentMap.put("NAME", "system");
 		            	contentMap.put("FI", entry.getKey().toString());  
 		            	contentMap.put("PRO", list.get(0).getProdnum());
@@ -197,11 +197,37 @@ public class TokenUtils {
 				paramMap.put("flag","1");
 				List<Production> temp=iProductionService.selectAllProductionByParam(paramMap);
 				logger.info("查询白班结束时间:"+temp.size());
+				
+				
 				for(Production prod:temp){
 					prod.setEndtime(new Date());
 					prod.setFlag("0");
 					iProductionService.updateProduction(prod);
 				}
+				
+				//新建
+				Production production = new Production();
+				production.setStartstatus("1");
+				production.setOvertime("0");
+				production.setProdstate("生产时间");
+				production.setCreater("admin");
+				production.setFlag("0");
+				for(int i=1;i<7;i++){
+					paramMap=new HashMap();
+					
+					paramMap.put("prodnum",i+"");
+					paramMap.put("fromPage",0);
+					paramMap.put("toPage",1); 
+					List<Production> newList=iProductionService.selectProductionByParam(paramMap);
+					if(newList.size()>0){
+						production.setProdnum(newList.get(0).getProdnum());
+						production.setChanged(newList.get(0).getChanged());
+						production.setStops(newList.get(0).getStops());
+					}
+					iProductionService.addProduction(production);
+				}
+				
+				
 				
 				//推送
 				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
@@ -230,12 +256,35 @@ public class TokenUtils {
 					prod.setFlag("0");
 					iProductionService.updateProduction(prod);
 				}
+
+
+				//新建
+				Production production = new Production();
+				production.setStartstatus("1");
+				production.setOvertime("0");
+				production.setProdstate("生产时间");
+				production.setCreater("admin");
+				production.setFlag("0");
+				for(int i=1;i<7;i++){
+					paramMap=new HashMap();
+					
+					paramMap.put("prodnum",i+"");
+					paramMap.put("fromPage",0);
+					paramMap.put("toPage",1); 
+					List<Production> newList=iProductionService.selectProductionByParam(paramMap);
+					if(newList.size()>0){
+						production.setProdnum(newList.get(0).getProdnum());
+						production.setChanged(newList.get(0).getChanged());
+						production.setStops(newList.get(0).getStops());
+					}
+					iProductionService.addProduction(production);
+				}
 				
 				//推送
 				for (Map.Entry entry:NettyChannelMap.map.entrySet()){
 					ChannelHandlerContext channelHandlerContext = (ChannelHandlerContext) entry.getValue();
 	            	Map<String, String> contentMap = new HashMap<String, String>();
-	            	contentMap.put("T", "7");
+	            	contentMap.put("T", "8");
 	            	contentMap.put("NAME", "system");
 	            	contentMap.put("FI", entry.getKey().toString());  
 	            	contentMap.put("PRO", entry.getKey().toString().substring(0, 1)); 
