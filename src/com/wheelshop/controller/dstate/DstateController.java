@@ -166,6 +166,7 @@ public class DstateController {
 										Long times=dstate.getAdddate().getTime()-d.getAdddate().getTime();
 										//d.setDuration(TimeUtils.formatTime(times));
 										d.setDuration((times/1000)+"");
+										d.setStopdate(new Date());
 										iDstateService.updateDstate(d);
 									}
 								}

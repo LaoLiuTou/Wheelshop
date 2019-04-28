@@ -82,6 +82,16 @@ public class Dstate {
 		this.devicename = devicename;
 	}
 	 
+	/** 添加时间 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+	private  Date stopdate;
+	public Date getStopdate() {
+		return stopdate;
+	}
+	public void setStopdate(Date stopdate) {
+		this.stopdate = stopdate;
+	}
+	 
 	
 
 
