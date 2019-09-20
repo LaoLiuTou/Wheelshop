@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class YieldUtils {
     public YieldUtils(IProductionService iProductionService) {
     	YieldUtils.iProductionService = iProductionService;
     }
-	private static Map<String,Timer> timerMap = new HashMap<String,Timer>();
+	private static Map<String,Timer> timerMap = new ConcurrentHashMap<String,Timer>();
 	public static void startSchedule(final String id,String prodnum,String interval){
 		Logger logger = Logger.getLogger("WheelshopLogger");
 		Timer timer = new Timer();

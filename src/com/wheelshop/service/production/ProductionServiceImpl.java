@@ -193,8 +193,10 @@ public class ProductionServiceImpl  implements IProductionService {
 						endTime=p.getEndtime();
 					}
 					else{
-						if(endTime.before(p.getStarttime())){
-							endTime=p.getEndtime();
+						if(startTime==null){ 
+							if(endTime.before(p.getStarttime())){
+								endTime=p.getEndtime();
+							}
 						}
 					}
 				}
